@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Database\Local\" />
+    <Folder Include="Services\LocalDatabase\" />
     <Folder Include="ViewModels\" />
   </ItemGroup>
 

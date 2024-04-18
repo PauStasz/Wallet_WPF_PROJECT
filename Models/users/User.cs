@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.RightsManagement;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Wallet.Models.users
+﻿namespace Wallet.Models.Users
 {
     internal class User
     {
@@ -15,6 +8,7 @@ namespace Wallet.Models.users
         public string Nick {  get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public string HashPassword { get; set; }
 
     }
 }
