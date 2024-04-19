@@ -1,35 +1,58 @@
-﻿using System.Xml.Linq;
+﻿using FireSharp.Response;
+using Newtonsoft.Json;
+using System.Windows.Controls;
+using System.Xml.Linq;
 using Wallet.Database.FirebaseRealTimeDatabase;
+using Wallet.Models;
 using Wallet.Models.Users;
 using Wallet.Repositories.IRepositories;
 
 namespace Wallet.Repositories
 {
-    internal class GenericRepository<T> : IGenericRepository<T> where T : class
+    internal class GenericRepository<T> : IGenericRepository<T> where T : BaseObject
     {
         private FirebaseSetup _firebase = new FirebaseSetup();
-        public void DeleteData(string nameTable, T entity)
+        public void DeleteData(string nameTable, int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+               var DataToBeDelted = _firebase.client.Delete(nameTable + "/" + id);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Wyjatek z usunieciem danych firebase");
+            }
         }
 
         public List<T> GetAllData(string nameTable)
         {
-            throw new NotImplementedException();
-        }
+            try
+            {
+                FirebaseResponse recordList = _firebase.client.Get(nameTable);
+                Dictionary<string, T> dictionaryData = JsonConvert.DeserializeObject<Dictionary<string, T>>(recordList.Body.ToString());
+               
+                List<T> convertedData = new List<T>();
 
-        public T GetData(string nameTable, int id)
-        {
-            throw new NotImplementedException();
+                /*foreach (var item in dictionaryData)
+                {
+
+                    convertedData
+                }*/
+
+                return convertedData;
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Wyjatek z dostaniem listy danych firebase");
+                return null;
+            }
         }
 
         public void SetData(string nameTable, T entity)
         {
             try
             {
-                int Id = 0;
-                var SetData = _firebase.client.Set(nameTable + "/" + Id, entity);
-
+                var SetData = _firebase.client.Set(nameTable + "/" + entity.Id, entity);
             }
             catch (Exception)
             {
@@ -39,7 +62,14 @@ namespace Wallet.Repositories
 
         public void UpdateData(string nameTable, T entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var DataToBeUpdated = _firebase.client.Update(nameTable + "/" + entity.Id, entity);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Wyjatek z aktulizacja danych firebase");
+            }
         }
     }
 }

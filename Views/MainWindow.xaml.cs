@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Diagnostics;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -28,13 +29,29 @@ namespace Wallet
 
             User user = new User
             {
-                Name = "Anna",
+                Id = 0,
+                Name = "Kasia",
                 Surname = "Kwiat",
                 Email = "anna12@op.pl",
                 Password = "1234",
             };
 
-            userRepository.SetData("users/", user);
+            User user2 = new User
+            {
+                Id = 1,
+                Name = "Ola",
+                Surname = "Kdt",
+                Email = "a12@op.pl",
+                Password = "1234",
+            };
+
+
+            // userRepository.SetData("users", user);
+            //userRepository.SetData("users", user2);
+
+            //userRepository.UpdateData("users", user);
+            // userRepository.DeleteData("users", 0);
+
         }
     }
 }
