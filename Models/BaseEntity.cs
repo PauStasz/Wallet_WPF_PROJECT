@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Wallet.Models
 {
-    internal class BaseObject
+    internal class BaseEntity
     {
         public int Id { get; set; }
     }

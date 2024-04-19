@@ -2,7 +2,7 @@
 
 namespace Wallet.Repositories.IRepositories
 {
-    internal interface IGenericRepository<T> where T : BaseObject
+    internal interface IGenericRepository<T> where T : BaseEntity
     {
         public List<T> GetAllData(string nameTable);
         public void SetData(string nameTable, T entity);

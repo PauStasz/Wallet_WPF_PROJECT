@@ -9,7 +9,7 @@ using Wallet.Repositories.IRepositories;
 
 namespace Wallet.Repositories
 {
-    internal class GenericRepository<T> : IGenericRepository<T> where T : BaseObject
+    internal class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
     {
         private FirebaseSetup _firebase = new FirebaseSetup();
         public void DeleteData(string nameTable, int id)

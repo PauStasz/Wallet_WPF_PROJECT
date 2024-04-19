@@ -1,6 +1,6 @@
 ﻿namespace Wallet.Models.Users
 {
-    internal class User : BaseObject
+    internal class User : BaseEntity
     {
         public string Name { get; set; }
         public string Surname { get; set; }
