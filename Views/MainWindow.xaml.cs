@@ -25,7 +25,7 @@ namespace Wallet
             
             InitializeComponent();
             
-            IGenericRepository<User> userRepository = new GenericRepository<User>();
+            IUserRepository userRepository = new UserRepository();
 
             User user = new User
             {
@@ -49,9 +49,19 @@ namespace Wallet
             // userRepository.SetData("users", user);
             //userRepository.SetData("users", user2);
 
-            userRepository.UpdateData("users", user2);
+            //userRepository.UpdateData("users", user2);
             // userRepository.DeleteData("users", 0);
 
+           /* List<User> users = userRepository.GetAllData("users");
+
+            foreach (var item in users)
+            {
+               Debug.WriteLine("Main: " + item.Id + " " + item.Email);
+            }*/
+
+            /*User temp = userRepository.GetOneData("users", 1);
+
+            Debug.WriteLine("Main: " + temp.Id + " " + temp.Email);*/
         }
     }
 }

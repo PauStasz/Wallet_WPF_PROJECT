@@ -1,7 +1,9 @@
-﻿using FireSharp.Response;
+﻿using FireSharp.Extensions;
+using FireSharp.Response;
 using Newtonsoft.Json;
-using System.Windows.Controls;
-using System.Xml.Linq;
+using System;
+using System.Diagnostics;
+using System.Reflection;
 using Wallet.Database.FirebaseRealTimeDatabase;
 using Wallet.Models;
 using Wallet.Models.Users;
@@ -28,27 +30,35 @@ namespace Wallet.Repositories
         {
             try
             {
-                FirebaseResponse recordList = _firebase.client.Get(nameTable);
-                Dictionary<string, T> dictionaryData = JsonConvert.DeserializeObject<Dictionary<string, T>>(recordList.Body.ToString());
-               
-                List<T> convertedData = new List<T>();
+                FirebaseResponse response = _firebase.client.Get(nameTable);
+                List<T> data = response.ResultAs<List<T>>();
 
-                /*foreach (var item in dictionaryData)
-                {
-
-                    convertedData
-                }*/
-
-                return convertedData;
+                return data;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                Console.WriteLine("Wyjatek z dostaniem listy danych firebase");
+                Console.WriteLine("Wyjatek z dostaniem listy danych firebase: " + ex.Message);
                 return null;
             }
         }
 
-        public void SetData(string nameTable, T entity)
+        public T GetOneData(string nameTable, int id)
+        {
+            try
+            {
+                FirebaseResponse response = _firebase.client.Get(nameTable + "/" + id);
+                T data = response.ResultAs<T>();
+
+                return data;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Wyjatek z dostaniem listy danych firebase: " + ex.Message);
+                return null;
+            }
+        }
+
+        public virtual void SetData(string nameTable, T entity)
         {
             try
             {
