@@ -59,9 +59,9 @@ namespace Wallet
                Debug.WriteLine("Main: " + item.Id + " " + item.Email);
             }*/
 
-            /*User temp = userRepository.GetOneData("users", 1);
+            User temp = userRepository.GetOneData("users", 1);
 
-            Debug.WriteLine("Main: " + temp.Id + " " + temp.Email);*/
+            Debug.WriteLine("Main: " + temp.Id + " " + temp.Email);
         }
     }
 }
