@@ -1,12 +1,6 @@
-﻿using FireSharp.Extensions;
-using FireSharp.Response;
-using Newtonsoft.Json;
-using System;
-using System.Diagnostics;
-using System.Reflection;
+﻿using FireSharp.Response;
 using Wallet.Services.FirebaseRealTimeDatabase;
 using Wallet.Models;
-using Wallet.Models.Users;
 using Wallet.Repositories.IRepositories;
 
 namespace Wallet.Repositories
@@ -18,7 +12,7 @@ namespace Wallet.Repositories
         {
             try
             {
-               var DataToBeDelted = _firebase.client.Delete(nameTable + "/" + id);
+               var DataToBeDeleted = _firebase.client.Delete(nameTable + "/" + id);
             }
             catch (Exception)
             {
