@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Diagnostics;
 using System.Reflection;
-using Wallet.Database.FirebaseRealTimeDatabase;
+using Wallet.Services.FirebaseRealTimeDatabase;
 using Wallet.Models;
 using Wallet.Models.Users;
 using Wallet.Repositories.IRepositories;

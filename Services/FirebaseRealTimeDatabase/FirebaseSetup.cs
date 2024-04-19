@@ -1,7 +1,7 @@
 ﻿using FireSharp.Config;
 using FireSharp;
 
-namespace Wallet.Database.FirebaseRealTimeDatabase
+namespace Wallet.Services.FirebaseRealTimeDatabase
 {
     internal class FirebaseSetup
     {
