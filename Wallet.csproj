@@ -10,11 +10,11 @@
 
   <ItemGroup>
     <Folder Include="Services\LocalDatabase\" />
-    <Folder Include="ViewModels\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="FireSharp.Serialization.JsonNet" Version="1.1.0" />
+    <PackageReference Include="MVVMEssentials.WPF" Version="1.0.3" />
     <PackageReference Include="PasswordBoxMVVM" Version="1.0.5" />
   </ItemGroup>
 
