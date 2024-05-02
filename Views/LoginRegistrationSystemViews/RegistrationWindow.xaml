@@ -40,36 +40,41 @@
 
             <StackPanel Grid.Row="0" Margin="10,10,10,10">
                 <TextBlock Text="Imię" HorizontalAlignment="Center" Foreground="White" Padding="0 5 0 5"/>
-                <TextBox Padding="0 5 0 5" FontSize="16"/>
+                <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Padding="0 5 0 5" FontSize="16"/>
             </StackPanel>
 
             <StackPanel Grid.Row="1" Margin="10,5,10,10">
                 <TextBlock Text="Nazwisko" HorizontalAlignment="Center" Foreground="White" Padding="0 5 0 5"/>
-                <TextBox Padding="0 5 0 5" FontSize="16"/>
+                <TextBox Text="{Binding Surname, UpdateSourceTrigger=PropertyChanged}" Padding="0 5 0 5" FontSize="16"/>
             </StackPanel>
 
             <StackPanel Grid.Row="2" Margin="10,5,10,10">
                 <TextBlock Text="Pseudonim" HorizontalAlignment="Center" Foreground="White" Padding="0 5 0 5"/>
-                <TextBox Padding="0 5 0 5" FontSize="16"/>
+                <TextBox Text="{Binding Nick, UpdateSourceTrigger=PropertyChanged}" Padding="0 5 0 5" FontSize="16"/>
             </StackPanel>
 
             <StackPanel Grid.Row="3" Margin="10,5,10,10">
                 <TextBlock Text="E-mail" HorizontalAlignment="Center" Foreground="White" Padding="0 5 0 5"/>
-                <TextBox Padding="0 5 0 5" FontSize="16" />
+                <TextBox Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}" Padding="0 5 0 5" FontSize="16" />
             </StackPanel>
 
             <StackPanel Grid.Row="4" Margin="10,5,10,10">
                 <TextBlock Text="Hasło" HorizontalAlignment="Center" Foreground="White" Padding="0 5 0 0"/>
-                <components:BindablePasswordBox Padding="0 5 0 5" Height="42" FontSize="16"  />
+                <components:BindablePasswordBox Password="{Binding Password, UpdateSourceTrigger=PropertyChanged}" Padding="0 5 0 5" Height="42" FontSize="16"  />
             </StackPanel>
 
             <StackPanel Grid.Row="5" Margin="10,5,10,10" >
                 <TextBlock Text="Potwierdź hasło" HorizontalAlignment="Center" Foreground="White" Padding="0 5 0 0"/>
-                <components:BindablePasswordBox Padding="0 5 0 5" Height="42" FontSize="16" />
+                <components:BindablePasswordBox Password="{Binding PasswordCheck, UpdateSourceTrigger=PropertyChanged}" Padding="0 5 0 5" Height="42" FontSize="16" />
 
             </StackPanel>
 
-            <Button Grid.Row="6" Content="ZAREJESTRUJ SIĘ" Margin="61,5,55,-12" Padding="5 5 5 5" FontWeight="Bold" FontSize="14" BorderBrush="#FFFFFEFE" Background="White"  />
+            <Button Grid.Row="6" Content="ZAREJESTRUJ SIĘ" 
+                    Margin="61,5,55,-12" Padding="5 5 5 5" 
+                    FontWeight="Bold" FontSize="14" 
+                    BorderBrush="#FFFFFEFE" Background="White" 
+                    Command="{Binding SubmitCommand}"
+                    />
         </Grid>
     </Grid>
 </Window>
