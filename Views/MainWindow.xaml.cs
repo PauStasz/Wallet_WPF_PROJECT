@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using Wallet.Models.Users;
 using Wallet.Repositories;
 using Wallet.Repositories.IRepositories;
+using Wallet.Views.LoginRegistrationSystemViews;
 
 namespace Wallet
 {
@@ -22,7 +23,19 @@ namespace Wallet
     {
         public MainWindow()
         {
-            
+            /*
+             * RegistrationWindow regwin = new RegistrationWindow();
+            regwin.InitializeComponent();
+            regwin.Show();
+            this.Close();
+            */
+
+            LoginWindow logwin = new LoginWindow();
+            logwin.InitializeComponent();
+            logwin.Show();
+            this.Close();
+
+
             InitializeComponent();
             
             IUserRepository userRepository = new UserRepository();
