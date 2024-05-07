@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Wallet.Views.LoginRegistrationSystemViews"
         xmlns:components="clr-namespace:PasswordBoxMVVM.Components;assembly=PasswordBoxMVVM"
         mc:Ignorable="d"
-        Title="RegistrationWindow" Height="598" Width="875" Foreground="Black" Background="#FF1A1919">
+        Title="Registration" Height="598" Width="875" Foreground="Black" Background="#FF1A1919">
 
     <Grid Margin="30,10,386,-6">
         <Grid.RowDefinitions>

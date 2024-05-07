@@ -11,10 +11,15 @@
   <ItemGroup>
     <None Remove="Assets\Vectors\black-wallet.svg" />
     <None Remove="Assets\Vectors\person-account.svg" />
+    <None Remove="Assets\Vectors\Transactional-SMS.svg" />
+    <None Remove="Assets\Vectors\wallet.svg" />
+    <None Remove="Assets\Vectors\wallet1.svg" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Assets\Vectors\person-account.svg" />
+    <Resource Include="Assets\Vectors\Transactional-SMS.svg" />
+    <Resource Include="Assets\Vectors\wallet1.svg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,10 +32,6 @@
     <PackageReference Include="MVVMEssentials.WPF" Version="1.0.3" />
     <PackageReference Include="PasswordBoxMVVM" Version="1.0.5" />
     <PackageReference Include="SharpVectors" Version="1.8.4" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="Assets\Vectors\black-wallet.svg" />
   </ItemGroup>
 
 </Project>
