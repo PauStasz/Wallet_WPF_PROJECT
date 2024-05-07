@@ -20,6 +20,67 @@
         <UserControls:SidebarMenu DockPanel.Dock="Left"/>
         <StackPanel DockPanel.Dock="Right">
             <UserControls:Searchbar Margin="20"/>
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" MinWidth="350"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>  
+            
+            <Border Grid.Column="0" MinHeight="130" MaxWidth="200" BorderThickness="2" BorderBrush="#FFF6E0" CornerRadius="20" Background="#FFF6E0">
+                    <StackPanel Orientation="Vertical">
+                    <Label Content="SALDO" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="18"/>
+                    <Label Content="{Binding amount}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15"/>
+                    <Label Content="Z konta" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="18"/>
+                    <Label Content="{Binding nameAccount}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15"/>
+                    </StackPanel>
+             </Border>
+                <Border Grid.Column="1" MinHeight="130" MinWidth="350" MaxWidth="350" BorderThickness="2" BorderBrush="#FFF6E0" CornerRadius="20" Background="#FFF6E0">
+                    <TreeView >
+                        <TreeViewItem Header="FILTRY" BorderBrush="#FFF6E0" >
+                            <TreeViewItem Header="KATEGORIE"/>
+                            <ItemsControl ItemsSource="{Binding Categories}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <RadioButton GroupName="CategoriesSelection"/>
+                                            <TextBlock Text="{Binding nameCategory}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </TreeViewItem>
+                        <TreeViewItem Header="SORTWANIE">
+                            <TreeViewItem Header="PO DACIE"/>
+                            <StackPanel Orientation="Horizontal">
+                                <RadioButton GroupName="DataSelection" IsChecked="True"/>
+                                <TextBlock Text="Rosnąco"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <RadioButton GroupName="DataSelection" IsChecked="True"/>
+                                <TextBlock Text="Malejąco"/>
+                            </StackPanel>
+                            <TreeViewItem Header="PO KWOCIE">
+                                <StackPanel Orientation="Horizontal">
+                                    <RadioButton GroupName="DataSelection" IsChecked="True"/>
+                                    <TextBlock Text="Rosnąco"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <RadioButton GroupName="DataSelection" IsChecked="True"/>
+                                    <TextBlock Text="Malejąco"/>
+                                </StackPanel>
+                            </TreeViewItem>
+                        </TreeViewItem>
+                    </TreeView>
+                </Border>
+            </Grid>
+            <Border MinHeight="130" MaxWidth="200" BorderThickness="2" BorderBrush="#FFF6E0" CornerRadius="20" Background="#FFF6E0">
+                <StackPanel Orientation="Vertical">
+                    <Label Content="SALDO" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="18"/>
+                    <Label Content="{Binding amount}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15"/>
+                    <Label Content="Z konta" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="18"/>
+                    <Label Content="{Binding nameAccount}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15"/>
+                </StackPanel>
+            </Border>
         </StackPanel>
     </DockPanel>
 </Window>

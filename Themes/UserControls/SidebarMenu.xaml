@@ -38,13 +38,13 @@
             </Grid>
 
             <StackPanel Grid.Row="1">
-            <Button Content="HOME" Style="{StaticResource lineBttn}" IsDefault="True"/>
-            <Button Content="PLANOWANIE WYDATKÓW" Style="{StaticResource lineBttn}" />
-            <Button Content="RAPORTY I STATYSTKI" Style="{StaticResource lineBttn}" />
-            <Button Content="PROGNOZA" Style="{StaticResource lineBttn}" />
-            <Button Content="KONTA" Style="{StaticResource lineBttn}" />
-            <Button Content="KATEGORIE" Style="{StaticResource lineBttn}" />
-            <Button Content="USTAWIENIA" Style="{StaticResource lineBttn}" />
+            <Button x:Name="HomeButton" Content="HOME" Style="{StaticResource lineBttn}" IsDefault="True" Click="GoHome"/>
+            <Button x:Name="ExpensePlanningButton" Content="PLANOWANIE WYDATKÓW" Style="{StaticResource lineBttn}" Click="GoExpensePlanning" />
+            <Button x:Name="RaportButton" Content="RAPORTY I STATYSTKI" Style="{StaticResource lineBttn}" Click="GoRaport" />
+            <Button x:Name="ForecastButton" Content="PROGNOZA" Style="{StaticResource lineBttn}" Click="GoForecast" />
+            <Button x:Name="AccountButton" Content="KONTA" Style="{StaticResource lineBttn}" Click="GoAccount" />
+            <Button x:Name="CategoriesButton" Content="KATEGORIE" Style="{StaticResource lineBttn}" Click="GoCategories" />
+            <Button x:Name="SettingsButton" Content="USTAWIENIA" Style="{StaticResource lineBttn}" IsDefault="False" Click="GoSettings" />
             <Button Content="WYLOGUJ SIĘ" Style="{StaticResource lineBttn}" />
         </StackPanel>
 

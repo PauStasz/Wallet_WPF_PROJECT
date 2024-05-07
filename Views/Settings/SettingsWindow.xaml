@@ -5,15 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wallet.Views" xmlns:UserControls="clr-namespace:Wallet.Themes.UserControls"
         mc:Ignorable="d"
-        Title="Settings" Height="650" Width="900" WindowStartupLocation="CenterScreen">
-    <Grid Background="#FF1A1919">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+        Title="Settings" Height="650" Width="900" WindowStartupLocation="CenterScreen" Background="#FF1A1919">
+    
+    <DockPanel>
+        <UserControls:SidebarMenu DockPanel.Dock="Left"/>
+        <StackPanel DockPanel.Dock="Right">
 
-
-        <Grid Grid.Column="1" Background="#FF1A1919">
-        </Grid>
-    </Grid>
+        </StackPanel>
+    </DockPanel>
 </Window>
