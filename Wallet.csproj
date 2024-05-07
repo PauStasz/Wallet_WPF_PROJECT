@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Vectors\alert-2-svgrepo-com.svg" />
     <None Remove="Assets\Vectors\alert-square-svgrepo-com.svg" />
     <None Remove="Assets\Vectors\black-wallet.svg" />
     <None Remove="Assets\Vectors\image-picture.svg" />
@@ -20,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\Vectors\alert-2-svgrepo-com.svg" />
     <Resource Include="Assets\Vectors\alert-square-svgrepo-com.svg" />
     <Resource Include="Assets\Vectors\image-picture.svg" />
     <Resource Include="Assets\Vectors\person-account.svg" />

@@ -5,15 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wallet.Views" xmlns:UserControls="clr-namespace:Wallet.Themes.UserControls"
         mc:Ignorable="d"
-        Title="Expense Planning" Height="650" Width="900" WindowStartupLocation="CenterScreen">
-    <Grid Background="#FF1A1919">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+        Title="Expense Planning" Height="650" Width="900" WindowStartupLocation="CenterScreen" Background="#FF1A1919">
 
 
-        <Grid Grid.Column="1" Background="#FF1A1919">
-        </Grid>
-    </Grid>
+    <DockPanel>
+        <UserControls:SidebarMenu DockPanel.Dock="Left"/>
+        <StackPanel DockPanel.Dock="Right">
+
+        </StackPanel>
+    </DockPanel>
 </Window>

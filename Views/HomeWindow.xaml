@@ -8,13 +8,6 @@
         mc:Ignorable="d"
         Title="Home" Height="650" Width="900" WindowStartupLocation="CenterScreen" Background="#FF1A1919">
 
-    <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Themes/Style.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>
 
     <DockPanel>
         <UserControls:SidebarMenu DockPanel.Dock="Left"/>

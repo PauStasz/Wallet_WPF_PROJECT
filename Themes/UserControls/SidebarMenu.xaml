@@ -38,7 +38,7 @@
             </Grid>
 
             <StackPanel Grid.Row="1">
-            <Button x:Name="HomeButton" Style="{StaticResource lineBttn}" IsDefault="True" Click="GoHome"/>
+            <Button x:Name="HomeButton" Content="HOME" Style="{StaticResource lineBttn}" IsDefault="True" Click="GoHome"/>
             <Button x:Name="ExpensePlanningButton" Content="PLANOWANIE WYDATKÓW" Style="{StaticResource lineBttn}" Click="GoExpensePlanning" />
             <Button x:Name="RaportButton" Content="RAPORTY I STATYSTKI" Style="{StaticResource lineBttn}" Click="GoRaport" />
             <Button x:Name="ForecastButton" Content="PROGNOZA" Style="{StaticResource lineBttn}" Click="GoForecast" />
