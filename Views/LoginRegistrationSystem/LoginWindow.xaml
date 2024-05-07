@@ -7,12 +7,12 @@
         xmlns:components="clr-namespace:PasswordBoxMVVM.Components;assembly=PasswordBoxMVVM" 
         xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
         mc:Ignorable="d"
-        Title="Login"  Height="600" Width="875" Background="#FF1A1919">
+        Title="Login"  Height="650" Width="900" Background="#FF1A1919" WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Themes/ButtonStyle.xaml" />
+                <ResourceDictionary Source="/Themes/Style.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>

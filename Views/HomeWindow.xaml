@@ -6,25 +6,20 @@
         xmlns:local="clr-namespace:Wallet.Views" 
         xmlns:UserControls="clr-namespace:Wallet.Themes.UserControls"
         mc:Ignorable="d"
-        Title="HomeWindow" Height="550" Width="800">
+        Title="Home" Height="650" Width="900" WindowStartupLocation="CenterScreen" Background="#FF1A1919">
 
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Themes/ButtonStyle.xaml"/>
+                <ResourceDictionary Source="/Themes/Style.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    
-    <Grid Background="#FF1A1919">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        
-        <UserControls:SidebarMenu/>
 
-        <Grid Grid.Column="1" Background="#FF1A1919">
-        </Grid>
-    </Grid>
+    <DockPanel>
+        <UserControls:SidebarMenu DockPanel.Dock="Left"/>
+        <StackPanel DockPanel.Dock="Right">
+            <UserControls:Searchbar Margin="20"/>
+        </StackPanel>
+    </DockPanel>
 </Window>

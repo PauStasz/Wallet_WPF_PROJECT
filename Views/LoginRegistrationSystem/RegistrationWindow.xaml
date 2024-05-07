@@ -7,12 +7,12 @@
         xmlns:components="clr-namespace:PasswordBoxMVVM.Components;assembly=PasswordBoxMVVM" 
         xmlns:svgc="http://sharpvectors.codeplex.com/svgc/" xmlns:viewmodels="clr-namespace:Wallet.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:RegistrationViewModel}"
         mc:Ignorable="d"
-        Title="Registration" Height="650" Width="875" Foreground="Black" Background="#FF1A1919">
+        Title="Registration" Height="650" Width="900" Foreground="Black" Background="#FF1A1919" WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Themes/ButtonStyle.xaml" />
+                <ResourceDictionary Source="/Themes/Style.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>

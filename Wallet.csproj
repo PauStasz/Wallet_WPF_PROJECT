@@ -9,17 +9,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Icons\-coins-and-wallet-modern-black-icon.png" />
     <None Remove="Assets\Vectors\black-wallet.svg" />
     <None Remove="Assets\Vectors\person-account.svg" />
+    <None Remove="Assets\Vectors\search-svgrepo-com.svg" />
     <None Remove="Assets\Vectors\Transactional-SMS.svg" />
     <None Remove="Assets\Vectors\wallet.svg" />
     <None Remove="Assets\Vectors\wallet1.svg" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\Icons\-coins-and-wallet-modern-black-icon.png" />
     <Resource Include="Assets\Vectors\person-account.svg" />
+    <Resource Include="Assets\Vectors\search-svgrepo-com.svg" />
     <Resource Include="Assets\Vectors\Transactional-SMS.svg" />
-    <Resource Include="Assets\Vectors\wallet1.svg" />
   </ItemGroup>
 
   <ItemGroup>

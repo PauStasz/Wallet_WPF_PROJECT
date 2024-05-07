@@ -5,14 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wallet.Views" xmlns:UserControls="clr-namespace:Wallet.Themes.UserControls"
         mc:Ignorable="d"
-        Title="SettingsWindow" Height="550" Width="800">
+        Title="Settings" Height="650" Width="900" WindowStartupLocation="CenterScreen">
     <Grid Background="#FF1A1919">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <UserControls:SidebarMenu/>
 
         <Grid Grid.Column="1" Background="#FF1A1919">
         </Grid>
