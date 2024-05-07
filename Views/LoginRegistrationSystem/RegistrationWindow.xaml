@@ -46,6 +46,7 @@
             <StackPanel Grid.Row="1" Margin="10,5,10,10">
                 <TextBlock Text="Nazwisko" HorizontalAlignment="Center" Foreground="White" Padding="0 5 0 5"/>
                 <TextBox Text="{Binding Surname, UpdateSourceTrigger=PropertyChanged}" Padding="0 5 0 5" FontSize="16"/>
+            
             </StackPanel>
 
             <StackPanel Grid.Row="2" Margin="10,5,10,10">
