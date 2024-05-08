@@ -23,5 +23,10 @@ namespace Wallet.Views
         {
             InitializeComponent();
         }
+
+        private void CartesianChart_Loaded()
+        {
+
+        }
     }
 }
