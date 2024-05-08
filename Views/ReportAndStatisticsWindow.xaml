@@ -7,7 +7,7 @@
         xmlns:UserControls="clr-namespace:Wallet.Themes.UserControls"
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
-        Title="Report And Statistics" Height="609" Width="1174" WindowStartupLocation="CenterScreen" Background="#FF1A1919">
+        Title="Report And Statistics" Height="721" Width="1300" WindowStartupLocation="CenterScreen" Background="#FF1A1919">
 
     <DockPanel>
         <UserControls:SidebarMenu DockPanel.Dock="Left"/>
@@ -76,6 +76,8 @@
                 </Grid>
             </Border>
 
+            <Button Content="POBIERZ PDF STATYSTYK" Margin="-190 600 -200 0" Padding="5 5 5 5" FontWeight="Bold" FontSize="16" BorderBrush="#FFFFFEFE" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource whiteBttn}" />
+
             <Border Grid.Row="1" Grid.ColumnSpan="2" CornerRadius="30" Margin="20 40 20 50" Height="500" Width="600">
                 <Border.Background>
                     <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
@@ -139,6 +141,12 @@
             </Border>
             <!--<checkbox content="checkbox"/>
             <checkbox content="checkbox"/>-->
+
+
         </StackPanel>
+
+
+
+
     </DockPanel>
 </Window>
