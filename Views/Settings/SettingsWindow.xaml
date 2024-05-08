@@ -5,12 +5,95 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wallet.Views" xmlns:UserControls="clr-namespace:Wallet.Themes.UserControls"
         mc:Ignorable="d"
-        Title="Settings" Height="650" Width="900" WindowStartupLocation="CenterScreen" Background="#FF1A1919">
+        Title="Settings" Height="650" Width="900" Foreground="White" WindowStartupLocation="CenterScreen" Background="#FF1A1919">
     
     <DockPanel>
         <UserControls:SidebarMenu DockPanel.Dock="Left"/>
         <StackPanel DockPanel.Dock="Right">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
 
+                    <GroupBox Grid.Row="0" Header="JĘZYK I LOKALIZACJA" Margin="30" Padding="10" Foreground="White">
+                    <StackPanel Orientation="Vertical">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Row="0" Grid.Column="0" Content="Język domyślny" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            <ComboBox Grid.Row="0" Grid.Column="1" HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="100,5,100,5" Width="340" >
+                                <ComboBoxItem>ANGIESLKI (ANGLIA)</ComboBoxItem>
+                                <ComboBoxItem IsSelected="True">POLSKI (POLSKA)</ComboBoxItem>
+                            </ComboBox>
+
+                            <Label Grid.Row="1" Grid.Column="0" Content="Format czasu" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            <ComboBox Grid.Row="1" Grid.Column="1" HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="100,5,100,5" Width="340" >
+                                <ComboBoxItem>ROK-DZIEŃ-GODZINA</ComboBoxItem>
+                                <ComboBoxItem IsSelected="True">GODZINA-DZIEŃ-ROK</ComboBoxItem>
+                            </ComboBox>
+                            <Label Grid.Row="2" Grid.Column="0" Content="Początek tygodnia" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            <ComboBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="100,5,100,5" Width="340" HorizontalContentAlignment="Center">
+                                <ComboBoxItem>NIEDZIELA</ComboBoxItem>
+                                <ComboBoxItem IsSelected="True">PONIEDZIAŁEK</ComboBoxItem>
+                            </ComboBox>
+                        </Grid>
+                    </StackPanel>
+                        
+                </GroupBox>
+                <GroupBox Grid.Row="1" Header="POWIADOMIENIA" Margin="30" Padding="10" Foreground="White">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Label Grid.Row="0" Grid.Column="0" Content="Dźwięk powiadomienia" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <ComboBox Grid.Row="0" Grid.Column="1" HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="100,5,100,5" Width="340" >
+                            <ComboBoxItem>Ptaszki</ComboBoxItem>
+                            <ComboBoxItem IsSelected="True">Ćwiergotanie</ComboBoxItem>
+                        </ComboBox>
+
+                        <Label Grid.Row="2" Grid.Column="0" Content="Dźwięk" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal"  HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <RadioButton  Foreground="White" Margin="10">Włączony</RadioButton>
+                            <RadioButton Foreground="White" Margin="10" IsChecked="True">Wyłączony</RadioButton>
+                        </StackPanel>
+
+                        <Label Grid.Row="1" Grid.Column="0" Content="Powiadomienia w tle" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal"  HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <RadioButton  Foreground="White" Margin="10" IsChecked="True">Tak</RadioButton>
+                            <RadioButton Foreground="White" Margin="10">Nie</RadioButton>
+                        </StackPanel>
+                    </Grid>
+                </GroupBox>
+
+                <Grid Grid.Row="2" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+                    
+                    <Button Grid.Column="0" Content="ZAPISZ ZMIANY" Margin="50" Height="60" FontWeight="Bold" FontSize="16" BorderBrush="#FFFFFEFE" Background="White"  Style="{StaticResource whiteBttn}" />
+                    <Button Grid.Column="1" Content="PRZYWRÓĆ DOMŚLNE ZMIANY" Margin="50" Height="60" FontWeight="Bold" FontSize="16" BorderBrush="#FFFFFEFE" Background="White"  Style="{StaticResource whiteBttn}" />
+                </Grid>
+            </Grid>
         </StackPanel>
     </DockPanel>
 </Window>
