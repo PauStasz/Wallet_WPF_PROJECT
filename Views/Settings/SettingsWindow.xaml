@@ -91,7 +91,7 @@
                     </Grid.ColumnDefinitions>
                     
                     <Button Grid.Column="0" Content="ZAPISZ ZMIANY" Margin="50" Height="60" FontWeight="Bold" FontSize="16" BorderBrush="#FFFFFEFE" Background="White"  Style="{StaticResource whiteBttn}" />
-                    <Button Grid.Column="1" Content="PRZYWRÓĆ DOMŚLNE ZMIANY" Margin="50" Height="60" FontWeight="Bold" FontSize="16" BorderBrush="#FFFFFEFE" Background="White"  Style="{StaticResource whiteBttn}" />
+                    <Button Grid.Column="1" Content="PRZYWRÓĆ DOMYŚLNE ZMIANY" Margin="50" Height="60" FontWeight="Bold" FontSize="16" BorderBrush="#FFFFFEFE" Background="White"  Style="{StaticResource whiteBttn}" />
                 </Grid>
             </Grid>
         </StackPanel>
