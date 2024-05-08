@@ -27,23 +27,32 @@
                     <Label Content="{Binding nameAccount}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15"/>
                     </StackPanel>
              </Border>
-                <Border Grid.Column="1" MinHeight="130" MinWidth="350" MaxWidth="350" BorderThickness="2" BorderBrush="#FFF6E0" CornerRadius="20" Background="#FFF6E0">
-                    <TreeView >
-                        <TreeViewItem Header="FILTRY" BorderBrush="#FFF6E0" >
-                            <TreeViewItem Header="KATEGORIE"/>
-                            <ItemsControl ItemsSource="{Binding Categories}">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
-                                            <RadioButton GroupName="CategoriesSelection"/>
-                                            <TextBlock Text="{Binding nameCategory}"/>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                        </TreeViewItem>
-                        <TreeViewItem Header="SORTWANIE">
-                            <TreeViewItem Header="PO DACIE"/>
+
+                <TreeView MaxHeight="150" Height="150" Grid.Column="1" Style="{StaticResource treeViewStyle}" >
+                    <TreeViewItem Header="FILTRY" BorderBrush="#FFF6E0" >
+                        <TreeViewItem Header="KATEGORIE"/>
+                        <ItemsControl ItemsSource="{Binding Categories}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <RadioButton GroupName="CategoriesSelection"/>
+                                        <TextBlock Text="{Binding nameCategory}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </TreeViewItem>
+                    <TreeViewItem Header="SORTWANIE">
+                        <TreeViewItem Header="PO DACIE"/>
+                        <StackPanel Orientation="Horizontal">
+                            <RadioButton GroupName="DataSelection" IsChecked="True"/>
+                            <TextBlock Text="Rosnąco"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <RadioButton GroupName="DataSelection" IsChecked="True"/>
+                            <TextBlock Text="Malejąco"/>
+                        </StackPanel>
+                        <TreeViewItem Header="PO KWOCIE">
                             <StackPanel Orientation="Horizontal">
                                 <RadioButton GroupName="DataSelection" IsChecked="True"/>
                                 <TextBlock Text="Rosnąco"/>
@@ -52,19 +61,9 @@
                                 <RadioButton GroupName="DataSelection" IsChecked="True"/>
                                 <TextBlock Text="Malejąco"/>
                             </StackPanel>
-                            <TreeViewItem Header="PO KWOCIE">
-                                <StackPanel Orientation="Horizontal">
-                                    <RadioButton GroupName="DataSelection" IsChecked="True"/>
-                                    <TextBlock Text="Rosnąco"/>
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <RadioButton GroupName="DataSelection" IsChecked="True"/>
-                                    <TextBlock Text="Malejąco"/>
-                                </StackPanel>
-                            </TreeViewItem>
                         </TreeViewItem>
-                    </TreeView>
-                </Border>
+                    </TreeViewItem>
+                </TreeView>
             </Grid>
             <Border MinHeight="300" Width="600" Margin="50" BorderThickness="2" BorderBrush="#FFF6E0" CornerRadius="20" Background="#FFF6E0">
                 <StackPanel Orientation="Vertical">

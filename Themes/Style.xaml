@@ -164,4 +164,9 @@
         <Setter Property="BorderThickness" Value="2"/>
     </Style>
 
+    <Style x:Key="treeViewStyle" TargetType="TreeView">
+        <Setter Property="Background" Value="#FFF6E0"/>
+        <Setter Property="Foreground" Value="Black"/>
+    </Style>
+
 </ResourceDictionary>
