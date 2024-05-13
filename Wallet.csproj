@@ -9,6 +9,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Services\LocalDatabase\**" />
+    <Compile Remove="Themes\CustomControls\**" />
+    <EmbeddedResource Remove="Services\LocalDatabase\**" />
+    <EmbeddedResource Remove="Themes\CustomControls\**" />
+    <None Remove="Services\LocalDatabase\**" />
+    <None Remove="Themes\CustomControls\**" />
+    <Page Remove="Services\LocalDatabase\**" />
+    <Page Remove="Themes\CustomControls\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Assets\Vectors\alert-2-svgrepo-com.svg" />
     <None Remove="Assets\Vectors\alert-square-svgrepo-com.svg" />
     <None Remove="Assets\Vectors\black-wallet.svg" />
@@ -27,11 +38,6 @@
     <Resource Include="Assets\Vectors\person-account.svg" />
     <Resource Include="Assets\Vectors\search-svgrepo-com.svg" />
     <Resource Include="Assets\Vectors\Transactional-SMS.svg" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Services\LocalDatabase\" />
-    <Folder Include="Themes\CustomControls\" />
   </ItemGroup>
 
   <ItemGroup>

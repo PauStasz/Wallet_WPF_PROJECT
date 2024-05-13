@@ -1,7 +1,6 @@
-﻿using System.Text;
+﻿using Wallet.Helpers;
 using Wallet.Models.Users;
 using Wallet.Repositories.IRepositories;
-using System.Security.Cryptography;
 
 namespace Wallet.Repositories
 {
@@ -21,37 +20,18 @@ namespace Wallet.Repositories
             return intId;
         }
 
-        public static string HashPassword(string password)
-        {
-            using var newSha256 = SHA256.Create();
-            {
-                byte[] shaBytes = newSha256.ComputeHash(Encoding.UTF8.GetBytes(password));
-                var sb = new StringBuilder();
-
-                foreach (byte b in shaBytes)
-                {
-                    sb.Append(b.ToString("X2"));
-                }
-
-                return sb.ToString();
-            }
-        }
-
-        public static bool VerifyPassword(string password, string hashedPasswordFromDB)
-        {
-            string passwordToVerify = HashPassword(password);
-            
-            if (passwordToVerify == hashedPasswordFromDB)
-            {
-                return true;
-            }
-            else return false;
-        }
 
         public override void SetData(string nameTable, User entity)
         {
             entity.Id = GenerateUserID();
-            entity.HashPassword = HashPassword(entity.Password);
+
+            if (entity.Password is not null && entity.Password.Length > 0)
+            {
+                entity.HashPassword = Authentication.GetHashPassword(entity.Password);
+                entity.Password = "";
+                entity.ConfirmPassword = "";
+            }
+
             base.SetData(nameTable, entity);    
         }
 

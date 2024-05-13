@@ -5,10 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wallet.Views.LoginRegistrationSystemViews" 
         xmlns:components="clr-namespace:PasswordBoxMVVM.Components;assembly=PasswordBoxMVVM" 
-        xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+        xmlns:svgc="http://sharpvectors.codeplex.com/svgc/" 
+        xmlns:viewModels="clr-namespace:Wallet.ViewModels"
         mc:Ignorable="d"
         Title="Login"  Height="650" Width="900" Background="#FF1A1919" WindowStartupLocation="CenterScreen">
 
+    <Window.DataContext>
+        <viewModels:LoginViewModel/>
+    </Window.DataContext>
+    
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -39,18 +44,17 @@
 
         <StackPanel Grid.Row="1" Grid.Column="0" Margin="10,5,10,10">
             <Label Content="E-mail" HorizontalAlignment="Center" Foreground="White" Padding="0 5 0 5" />
-            <TextBox Padding="0 5 0 5" FontSize="16" Style="{StaticResource textbox1}" />
+            <TextBox Text="{Binding User.Email, UpdateSourceTrigger=PropertyChanged}" Padding="0 5 0 5" FontSize="16" Style="{StaticResource textbox1}" />
         </StackPanel>
 
         <StackPanel Grid.Row="2" Grid.Column="0" Margin="10,5,10,10">
             <Label Content="Hasło" HorizontalAlignment="Center" Foreground="White" Padding="0 5 0 0"/>
-            <PasswordBox Padding="0 5 0 5" Height="42" FontSize="16" Style="{StaticResource password}"></PasswordBox>
+            <components:BindablePasswordBox Password="{Binding User.Password, UpdateSourceTrigger=PropertyChanged}" Padding="0 5 0 5" FontSize="16" Style="{StaticResource bindablepassword}"></components:BindablePasswordBox>
         </StackPanel>
 
-        <Button Grid.Row="3" Grid.Column="0" Content="ZALOGUJ SIĘ" Margin="5,18,10,29" Padding="5 5 5 5" FontWeight="Bold" FontSize="16" BorderBrush="#FFFFFEFE" Background="White"  Style="{StaticResource whiteBttn}" />
+        <Button Command="{Binding LoginCommand}" Grid.Row="3" Grid.Column="0" Content="ZALOGUJ SIĘ" Margin="5,18,10,29" Padding="5 5 5 5" FontWeight="Bold" FontSize="16" BorderBrush="#FFFFFEFE" Background="White"  Style="{StaticResource whiteBttn}" />
 
-        <Button Grid.Row="4" Grid.Column="0" Content="STWÓRZ KONTO" Margin="5,18,5,29" Padding="5 5 5 5" FontWeight="Bold" FontSize="16" BorderBrush="#FFFFFEFE" Background="White"  Style="{StaticResource whiteBttn}" />
-
+        <Button Command="{Binding CreateAccountCommand}" Grid.Row="4" Grid.Column="0" Content="STWÓRZ KONTO" Margin="5,18,5,29" Padding="5 5 5 5" FontWeight="Bold" FontSize="16" BorderBrush="#FFFFFEFE" Background="White"  Style="{StaticResource whiteBttn}" />
 
 
         <StackPanel Grid.Row="0" Grid.Column="1" Grid.RowSpan="5" MinHeight="400">

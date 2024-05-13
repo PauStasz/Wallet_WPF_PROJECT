@@ -5,9 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wallet.Views.LoginRegistrationSystemViews"
         xmlns:components="clr-namespace:PasswordBoxMVVM.Components;assembly=PasswordBoxMVVM" 
-        xmlns:svgc="http://sharpvectors.codeplex.com/svgc/" xmlns:viewmodels="clr-namespace:Wallet.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:RegistrationViewModel}"
+        xmlns:viewModels="clr-namespace:Wallet.ViewModels"
         mc:Ignorable="d"
         Title="Registration" Height="650" Width="900" Foreground="Black" Background="#FF1A1919" WindowStartupLocation="CenterScreen">
+
+    <Window.DataContext>
+        <viewModels:RegistrationViewModel />
+    </Window.DataContext>
 
     <Window.Resources>
         <ResourceDictionary>
@@ -48,37 +52,37 @@
             
             <StackPanel Grid.Row="0"  Grid.Column="0"  Margin="10,10,10,10">
                 <TextBlock Text="Imię" HorizontalAlignment="Center" Foreground="White" Padding="0 5 0 5"/>
-                <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Padding="0 5 0 5" FontSize="16" Style="{StaticResource textbox1}"/>
+                <TextBox Text="{Binding User.Name, UpdateSourceTrigger=PropertyChanged}" Padding="0 5 0 5" FontSize="16" Style="{StaticResource textbox1}"/>
             </StackPanel>
 
             <StackPanel Grid.Row="0" Grid.Column="1" Margin="10,10,10,10">
                 <TextBlock Text="Nazwisko" HorizontalAlignment="Center" Foreground="White" Padding="0 5 0 5"/>
-                <TextBox Text="{Binding Surname, UpdateSourceTrigger=PropertyChanged}" Padding="0 5 0 5" FontSize="16" Style="{StaticResource textbox1}"/>
+                <TextBox Text="{Binding User.Surname, UpdateSourceTrigger=PropertyChanged}" Padding="0 5 0 5" FontSize="16" Style="{StaticResource textbox1}"/>
             </StackPanel>
 
             <StackPanel Grid.Row="1" Grid.Column="0" Margin="10,5,10,10">
                 <Label Content="E-mail" HorizontalAlignment="Center" Foreground="White" Padding="0 5 0 5" />
-                <TextBox Padding="0 5 0 5" FontSize="16" Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource textbox1}" />
+                <TextBox Padding="0 5 0 5" FontSize="16" Text="{Binding User.Email, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource textbox1}" />
             </StackPanel>
 
             <StackPanel Grid.Row="1" Grid.Column="1" Margin="10,5,10,10">
                 <Label Content="Nick" HorizontalAlignment="Center" Foreground="White" Padding="0 5 0 5" />
-                <TextBox Padding="0 5 0 5" FontSize="16" Text="{Binding Nick, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource textbox1}" />
+                <TextBox Padding="0 5 0 5" FontSize="16" Text="{Binding User.Nick, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource textbox1}" />
             </StackPanel>
 
             <StackPanel Grid.Row="2" Grid.Column="0" Margin="10,5,10,10">
                 <Label Content="Hasło" HorizontalAlignment="Center" Foreground="White" Padding="0 5 0 0"/>
-                <PasswordBox Padding="0 5 0 5" Height="42" FontSize="16" Style="{StaticResource password}" ></PasswordBox>
+                <components:BindablePasswordBox Password="{Binding User.Password, UpdateSourceTrigger=PropertyChanged}" Padding="0 5 0 5" FontSize="16" Style="{StaticResource bindablepassword}"></components:BindablePasswordBox>
             </StackPanel>
 
             <StackPanel Grid.Row="2" Grid.Column="1" Margin="10,5,10,10">
                 <Label Content="Powtórz hasło" HorizontalAlignment="Center" Foreground="White" Padding="0 5 0 0"/>
-                <PasswordBox Padding="0 5 0 5" Height="42" FontSize="16"  Style="{StaticResource password}"></PasswordBox>
+                <components:BindablePasswordBox Password="{Binding User.ConfirmPassword, UpdateSourceTrigger=PropertyChanged}" Padding="0 5 0 5" FontSize="16" Style="{StaticResource bindablepassword}"></components:BindablePasswordBox>
             </StackPanel>
 
-            <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Content="STWÓRZ KONTO" Margin="5,18,10,20" Padding="5 5 5 5" FontWeight="Bold" FontSize="16" BorderBrush="#FFFFFEFE" Background="White"  Style="{StaticResource whiteBttn}" Command="{Binding SubmitCommand}" />
+            <Button Command="{Binding SubmitCommand}" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Content="STWÓRZ KONTO" Margin="5,18,10,20" Padding="5 5 5 5" FontWeight="Bold" FontSize="16" BorderBrush="#FFFFFEFE" Background="White"  Style="{StaticResource whiteBttn}" />
 
-            <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Content="POSIADAM KONTO" Margin="5,18,5,20" Padding="5 5 5 5" FontWeight="Bold" FontSize="16" BorderBrush="#FFFFFEFE" Background="White"  Style="{StaticResource whiteBttn}" />
+            <Button Command="{Binding BackCommand}" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Content="POSIADAM KONTO" Margin="5,18,5,20" Padding="5 5 5 5" FontWeight="Bold" FontSize="16" BorderBrush="#FFFFFEFE" Background="White"  Style="{StaticResource whiteBttn}" />
 
         </Grid>
     </Grid>

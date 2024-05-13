@@ -2,6 +2,8 @@
 using Wallet.Services.FirebaseRealTimeDatabase;
 using Wallet.Models;
 using Wallet.Repositories.IRepositories;
+using Wallet.Models.Users;
+using System.Diagnostics;
 
 namespace Wallet.Repositories
 {
@@ -25,9 +27,16 @@ namespace Wallet.Repositories
             try
             {
                 FirebaseResponse response = _firebase.client.Get(nameTable);
-                List<T> data = response.ResultAs<List<T>>();
+                Dictionary<string, T> data = response.ResultAs<Dictionary<string, T>>();
 
-                return data;
+                List<T> getList = new List<T>();
+
+                foreach (var item in data)
+                {
+                    getList.Add(item.Value);
+                }
+
+                return getList;
             }
             catch (Exception ex)
             {

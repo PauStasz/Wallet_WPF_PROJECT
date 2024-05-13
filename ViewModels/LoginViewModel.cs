@@ -1,25 +1,27 @@
-﻿using System.ComponentModel;
+﻿using MVVMEssentials.ViewModels;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 using Wallet.Helpers;
 using Wallet.Models.Users;
 using Wallet.Views;
+using Wallet.Views.DialogsWindows;
 using Wallet.Views.LoginRegistrationSystemViews;
 
 namespace Wallet.ViewModels
 {
-    public class RegistrationViewModel : INotifyPropertyChanged
+    public class LoginViewModel : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler? PropertyChanged;
-        private ICommand _submitCommand;
-        private ICommand _backCommand;
         private User _user = new User();
 
-        public RegistrationViewModel()
-        {
-                
-        }
+        public event PropertyChangedEventHandler? PropertyChanged;
+        public ICommand _loginCommand;
+        private ICommand _createAccountCommand;
 
+        public LoginViewModel() 
+        {
+            
+        }
         public User User
         {
             get { return _user; }
@@ -29,49 +31,48 @@ namespace Wallet.ViewModels
                 OnPropertyChanged(nameof(User));
             }
         }
-        public ICommand SubmitCommand
+
+        public ICommand CreateAccountCommand
         {
             get
             {
-                if (_submitCommand == null)
+                if (_createAccountCommand == null)
                 {
-                    _submitCommand = new RelayCommand(execute => CreateAccount());
+                   _createAccountCommand = new RelayCommand(execute => CreateAccount());
                 }
 
-                return _submitCommand;
+                return _createAccountCommand;
             }
         }
 
-        public ICommand BackCommand
+        public ICommand LoginCommand
         {
             get
             {
-                if (_backCommand == null)
+                if (_loginCommand == null)
                 {
-                    _backCommand = new RelayCommand(execute => BackToLoginWindow());
+                    _loginCommand = new RelayCommand(execute => Login());
                 }
 
-                return _backCommand;
-            }
-        }
-
-        private void BackToLoginWindow()
-        {
-            Window currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive);
-            if (currentWindow is not null)
-            {
-                LoginWindow window = new LoginWindow();
-
-                currentWindow.Close();
-                window.Show();
+                return _loginCommand;
             }
         }
         private void CreateAccount()
         {
-            if (!User.IsAlreadyCreated())
+            Window currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive);
+            if (currentWindow is not null) 
             {
-                User.Register();
+                RegistrationWindow window = new RegistrationWindow();
+             
+                currentWindow.Close();
+                window.Show();
 
+            }
+        }
+        private void Login()
+        {
+            if (User.Authenticate())
+            {
                 Window currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive);
                 if (currentWindow is not null)
                 {
