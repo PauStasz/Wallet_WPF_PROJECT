@@ -26,14 +26,15 @@ namespace Wallet.Models.Users
             _userRepository = new UserRepository();
         }
 
-        public bool Authenticate()
+        public bool Authenticate(string email, string password)
         {
             List<User> users = _userRepository.GetAllData("users");
 
-            var user = users.FirstOrDefault(u => u.Email.Equals(Email));
+            var user = users.FirstOrDefault(u => u.Email.Equals(email));
+
             if ((user is not null) && (Password is not null))
             {
-                var result = Authentication.VerifyPassword(Password, user.HashPassword);
+                var result = Authentication.VerifyPassword(password, user.HashPassword);
 
                 return result;
             }
