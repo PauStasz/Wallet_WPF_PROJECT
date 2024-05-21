@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 using Wallet.Helpers;
+using Wallet.Models;
 using Wallet.Models.Users;
 using Wallet.Views;
 using Wallet.Views.DialogsWindows;
@@ -95,8 +96,23 @@ namespace Wallet.ViewModels
         {
             if (Internet.IsConnected())
             {
-                if (_user.Authenticate(_email, _password))
+                if (string.IsNullOrEmpty(Email) || string.IsNullOrEmpty(Password))
                 {
+                    if (string.IsNullOrEmpty(Email))
+                    {
+                        _isValidationEnabledForEmail = true;
+                        OnPropertyChanged(nameof(Email));
+
+                    }
+                    if (string.IsNullOrEmpty(Password))
+                    {
+                        _isValidationEnabledForPassword = true;
+                        OnPropertyChanged(nameof(Password));
+                    }
+                }
+                else if (_user.Authenticate(_email, _password))
+                {
+
                     Window currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive);
                     if (currentWindow is not null)
                     {
@@ -108,16 +124,19 @@ namespace Wallet.ViewModels
                 }
                 else
                 {
-                    //InfoWindow window = new InfoWindow();
-                    //window.Show();
-                    MessageBox.Show("Nieprawidłowe dane.");
+                    MessageHolder msg = MessageHolder.Instance;
+                    msg.Text = "Błędne dane logowania";
+                    InfoWindow window = new InfoWindow();
+                    window.Show();
                 }
             }
             else
             {
-                //InfoWindow window = new InfoWindow();
-                //window.Show();
-                MessageBox.Show("NiBrak netu.");
+                MessageHolder msg = MessageHolder.Instance;
+                msg.Text = "Brak dostępu do internetu";
+
+                InfoWindow window = new InfoWindow();
+                window.Show();
             }
 
         }

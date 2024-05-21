@@ -15,8 +15,8 @@ namespace Wallet.Services.FirebaseRealTimeDatabase
         {
             _config = new FirebaseConfig
             {
-                AuthSecret = "S8FGNt0XY2j26r2vC0yA2PAxCRUSTKUTOScxyszs",
-                BasePath = "https://portfel-a3197-default-rtdb.firebaseio.com/",
+                AuthSecret = "1I9XMHVuVBwOWAYig334luwhj3OFzm4btVRh12Ne",
+                BasePath = "https://portfel-a3000-default-rtdb.firebaseio.com/",
             };
 
             try

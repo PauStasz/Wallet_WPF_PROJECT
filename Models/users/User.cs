@@ -2,6 +2,7 @@
 using System.Net.NetworkInformation;
 using System.Security.Cryptography;
 using System.Text;
+using System.Windows;
 using Wallet.Helpers;
 using Wallet.Repositories;
 using Wallet.Repositories.IRepositories;
@@ -31,8 +32,8 @@ namespace Wallet.Models.Users
             List<User> users = _userRepository.GetAllData("users");
 
             var user = users.FirstOrDefault(u => u.Email.Equals(email));
-
-            if ((user is not null) && (Password is not null))
+            
+            if ((user is not null) && (password is not null))
             {
                 var result = Authentication.VerifyPassword(password, user.HashPassword);
 
@@ -42,15 +43,20 @@ namespace Wallet.Models.Users
             return false;
         }
 
-        public bool IsAlreadyCreated()
+        public bool IsAlreadyCreated(string email)
         {
             List<User> users = _userRepository.GetAllData("users");
 
-            return users.Any(u => u.Email.Equals(Email));
+            return users.Any(u => u.Email.Equals(email));
         }
 
-        public void Register()
+        public void Register(string email, string name, string surname, string nick, string password)
         {
+            Email = email;
+            Name = name;
+            Surname = surname;
+            Nick = nick;
+            Password = password;
             _userRepository.SetData("users", this);
         }
     }

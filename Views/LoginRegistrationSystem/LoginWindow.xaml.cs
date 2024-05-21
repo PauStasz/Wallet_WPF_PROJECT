@@ -27,6 +27,7 @@ namespace Wallet.Views.LoginRegistrationSystemViews
         public LoginWindow()
         {
             InitializeComponent();
+
         }
     }
 }
