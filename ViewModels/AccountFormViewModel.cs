@@ -17,10 +17,11 @@ namespace Wallet.ViewModels
     public class AccountFormViewModel : INotifyPropertyChanged, IDataErrorInfo
     {
         private User _user;
-        private Account _account = new Account();
+        private Account _account;
         public AccountFormViewModel()
         {
             _user = new User();
+            _account = new Account();
             _user.GetCurrentUser();
         }
 

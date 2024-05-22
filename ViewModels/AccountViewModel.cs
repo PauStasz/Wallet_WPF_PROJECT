@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Wallet.Helpers;
+using Wallet.Models;
+using Wallet.Models.Users;
 using Wallet.Views.DialogsWindows;
 using Wallet.Views.LoginRegistrationSystemViews;
 
@@ -13,12 +15,16 @@ namespace Wallet.ViewModels
 {
     public class AccountViewModel
     {
-        public ICommand _addAccountCommand;
+        private User _user;
+        private Account _account;
         public AccountViewModel()
         {
-                
+            _user = new User();
+            _account = new Account();
+            _user.GetCurrentUser();
         }
 
+        private ICommand _addAccountCommand;
         public ICommand AddAccountCommand
         {
             get
