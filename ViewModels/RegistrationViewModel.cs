@@ -32,7 +32,7 @@ namespace Wallet.ViewModels
         private bool _isValidationEnabledForConfirmationPassword = false;
         public RegistrationViewModel()
         {
-                
+            
         }
 
         public string Email
@@ -143,9 +143,7 @@ namespace Wallet.ViewModels
         {
             if (Internet.IsConnected())
             {
-                if (string.IsNullOrEmpty(Email) || string.IsNullOrEmpty(Password) || 
-                    string.IsNullOrEmpty(ConfirmationPassword) || string.IsNullOrEmpty(Name) ||
-                    string.IsNullOrEmpty(Surname) || string.IsNullOrEmpty(Nick))
+                if (IsDataNullOrEmpty())
                 {
                     if (string.IsNullOrEmpty(Email))
                     {
@@ -211,6 +209,11 @@ namespace Wallet.ViewModels
                 InfoWindow window = new InfoWindow();
                 window.Show();
             }
+        }
+
+        private bool IsDataNullOrEmpty()
+        {
+            return (string.IsNullOrEmpty(Email) || string.IsNullOrEmpty(Password) || string.IsNullOrEmpty(ConfirmationPassword) || string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(Surname) || string.IsNullOrEmpty(Nick));
         }
 
         protected virtual void OnPropertyChanged(string propertyName)

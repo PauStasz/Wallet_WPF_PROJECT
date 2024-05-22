@@ -29,18 +29,19 @@ namespace Wallet.Themes.UserControls
         private void GoHome(object sender, RoutedEventArgs e)
         {
            
-            Window currentWindow = Application.Current.MainWindow;
+            Window currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive); ;
 
             if (currentWindow is not null)
             {
-                HomeWindow homeWindow = new HomeWindow();
-                currentWindow.Content = homeWindow.Content;
+                HomeWindow window = new HomeWindow();
+                currentWindow.Close();
+                window.Show();
             }
         }
 
         private void GoExpensePlanning(object sender, RoutedEventArgs e)
         {
-            Window currentWindow = Application.Current.MainWindow;
+            Window currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive); ;
 
             if (currentWindow is not null)
             {
@@ -51,7 +52,7 @@ namespace Wallet.Themes.UserControls
 
         private void GoRaport(object sender, RoutedEventArgs e)
         {
-            Window currentWindow = Application.Current.MainWindow;
+            Window currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive); ;
 
             if (currentWindow is not null)
             {
@@ -62,7 +63,7 @@ namespace Wallet.Themes.UserControls
 
         private void GoForecast(object sender, RoutedEventArgs e)
         {
-            Window currentWindow = Application.Current.MainWindow;
+            Window currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive); ;
 
             if (currentWindow is not null)
             {
@@ -74,19 +75,20 @@ namespace Wallet.Themes.UserControls
 
         private void GoAccount(object sender, RoutedEventArgs e)
         {
-            Window currentWindow = Application.Current.MainWindow;
+            Window currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive); ;
 
             if (currentWindow is not null)
             {
                 AccountsWindow window = new AccountsWindow();
-                currentWindow.Content = window.Content;
+                currentWindow.Close();
+                window.Show();
 
             }
         }
 
         private void GoCategories(object sender, RoutedEventArgs e)
         {
-            Window currentWindow = Application.Current.MainWindow;
+            Window currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive); ;
 
             if (currentWindow is not null)
             {
@@ -97,7 +99,7 @@ namespace Wallet.Themes.UserControls
 
         private void GoSettings(object sender, RoutedEventArgs e)
         {
-            Window currentWindow = Application.Current.MainWindow;
+            Window currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive); ;
 
             if (currentWindow is not null)
             {   

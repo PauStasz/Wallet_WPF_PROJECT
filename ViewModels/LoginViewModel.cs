@@ -28,7 +28,7 @@ namespace Wallet.ViewModels
 
         public LoginViewModel()
         {
-
+            
         }
         public string Email
         {

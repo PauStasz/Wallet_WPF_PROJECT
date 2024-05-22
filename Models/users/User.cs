@@ -4,6 +4,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
 using Wallet.Helpers;
+using Wallet.Models.users;
 using Wallet.Repositories;
 using Wallet.Repositories.IRepositories;
 
@@ -20,11 +21,12 @@ namespace Wallet.Models.Users
         public string ConfirmPassword { get; set; }
         public string HashPassword { get; set; }
 
-        private IUserRepository _userRepository;
+        private IUserRepository _userRepository = new UserRepository();
+       
 
         public User()
         {
-            _userRepository = new UserRepository();
+            
         }
 
         public bool Authenticate(string email, string password)
@@ -36,6 +38,13 @@ namespace Wallet.Models.Users
             if ((user is not null) && (password is not null))
             {
                 var result = Authentication.VerifyPassword(password, user.HashPassword);
+
+                if(result)
+                {
+                    IdHolder idHolder = IdHolder.Instance;
+                    idHolder.Id = user.Id;
+                    
+                }
 
                 return result;
             }
@@ -58,6 +67,23 @@ namespace Wallet.Models.Users
             Nick = nick;
             Password = password;
             _userRepository.SetData("users", this);
+        }
+
+        public void GetCurrentUser()
+        {
+            IdHolder idHolder = IdHolder.Instance;
+            var user = _userRepository.GetOneData("users", idHolder.Id);
+
+            if (user is not null) 
+            { 
+                Name = user.Name;
+                Surname = user.Surname;
+                Email = user.Email;
+                Id = user.Id;
+                Nick = user.Nick;
+            }
+
+            
         }
     }
 }

@@ -4,24 +4,34 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wallet.Views.DialogsWindows"
+        xmlns:viewModels="clr-namespace:Wallet.ViewModels"
         mc:Ignorable="d"
-        Title="AccountFormWindow" Height="320" Width="400" Background="#FF1A1919">
+        Title="AccountFormWindow" Height="400" Width="400" Background="#FF1A1919" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+
+    <Window.DataContext>
+        <viewModels:AccountFormViewModel/>
+    </Window.DataContext>
+    
     <StackPanel Orientation="Vertical">
         <StackPanel Margin="20">
             <Label Content="Nazwa" HorizontalAlignment="Center" Foreground="White" Padding="0 5 0 5" />
-            <TextBox Padding="0 5 0 5" FontSize="16" Style="{StaticResource textbox1}" />
+            <TextBox Name="NameTextBox" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Padding="0 5 0 5" FontSize="16" Style="{StaticResource textbox1}" />
+            <TextBlock Text="{Binding (Validation.Errors)[0].ErrorContent, ElementName=NameTextBox}"
+Foreground="Red" Margin="-0,10,0 0"   HorizontalAlignment="Center"/>
         </StackPanel>
         <StackPanel Margin="20">
             <Label Content="Saldo" HorizontalAlignment="Center" Foreground="White" Padding="0 5 0 5" />
-            <TextBox Padding="0 5 0 5" FontSize="16" Style="{StaticResource textbox1}" />
+            <TextBox Name="SalaryTextBox" Text="{Binding Salary, StringFormat={}{0:C}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Padding="0 5 0 5" FontSize="16" Style="{StaticResource textbox1}" />
+            <TextBlock Text="{Binding (Validation.Errors)[0].ErrorContent, ElementName=SalaryTextBox}"
+Foreground="Red" Margin="-0,10,0 0"   HorizontalAlignment="Center"/>
         </StackPanel>
         <Grid Margin="20">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0"  Content="ZAPISZ" Margin="10" Padding="2" FontWeight="Bold" FontSize="12" BorderBrush="#FFFFFEFE" Background="White" Width="100" Style="{StaticResource whiteBttn}" />
-            <Button Grid.Column="1"  Content="ANULUJ" Margin="10" Padding="2" FontWeight="Bold" FontSize="12" BorderBrush="#FFFFFEFE" Background="White" Width="100"   Style="{StaticResource whiteBttn}" />
+            <Button Command="{Binding SaveCommand}" Grid.Column="0"  Content="ZAPISZ" Margin="10" Padding="2" FontWeight="Bold" FontSize="12" BorderBrush="#FFFFFEFE" Background="White" Width="100" Style="{StaticResource whiteBttn}" />
+            <Button Command="{Binding CancelCommand}" Grid.Column="1"  Content="ANULUJ" Margin="10" Padding="2" FontWeight="Bold" FontSize="12" BorderBrush="#FFFFFEFE" Background="White" Width="100"   Style="{StaticResource whiteBttn}" />
         </Grid>
     </StackPanel>
 </Window>

@@ -8,6 +8,20 @@ namespace Wallet.Models
 {
     public class BaseEntity
     {
-        public int Id { get; set; }
+
+        public int Id { get; protected set; }
+
+        public BaseEntity()
+        {
+            Id = GenerateUserID();
+        }
+        private static int GenerateUserID()
+        {
+            Guid newGuid = Guid.NewGuid();
+            byte[] newGuidByte = newGuid.ToByteArray();
+            int intId = BitConverter.ToInt32(newGuidByte, 0);
+
+            return intId;
+        }
     }
 }

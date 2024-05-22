@@ -5,9 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Wallet.Themes.UserControls" 
              xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+             xmlns:viewModels="clr-namespace:Wallet.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="170">
 
+    <UserControl.DataContext>
+        <viewModels:SidebarMenuViewModel/>
+    </UserControl.DataContext>
+    
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -45,7 +50,7 @@
             <Button x:Name="AccountButton" Content="KONTA" Style="{StaticResource lineBttn}" Click="GoAccount" />
             <Button x:Name="CategoriesButton" Content="KATEGORIE" Style="{StaticResource lineBttn}" Click="GoCategories" />
             <Button x:Name="SettingsButton" Content="USTAWIENIA" Style="{StaticResource lineBttn}" IsDefault="False" Click="GoSettings" />
-            <Button Content="WYLOGUJ SIĘ" Style="{StaticResource lineBttn}" />
+            <Button Content="WYLOGUJ SIĘ" Command="{Binding LogoutCommand}" Style="{StaticResource lineBttn}" />
         </StackPanel>
 
     </Grid>

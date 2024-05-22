@@ -11,19 +11,10 @@ namespace Wallet.Repositories
 
         }        
 
-        private int GenerateUserID()
-        {
-            Guid newGuid = Guid.NewGuid();
-            byte[] newGuidByte = newGuid.ToByteArray();
-            int intId = BitConverter.ToInt32(newGuidByte, 0);
-
-            return intId;
-        }
 
 
         public override void SetData(string nameTable, User entity)
         {
-            entity.Id = GenerateUserID();
 
             if (entity.Password is not null && entity.Password.Length > 0)
             {
