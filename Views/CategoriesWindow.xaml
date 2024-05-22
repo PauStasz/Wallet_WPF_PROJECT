@@ -4,9 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wallet.Views" xmlns:UserControls="clr-namespace:Wallet.Themes.UserControls" xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+        xmlns:viewModels="clr-namespace:Wallet.ViewModels"
         mc:Ignorable="d"
         Title="Categories" Height="650" Width="900" WindowStartupLocation="CenterScreen" Background="#FF1A1919">
 
+    <Window.DataContext>
+        <viewModels:CategoriesViewModel/>
+    </Window.DataContext>
+    
     <DockPanel>
         <UserControls:SidebarMenu DockPanel.Dock="Left"/>
         <StackPanel DockPanel.Dock="Right">
@@ -46,7 +51,7 @@
                 </ListBoxItem>
             </ListBox>
 
-            <Button Grid.Row="2" Content="DODAJ NOWĄ KATEGORIĘ" Margin="5,18,5,20" Padding="5 5 5 5" FontWeight="Bold" FontSize="16" BorderBrush="#FFFFFEFE" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource whiteBttn}" />
+            <Button Command="{Binding AddCategoryCommand}" Grid.Row="2" Content="DODAJ NOWĄ KATEGORIĘ" Margin="5,18,5,20" Padding="5 5 5 5" FontWeight="Bold" FontSize="16" BorderBrush="#FFFFFEFE" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource whiteBttn}" />
 
         </StackPanel>
     </DockPanel>
