@@ -19,11 +19,25 @@ namespace Wallet.ViewModels
     {
         private User _user;
         private Account _account;
+        private bool _isEditedOrAddedNew;
         public AccountFormViewModel()
         {
             _user = new User();
             _account = new Account();
             _user.GetCurrentUser();
+            _isEditedOrAddedNew = false;
+        }
+
+        public Account GetAccount() => _account;
+
+        public AccountFormViewModel(Account account)
+        {
+            _user = new User();
+            _account = account;
+            _name = account.Name;
+            _salary = account.Salary;
+            _user.GetCurrentUser();
+            _isEditedOrAddedNew = true;
         }
 
         private string _name;
@@ -151,21 +165,29 @@ namespace Wallet.ViewModels
             }
             else if(Internet.IsConnected())
             {
-                _account.Create(Name, Salary, _user.Id);
+                
 
                 Window currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive);
 
                 MessageHolder msg = MessageHolder.Instance;
-                msg.Text = "Konto zostało dodane.";
+
+                if (!_isEditedOrAddedNew)
+                {
+                    _account.Create(Name, Salary, _user.Id);
+                    msg.Text = "Konto zostało dodane.";
+                }
+                else
+                {
+                    _account.UpdateOne(Name, Salary, _user.Id);
+                    msg.Text = "Konto zostało edytowane.";
+                }
 
                 InfoWindow window = new InfoWindow();
                 window.Show();
 
                 if (currentWindow is not null)
                 {
-
                     currentWindow.Close();
-
                 }
             }
             else

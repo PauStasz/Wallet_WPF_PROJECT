@@ -172,18 +172,18 @@ namespace Wallet.ViewModels
                         return "Hasło musi mieć 6-20 znaków.";
                     }
                 }
-                return "";
+                return String.Empty;
 
             }
 
 
         }
         public string Error
-
         {
-
-            get { throw new NotImplementedException(); }
-
+            get
+            {
+                return string.Empty;
+            }
         }
     }
 }

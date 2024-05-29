@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Wallet.Models;
+using Wallet.ViewModels;
 
 namespace Wallet.Views.DialogsWindows
 {
@@ -19,9 +21,32 @@ namespace Wallet.Views.DialogsWindows
     /// </summary>
     public partial class AccountFormWindow : Window
     {
+        AccountFormViewModel _viewModel;
         public AccountFormWindow()
         {
             InitializeComponent();
+            _viewModel = new AccountFormViewModel();
+            DataContext = _viewModel;
+        }
+
+        public AccountFormWindow(Account account)
+        {
+            InitializeComponent();
+            _viewModel = new AccountFormViewModel(account);
+            DataContext = _viewModel;
+        }
+
+        public Account GetAccount()
+        {
+            return _viewModel.GetAccount();
+
+        }
+
+        public void DialogIsActive(Action<bool> callback)
+        {
+
+            callback(true);
         }
     }
+
 }

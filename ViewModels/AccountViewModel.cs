@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+using System.Security.Principal;
 using System.Windows;
 using System.Windows.Input;
 using Wallet.Helpers;
 using Wallet.Models;
 using Wallet.Models.Users;
 using Wallet.Views.DialogsWindows;
-using Wallet.Views.LoginRegistrationSystemViews;
 
 namespace Wallet.ViewModels
 {
@@ -26,8 +22,46 @@ namespace Wallet.ViewModels
             _user = new User();
             _account = new Account();
             _user.GetCurrentUser();
+
+            _deleteCommand = new RelayCommand(DeleteAccount);
+            _addAccountCommand = new RelayCommand(execute => AddAccount());
+            _editCommand = new RelayCommand(EditAccount);
+            _selectMainAccountCommand = new RelayCommand(SelectMainAccount);
+
             SetItems();
 
+
+        }
+
+        private ICommand _selectMainAccountCommand;
+        public ICommand SelectMainAccountCommand
+        {
+            get
+            {
+                return _selectMainAccountCommand;
+            }
+        }
+
+        private void SelectMainAccount(object parameter)
+        {
+            if (parameter is Account item)
+            {
+                foreach (Account temp in Items)
+                {
+                    if (item.Id != temp.Id)
+                    {
+                        temp.IsMain = false;
+                        temp.MainAccount = "USTAW JAKO GŁÓWNE";
+                    }
+                    else
+                    {
+                        temp.IsMain = true;
+                        temp.MainAccount = "WYBRANO NA GŁÓWNE";
+                    }
+                }
+
+                _account.UpdateAll(Items);
+            }
         }
 
         private ICommand _addAccountCommand;
@@ -35,37 +69,43 @@ namespace Wallet.ViewModels
         {
             get
             {
-                if (_addAccountCommand == null)
-                {
-                    _addAccountCommand = new RelayCommand(execute => AddAccount());
-                }
-
                 return _addAccountCommand;
             }
         }
 
         private ICommand _deleteCommand;
-        public ICommand DeleteCommand
+        public ICommand DeleteCommand 
         {
             get
             {
-                if (_deleteCommand == null)
-                {
-                    _deleteCommand = new RelayCommand(execute => DeleteAccount(execute));
-                }
-
                 return _deleteCommand;
             }
         }
 
         private void DeleteAccount(object parameter)
         {
-            MessageBox.Show("Usinueto");
-            if (parameter is Account item && Items.Contains(item))
+            if (parameter is Account item)
             {
                 Items.Remove(item);
                 _account.Delete(item.Id);
-                //SetItems();
+            }
+        }
+
+        private ICommand _editCommand;
+        public ICommand EditCommand
+        {
+            get
+            {
+                return _editCommand;
+            }
+        }
+
+        private void EditAccount(object parameter)
+        {
+            if (parameter is Account item)
+            {
+                AccountFormWindow window = new AccountFormWindow(item);
+                window.Show();        
             }
         }
 
@@ -102,9 +142,23 @@ namespace Wallet.ViewModels
 
         private void AddAccount()
         {
+            OpenAddAccountDialog(UpdateItems);
+        }
+
+        private void UpdateItems(Account result)
+        {
+            if (result is not null)
+            {
+                Items.Add(result);
+            }
+        }
+
+        private void OpenAddAccountDialog(Action<Account> callback)
+        {
             AccountFormWindow window = new AccountFormWindow();
+
+            window.Closed += (sender, args) => callback(window.GetAccount());
             window.Show();
-            //to do after add SetItems();
         }
 
         protected void OnPropertyChanged([CallerMemberName] string name = null)
