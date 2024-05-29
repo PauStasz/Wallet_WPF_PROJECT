@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Wallet.Models;
+using Wallet.ViewModels;
 
 namespace Wallet.Views.DialogsWindows
 {
@@ -19,9 +21,23 @@ namespace Wallet.Views.DialogsWindows
     /// </summary>
     public partial class CategoryFormWindow : Window
     {
+        CategoryFormViewModel _viewModel;
         public CategoryFormWindow()
         {
             InitializeComponent();
+            _viewModel = new CategoryFormViewModel();
+            DataContext = _viewModel;
+        }
+
+        public CategoryFormWindow(Category category)
+        {
+            InitializeComponent();
+            _viewModel = new CategoryFormViewModel(category);
+            DataContext = _viewModel;
+        }
+        public Category GetCategory()
+        {
+            return _viewModel.GetCategory();
         }
     }
 }

@@ -46,7 +46,8 @@ namespace Wallet.Themes.UserControls
             if (currentWindow is not null)
             {
                 ExpensePlanningWindow window = new ExpensePlanningWindow();
-                currentWindow.Content = window.Content;
+                currentWindow.Close();
+                window.Show();
             }
         }
 
@@ -57,7 +58,8 @@ namespace Wallet.Themes.UserControls
             if (currentWindow is not null)
             {
                 ReportAndStatisticsWindow window = new ReportAndStatisticsWindow();
-                currentWindow.Content = window.Content;
+                currentWindow.Close();
+                window.Show();
             }
         }
 
@@ -68,8 +70,9 @@ namespace Wallet.Themes.UserControls
             if (currentWindow is not null)
             {
                 ForecastWindow window = new ForecastWindow();
-                currentWindow.Content = window.Content;
- 
+                currentWindow.Close();
+                window.Show();
+
             }
         }
 
@@ -93,7 +96,8 @@ namespace Wallet.Themes.UserControls
             if (currentWindow is not null)
             {
                 CategoriesWindow window = new CategoriesWindow();
-                currentWindow.Content = window.Content;
+                currentWindow.Close();
+                window.Show();
             }
         }
 
@@ -104,7 +108,8 @@ namespace Wallet.Themes.UserControls
             if (currentWindow is not null)
             {   
                 SettingsWindow window = new SettingsWindow();
-                currentWindow.Content = window.Content;
+                currentWindow.Close();
+                window.Show();
             }
         }
     }

@@ -147,7 +147,7 @@ namespace Wallet.ViewModels
 
         private void UpdateItems(Account result)
         {
-            if (result is not null)
+            if (result != null)
             {
                 Items.Add(result);
             }

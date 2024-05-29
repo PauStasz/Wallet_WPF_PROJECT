@@ -41,12 +41,6 @@ namespace Wallet.Views.DialogsWindows
             return _viewModel.GetAccount();
 
         }
-
-        public void DialogIsActive(Action<bool> callback)
-        {
-
-            callback(true);
-        }
     }
 
 }

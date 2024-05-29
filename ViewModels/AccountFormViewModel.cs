@@ -84,7 +84,7 @@ namespace Wallet.ViewModels
         private void CancelAction()
         {
             Window currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive);
-            if (currentWindow is not null)
+            if (currentWindow != null)
             {
                 currentWindow.Close();
 
@@ -185,7 +185,7 @@ namespace Wallet.ViewModels
                 InfoWindow window = new InfoWindow();
                 window.Show();
 
-                if (currentWindow is not null)
+                if (currentWindow != null)
                 {
                     currentWindow.Close();
                 }
@@ -200,7 +200,7 @@ namespace Wallet.ViewModels
                 InfoWindow window = new InfoWindow();
                 window.Show();
 
-                if (currentWindow is not null)
+                if (currentWindow != null)
                 {
 
                     currentWindow.Close();

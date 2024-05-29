@@ -1,11 +1,26 @@
 ﻿using Wallet.Repositories.IRepositories;
 using Wallet.Repositories;
+using System.ComponentModel;
+using Wallet.Models.Users;
 
 namespace Wallet.Models
 {
-    internal class Category : BaseEntity
+    public class Category : BaseEntity, INotifyPropertyChanged
     {
-        public string Name { get; set; }
+        private string _name;
+
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                if (_name != value)
+                {
+                    _name = value;
+                    OnPropertyChanged(nameof(Name));
+                }
+            }
+        }
 
         public int IdUser { get; set; }
 
@@ -30,6 +45,26 @@ namespace Wallet.Models
             }
 
             return new List<Category>();
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        internal void UpdateOne(string name, int id)
+        {
+            Name = name;
+            IdUser = id;
+
+            _repository.UpdateData("categories", this);
+        }
+
+        internal void Delete(int id)
+        {
+            _repository.DeleteData("categories", id);
         }
     }
 }
