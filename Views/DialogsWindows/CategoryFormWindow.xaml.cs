@@ -39,5 +39,6 @@ namespace Wallet.Views.DialogsWindows
         {
             return _viewModel.GetCategory();
         }
+
     }
 }

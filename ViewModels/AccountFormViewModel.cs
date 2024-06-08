@@ -26,6 +26,13 @@ namespace Wallet.ViewModels
             _account = new Account();
             _user.GetCurrentUser();
             _isEditedOrAddedNew = false;
+
+            _addIconCommand = new RelayCommand(execute => AddIcon());
+        }
+
+        private void AddIcon()
+        {
+            throw new NotImplementedException();
         }
 
         public Account GetAccount() => _account;
@@ -38,6 +45,8 @@ namespace Wallet.ViewModels
             _salary = account.Salary;
             _user.GetCurrentUser();
             _isEditedOrAddedNew = true;
+
+            _addIconCommand = new RelayCommand(execute => AddIcon());
         }
 
         private string _name;
@@ -81,6 +90,17 @@ namespace Wallet.ViewModels
             }
         }
 
+
+        private ICommand _addIconCommand;
+
+        public ICommand AddIconCommand
+        {
+            get
+            {
+
+                return _addIconCommand;
+            }
+        }
         private void CancelAction()
         {
             Window currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive);

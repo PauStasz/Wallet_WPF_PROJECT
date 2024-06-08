@@ -1,12 +1,16 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 using Wallet.Helpers;
 using Wallet.Models;
 using Wallet.Models.Users;
@@ -19,6 +23,7 @@ namespace Wallet.ViewModels
         private Category _category;
         private User _user;
         private bool _isEditedOrAddedNew;
+        private BitmapImage _icon;
 
 
         public CategoryFormViewModel()
@@ -30,9 +35,34 @@ namespace Wallet.ViewModels
 
             _saveCommand = new RelayCommand(execute => CreateCategory());
             _cancelCommand = new RelayCommand(execute => CancelAction());
+            _addIconCommand = new RelayCommand(execute => AddIcon());
 
         }
 
+
+        private void AddIcon()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Files (*.png)|*.png";
+            openFileDialog.Multiselect = false;
+            if (openFileDialog.ShowDialog() == true)
+            {
+                BitmapImage bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.UriSource = new Uri(openFileDialog.FileName);
+                bitmap.EndInit();
+                _icon = bitmap;
+            }     
+        }
+
+        private ICommand _addIconCommand;
+        public ICommand AddIconCommand
+        {
+            get
+            {
+                return _addIconCommand;
+            }
+        }
         public CategoryFormViewModel(Category category)
         {
             _category = category;
@@ -43,6 +73,7 @@ namespace Wallet.ViewModels
 
             _saveCommand = new RelayCommand(execute => CreateCategory());
             _cancelCommand = new RelayCommand(execute => CancelAction());
+            _addIconCommand = new RelayCommand(execute => AddIcon());
         }
 
         private string _name;
@@ -76,13 +107,12 @@ namespace Wallet.ViewModels
 
         private void CreateCategory()
         {
-            if (string.IsNullOrEmpty(Name))
+            if (string.IsNullOrEmpty(Name) || Name.Length <= 0)
             {
-                if (string.IsNullOrEmpty(Name))
-                {
-                    _isValidationEnabledForName = true;
-                    OnPropertyChanged(nameof(Name));
-                }
+
+                _isValidationEnabledForName = true;
+                OnPropertyChanged(nameof(Name));
+                
 
             }
             else if (Internet.IsConnected())
@@ -97,11 +127,16 @@ namespace Wallet.ViewModels
                 {
                     _category.Create(Name, _user.Id);
                     msg.Text = "Kategoria została dodana.";
+
+                    var category = _category.GetCategoriesByIdUserName(_user.Id, Name);
+                    SaveImage(category);
                 }
                 else
                 {
                     _category.UpdateOne(Name, _user.Id);
                     msg.Text = "Kategoria została edytowana.";
+
+                    SaveImage(_category);
                 }
 
                 InfoWindow window = new InfoWindow();
@@ -128,6 +163,28 @@ namespace Wallet.ViewModels
                     currentWindow.Close();
 
                 }
+            }
+        }
+
+        private void SaveImage(Category category)
+        {
+            string path = AppDomain.CurrentDomain.BaseDirectory;
+
+            string nameFile = _user.Id.ToString() + "_" + category.Id.ToString() + ".png";
+            _category.Icon = nameFile;
+            string outputPath = Path.Combine(path, "Assets", "UserIcons", nameFile);
+
+            if (!Directory.Exists(Path.Combine(path, "Assets", "UserIcons")))
+            {
+                Directory.CreateDirectory(Path.Combine(path, "Assets", "UserIcons"));
+            }
+
+            BitmapEncoder encoder = new PngBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(_icon));
+
+            using (FileStream fileStream = new FileStream(outputPath, FileMode.Create))
+            {
+                encoder.Save(fileStream);
             }
         }
 
@@ -165,7 +222,7 @@ namespace Wallet.ViewModels
             {
                 if (columnName == "Name" && _isValidationEnabledForName)
                 {
-                    if (string.IsNullOrEmpty(Name))
+                    if (string.IsNullOrEmpty(Name) || Name.Length <= 0)
                     {
                         return "Nie może być puste.";
                     }

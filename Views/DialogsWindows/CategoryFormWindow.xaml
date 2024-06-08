@@ -20,8 +20,8 @@
             <TextBlock Text="{Binding (Validation.Errors)[0].ErrorContent, ElementName=NameTextBox}"
 Foreground="Red" Margin="-0,10,0 0"   HorizontalAlignment="Center"/>
         </StackPanel>
-        <Button   Margin="10" Padding="2" FontWeight="Bold" FontSize="12" BorderBrush="#FFFFFEFE" Background="White" Width="270" Style="{StaticResource whiteBttn}" >
-            <Button.Content>
+        <Button Command="{Binding AddIconCommand}"  Margin="10" Padding="2" FontWeight="Bold" FontSize="12" BorderBrush="#FFFFFEFE" Background="White" Width="270" Style="{StaticResource whiteBttn}" >
+            <Button.Content >
                 <StackPanel Orientation="Horizontal">
                     <Label Content="DODAJ IKONĘ" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
 

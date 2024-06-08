@@ -2,6 +2,9 @@
 using Wallet.Repositories;
 using System.ComponentModel;
 using Wallet.Models.Users;
+using System.Windows.Media.Imaging;
+using System.IO;
+using System.Drawing;
 
 namespace Wallet.Models
 {
@@ -23,6 +26,9 @@ namespace Wallet.Models
         }
 
         public int IdUser { get; set; }
+        public string Icon { get; set; }
+
+        public string Image { get; set; }
 
         private IGenericRepository<Category> _repository = new GenericRepository<Category>();
 
@@ -41,10 +47,41 @@ namespace Wallet.Models
 
             if (category is not null)
             {
-                return category.Where(a => a.IdUser == idUser).ToList();
+                var list = category.Where(a => a.IdUser == idUser).ToList();
+
+                string path = AppDomain.CurrentDomain.BaseDirectory;
+                string inputPath = Path.Combine(path, "Assets", "UserIcons");
+
+                if (Directory.Exists(inputPath))
+                {
+                    foreach (Category item in list)
+                    {
+                        string nameFile = idUser.ToString() + "_" + item.Id.ToString() + ".png";
+                        string fullPath = System.IO.Path.Combine(inputPath, nameFile);
+                        if (File.Exists(fullPath))
+                        {
+                            item.Image = fullPath;
+                        }
+                    }
+                }
+                
+                return list;
             }
 
             return new List<Category>();
+        }
+
+        public Category GetCategoriesByIdUserName(int idUser, string name)
+        {
+
+            List<Category> category = _repository.GetAllData("categories");
+
+            if (category is not null)
+            {
+                return category.FirstOrDefault(a => a.IdUser == idUser && a.Name == name);
+            }
+
+            return new Category();
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

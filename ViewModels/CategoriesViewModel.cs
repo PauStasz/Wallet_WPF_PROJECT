@@ -13,6 +13,9 @@ using System.Security.Principal;
 using System.Runtime.CompilerServices;
 using Wallet.Views.DialogsWindows;
 using System.Diagnostics;
+using Microsoft.Win32;
+using System.Windows.Media.Imaging;
+using System.Windows;
 
 namespace Wallet.ViewModels
 {
@@ -30,11 +33,14 @@ namespace Wallet.ViewModels
             _addCategoryCommand = new RelayCommand(execute => AddCategory());
             _deleteCommand = new RelayCommand(DeleteAccount);
             _editCommand = new RelayCommand(EditCategory);
+            
 
 
             SetItems();
 
         }
+
+     
 
         private ICommand _editCommand;
         public ICommand EditCommand
@@ -101,7 +107,7 @@ namespace Wallet.ViewModels
 
         private void UpdateItems(Category result)
         {
-            if (result != null) //TODO: INNY WARUNEK NOT SET INSATMCE
+            if (!string.IsNullOrEmpty(result.Name) && result.Name.Length > 0)
             {
                 Items.Add(result);
             }

@@ -46,6 +46,11 @@
     <PackageReference Include="MVVMEssentials.WPF" Version="1.0.3" />
     <PackageReference Include="PasswordBoxMVVM" Version="1.0.5" />
     <PackageReference Include="SharpVectors" Version="1.8.4" />
+    <PackageReference Include="System.Drawing.Common" Version="8.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Assets\UserIcons\" />
   </ItemGroup>
 
 </Project>
