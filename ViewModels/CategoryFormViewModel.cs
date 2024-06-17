@@ -136,9 +136,10 @@ namespace Wallet.ViewModels
 
                 MessageHolder msg = MessageHolder.Instance;
 
-                if (_isUploaded)
+
+                if (!_isEditedOrAddedNew)
                 {
-                    if (!_isEditedOrAddedNew)
+                    if (_isUploaded)
                     {
                         _category.Create(Name, _user.Id);
                         msg.Text = "Kategoria została dodana.";
@@ -148,11 +149,33 @@ namespace Wallet.ViewModels
                     }
                     else
                     {
-                        _category.UpdateOne(Name, _user.Id);
-                        msg.Text = "Kategoria została edytowana.";
+                        Window currentWindow1 = Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive);
 
+
+                        MessageHolder msg1 = MessageHolder.Instance;
+                        msg1.Text = "Brak zdjęcia";
+
+                        InfoWindow window1 = new InfoWindow();
+                        window1.Show();
+
+                        if (currentWindow1 is not null)
+                        {
+
+                            currentWindow1.Close();
+
+                        }
+                    }
+                }
+                else
+                {
+                    _category.UpdateOne(Name, _user.Id);
+                    msg.Text = "Kategoria została edytowana.";
+
+                    if (_isUploaded)
+                    {
                         SaveImage(_category);
                     }
+                }
 
                     InfoWindow window = new InfoWindow();
                     window.Show();
@@ -161,25 +184,7 @@ namespace Wallet.ViewModels
                     {
                         currentWindow.Close();
                     }
-                }
-                else
-                {
-                    Window currentWindow1 = Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive);
-
-
-                    MessageHolder msg1 = MessageHolder.Instance;
-                    msg1.Text = "Brak zdjęcia";
-
-                    InfoWindow window1 = new InfoWindow();
-                    window1.Show();
-
-                    if (currentWindow1 is not null)
-                    {
-
-                        currentWindow1.Close();
-
-                    }
-                }
+                
 
             }
             else
