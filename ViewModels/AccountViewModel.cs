@@ -86,8 +86,20 @@ namespace Wallet.ViewModels
         {
             if (parameter is Account item)
             {
-                Items.Remove(item);
-                _account.Delete(item.Id);
+                if (!item.IsMain)
+                {
+                    Items.Remove(item);
+                    _account.Delete(item.Id);
+                }
+                else
+                {
+                    MessageHolder msg1 = MessageHolder.Instance;
+                    msg1.Text = "Ustaw inne konto główne.";
+
+                    InfoWindow window1 = new InfoWindow();
+                    window1.Show();
+                }
+                
             }
         }
 
@@ -125,8 +137,17 @@ namespace Wallet.ViewModels
         {
             List<Account> data = _account.GetAccountsById(_user.Id);
 
-            ObservableCollection<Account> temp = [.. data];
-            _items = temp;
+
+            if (data != null && data.Count() > 0)
+            {
+                ObservableCollection<Account> temp = [.. data];
+                _items = temp;
+
+            }
+            else
+            {
+                Items = new ObservableCollection<Account>();
+            }
         }
 
         private Account selectedItem;
