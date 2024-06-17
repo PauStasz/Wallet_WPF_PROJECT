@@ -3,9 +3,17 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Wallet.Views" xmlns:UserControls="clr-namespace:Wallet.Themes.UserControls" xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+        xmlns:local="clr-namespace:Wallet.Views"
+        xmlns:UserControls="clr-namespace:Wallet.Themes.UserControls"
+        xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+        xmlns:viewModels="clr-namespace:Wallet.ViewModels"
+        d:DataContext="{d:DesignInstance Type=viewModels:ExpensesViewModel}"
         mc:Ignorable="d"
         Title="Expense Planning" Height="650" Width="900" WindowStartupLocation="CenterScreen" Background="#FF1A1919">
+
+    <Window.DataContext>
+        <viewModels:ExpensesViewModel/>
+    </Window.DataContext>
 
     <DockPanel>
         <UserControls:SidebarMenu DockPanel.Dock="Left"/>
@@ -23,31 +31,39 @@
                 <Border BorderThickness="0,0,0,2" BorderBrush="White" VerticalAlignment="Bottom"/>
             </StackPanel>
 
-            <ListBox  Grid.Row="1"  Width="514" Height="380" Margin="20" Style="{StaticResource ListBox}">
-                <ListBoxItem >
-                    <StackPanel Orientation="Horizontal" Background="White" Width="480" MaxWidth="480" Margin="0,5,0,2">
-                        <ContentControl  Height="30" Margin="10, 0, 40, 0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <svgc:SvgViewbox Source="/Assets/Vectors/Transactional-SMS.svg" />
-                        </ContentControl>
-                        <Label Content="nazwa wydatku" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" Width="240" HorizontalContentAlignment="Center"/>
-                        <Button  Content="EDYTUJ" Margin="10" Padding="5" FontWeight="Bold" FontSize="12" BorderBrush="#FFFFFEFE" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource transBttn}" />
-                        <Button  Content="USUŃ" Margin="10" Padding="5" FontWeight="Bold" FontSize="12" BorderBrush="#FFFFFEFE" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource transBttn}" />
-                    </StackPanel>
-                </ListBoxItem>
-                <ListBoxItem >
-                    <StackPanel Orientation="Horizontal" Background="White" Width="480" MaxWidth="480" Margin="0,5,0,2">
-                        <ContentControl  Height="30" Margin="10, 0, 40, 0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <svgc:SvgViewbox Source="/Assets/Vectors/Transactional-SMS.svg" />
-                        </ContentControl>
-                        <Label Content="nazwa wydatku" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" Width="240" HorizontalContentAlignment="Center"/>
-                        <Button  Content="EDYTUJ" Margin="10" Padding="5" FontWeight="Bold" FontSize="12" BorderBrush="#FFFFFEFE" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource transBttn}" />
-                        <Button  Content="USUŃ" Margin="10" Padding="5" FontWeight="Bold" FontSize="12" BorderBrush="#FFFFFEFE" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource transBttn}" />
-                    </StackPanel>
-                </ListBoxItem>
+            <ListBox Grid.Row="1" ItemsSource="{Binding Items, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="777" Height="380" Margin="20" Style="{StaticResource ListBox}" RenderTransformOrigin="0.5,0.5">
+                <ListBox.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform AngleY="0.232"/>
+                        <RotateTransform/>
+                        <TranslateTransform Y="1.196"/>
+                    </TransformGroup>
+                </ListBox.RenderTransform>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Background="White" Margin="0,1,0,1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Content="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" Grid.Column="0" HorizontalContentAlignment="Center"/>
+                            <Label Content="{Binding Date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" Grid.Column="1" HorizontalContentAlignment="Center"/>
+                            <Label Content="{Binding Amount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" Grid.Column="2" HorizontalContentAlignment="Center"/>
+                            <Label Content="{Binding Category, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" Grid.Column="3" HorizontalContentAlignment="Center"/>
+                            <Button Content="EDYTUJ" Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding}" Margin="10" Padding="5" FontWeight="Bold" FontSize="12" BorderBrush="#FFFFFEFE" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource transBttn}" Grid.Column="4"/>
+                            <Button Content="USUŃ" Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding}" Margin="10" Padding="5" FontWeight="Bold" FontSize="12" BorderBrush="#FFFFFEFE" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource transBttn}" Grid.Column="5"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
             </ListBox>
 
-            <Button Grid.Row="2" Content="DODAJ NOWY WYDATEK" Margin="5,18,5,20" Padding="5 5 5 5" FontWeight="Bold" FontSize="16" BorderBrush="#FFFFFEFE" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource whiteBttn}" />
-
+            <Button Command="{Binding AddExpenseCommand}" Grid.Row="2" Content="DODAJ NOWY WYDATEK" Margin="5,18,5,20" Padding="5" FontWeight="Bold" FontSize="16" BorderBrush="#FFFFFEFE" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource whiteBttn}"/>
         </StackPanel>
     </DockPanel>
 </Window>
+

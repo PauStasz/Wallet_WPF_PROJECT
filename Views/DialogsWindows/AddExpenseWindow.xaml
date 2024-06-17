@@ -4,23 +4,35 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wallet.Views.DialogsWindows"
+        xmlns:viewModels="clr-namespace:Wallet.ViewModels" d:DataContext="{d:DesignInstance Type=viewModels:AddExpenseViewModel}"
         mc:Ignorable="d"
-        Title="AddExpenseWindow" Height="250" Width="400" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Background="#FF1A1919">
+        Title="AddExpenseWindow" Height="344" Width="400" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Background="#FF1A1919">
+ 
+    <Window.DataContext>
+        <viewModels:AddExpenseViewModel />
+    </Window.DataContext>
+
     <StackPanel Orientation="Vertical">
         <StackPanel Margin="20">
             <Label Content="Nazwa" HorizontalAlignment="Center" Foreground="White" Padding="0 5 0 5" />
-            <TextBox Padding="0 5 0 5" FontSize="16" Style="{StaticResource textbox1}" />
+            <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Padding="0 5 0 5" FontSize="16" Style="{StaticResource textbox1}" />
+
+            <Label Content="Kwota" HorizontalAlignment="Center" Foreground="White" Padding="0 5 0 5" />
+            <TextBox Text="{Binding Amount, UpdateSourceTrigger=PropertyChanged}" Padding="0 5 0 5" FontSize="16" Style="{StaticResource textbox1}" />
+
+            <Label Content="Kategoria" HorizontalAlignment="Center" Foreground="White" Padding="0 5 0 5" />
+            <TextBox Text="{Binding Category, UpdateSourceTrigger=PropertyChanged}" Padding="0 5 0 5" FontSize="16" Style="{StaticResource textbox1}" />
         </StackPanel>
 
-        <DatePicker Margin="60,0,60,0" />
+        <DatePicker Margin="60,0,60,0" SelectedDate="{Binding Date}" />
 
         <Grid Margin="20">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0"  Content="DODAJ" Margin="10" Padding="2" FontWeight="Bold" FontSize="12" BorderBrush="#FFFFFEFE" Background="White" Width="100" Style="{StaticResource whiteBttn}" />
-            <Button Grid.Column="1"  Content="ANULUJ" Margin="10" Padding="2" FontWeight="Bold" FontSize="12" BorderBrush="#FFFFFEFE" Background="White" Width="100"   Style="{StaticResource whiteBttn}" />
+            <Button Grid.Column="0" Content="DODAJ" Command="{Binding SaveCommand}" Margin="10" Padding="2" FontWeight="Bold" FontSize="12" BorderBrush="#FFFFFEFE" Background="White" Width="100" Style="{StaticResource whiteBttn}" />
+            <Button Grid.Column="1" Content="ANULUJ" Command="{Binding CancelCommand}" Margin="10" Padding="2" FontWeight="Bold" FontSize="12" BorderBrush="#FFFFFEFE" Background="White" Width="100" Style="{StaticResource whiteBttn}" />
         </Grid>
     </StackPanel>
 </Window>
