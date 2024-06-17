@@ -90,7 +90,7 @@ namespace Wallet.Models
 
             List<Account> accounts = _repository.GetAllData("accounts");
 
-            if (accounts is not null) 
+            if (accounts != null) 
             {
                 return accounts.Where(a => a.IdUser == idUser).ToList();
             }
@@ -125,6 +125,21 @@ namespace Wallet.Models
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        internal void GetMainActive(int id)
+        {
+            List<Account> accounts = _repository.GetAllData("accounts");
+
+            Account temp = accounts.FirstOrDefault(a => a.IsMain == true && a.IdUser == id);
+
+            Name = temp.Name;
+            Salary = temp.Salary;
+            IdUser = temp.IdUser;
+            IsMain = temp.IsMain;
+            MainAccount = temp.MainAccount;
+            Id = temp.Id;
+            
         }
     }
 }

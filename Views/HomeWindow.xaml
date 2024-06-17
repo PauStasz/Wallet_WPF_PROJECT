@@ -28,13 +28,14 @@
             <Border Grid.Column="0" MinHeight="130" MaxWidth="200" BorderThickness="2" BorderBrush="#FFF6E0" CornerRadius="20" Background="#FFF6E0">
                     <StackPanel Orientation="Vertical">
                     <Label Content="SALDO" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="18"/>
-                    <Label Content="{Binding amount}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15"/>
+                    <Label Content="{Binding Account.Salary}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15"/>
                     <Label Content="Z konta" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="18"/>
-                    <Label Content="{Binding nameAccount}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15"/>
+                    <Label Content="{Binding Account.Name}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15"/>
                     </StackPanel>
              </Border>
 
-                <TreeView MaxHeight="150" Height="150" Grid.Column="1" Style="{StaticResource treeViewStyle}" >
+
+                <TreeView  MaxHeight="150" Height="150" Grid.Column="1" Style="{StaticResource treeViewStyle}" >
                     <TreeViewItem Header="FILTRY" BorderBrush="#FFF6E0" >
                         <TreeViewItem Header="KATEGORIE"/>
                         <ItemsControl ItemsSource="{Binding Categories}">
@@ -80,23 +81,22 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Button Grid.Column="0"  Content="WYDATKI" Margin="10" Height="30" Width="150" FontWeight="Bold" FontSize="12" BorderBrush="#FF1A1919" Background="#FFF6E0" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" IsEnabled="True" />
-                        <Button Grid.Column="1"  Content="WPŁYWY" Margin="10"  Height="30" Width="150" FontWeight="Bold" FontSize="12" BorderBrush="#FF1A1919" Background="#FF1A1919" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        <Button Grid.Column="2"  Content="PLANOWANE WYDATKI" Margin="10"  Height="30" Width="150" FontWeight="Bold" FontSize="12" BorderBrush="#FF1A1919" Background="#FF1A1919" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <Button Grid.Column="0" Command="{Binding ExpansesCommand}" Content="WYDATKI" Margin="10" Height="30" Width="150" FontWeight="Bold" FontSize="12" BorderBrush="#FF1A1919" Background="#FF1A1919" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <Button Grid.Column="1" Command="{Binding RevenuesCommand}" Content="WPŁYWY" Margin="10"  Height="30" Width="150" FontWeight="Bold" FontSize="12" BorderBrush="#FF1A1919" Background="#FF1A1919" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <Button Grid.Column="2" Command="{Binding FutureExpansesCommand}" Content="PLANOWANE WYDATKI" Margin="10"  Height="30" Width="150" FontWeight="Bold" FontSize="12" BorderBrush="#FF1A1919" Background="#FF1A1919" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Grid>
-                        <ListBox Width="auto" Height="auto" Margin="20" Background="#FFF6E0" BorderThickness="0">
-                        <ListBoxItem  Background="#FF1A1919" HorizontalAlignment="Center" >
-                            <StackPanel Orientation="Horizontal"  Width="480" MaxWidth="480">
-                                <ContentControl  Height="30" Margin="10, 0, 40, 0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                    <svgc:SvgViewbox Source="/Assets/Vectors/Transactional-SMS.svg" />
-                                </ContentControl>
-                                <Label Content="nazwa" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" Width="100" HorizontalContentAlignment="Center"/>
-                                <Label Content="data" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" Width="100" HorizontalContentAlignment="Center"/>
-                                <Label Content="cena" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" Width="100" HorizontalContentAlignment="Center"/>
-
-                                <Button  Content="USUŃ" Margin="10" Padding="5" FontWeight="Bold" FontSize="12" BorderBrush="#FF1A1919" Background="#FF1A1919" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource transBttn}" />
+                    
+                    <ListBox x:Name="ExpensesRevenuesListBox" ItemsSource="{Binding Items, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="auto" Height="auto" Margin="20" Background="#FFF6E0" BorderThickness="0">
+                        <ListBox.ItemTemplate>
+                        <DataTemplate >
+                                <StackPanel Background="#FF1A1919" HorizontalAlignment="Center" Orientation="Horizontal" Margin="20,0,0,0"  Width="500" MaxWidth="500" Height="60">
+                                    <Image Source="{Binding Category.Image}" Height="30" Margin="10, 0, 20, 0" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    <Label Content="{Binding Name}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" Width="100" HorizontalContentAlignment="Center"/>
+                                    <Label Content="{Binding Date}" Padding="0" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" Width="100" HorizontalContentAlignment="Center"/>
+                                <Label Content="{Binding Salary}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" Width="100" HorizontalContentAlignment="Center"/>
                             </StackPanel>
-                        </ListBoxItem>
+                        </DataTemplate>
+                        </ListBox.ItemTemplate>
                     </ListBox>
                 </StackPanel>
             </Border>
