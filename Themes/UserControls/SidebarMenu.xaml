@@ -13,13 +13,6 @@
         <viewModels:SidebarMenuViewModel/>
     </UserControl.DataContext>
     
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Themes/Style.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </UserControl.Resources>
 
     <Grid Background="#272829">
         <Grid.RowDefinitions>
@@ -39,17 +32,17 @@
                     <svgc:SvgViewbox Source="/Assets/Vectors/person-account.svg" />
                 </Label>
 
-                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Name,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
             </Grid>
 
             <StackPanel Grid.Row="1">
-            <Button x:Name="HomeButton" Content="HOME" Style="{StaticResource lineBttn}" IsDefault="True" Click="GoHome"/>
-            <Button x:Name="ExpensePlanningButton" Content="PLANOWANIE WYDATKÓW" Style="{StaticResource lineBttn}" Click="GoExpensePlanning" />
-            <Button x:Name="RaportButton" Content="RAPORTY I STATYSTKI" Style="{StaticResource lineBttn}" Click="GoRaport" />
-            <Button x:Name="ForecastButton" Content="PROGNOZA" Style="{StaticResource lineBttn}" Click="GoForecast" />
-            <Button x:Name="AccountButton" Content="KONTA" Style="{StaticResource lineBttn}" Click="GoAccount" />
-            <Button x:Name="CategoriesButton" Content="KATEGORIE" Style="{StaticResource lineBttn}" Click="GoCategories" />
-            <Button x:Name="SettingsButton" Content="USTAWIENIA" Style="{StaticResource lineBttn}" IsDefault="False" Click="GoSettings" />
+            <Button x:Name="HomeButton" Command="{Binding HomeCommand}" Content="HOME" Style="{StaticResource lineBttn}" IsDefault="True"/>
+            <Button x:Name="ExpensePlanningButton" Command="{Binding ExpensePlanningCommand}" Content="PLANOWANIE WYDATKÓW" Style="{StaticResource lineBttn}" />
+            <Button x:Name="RaportButton" Command="{Binding RaportCommand}" Content="RAPORTY I STATYSTKI" Style="{StaticResource lineBttn}" />
+            <Button x:Name="ForecastButton" Command="{Binding ForecastCommand}" Content="PROGNOZA" Style="{StaticResource lineBttn}" />
+            <Button x:Name="AccountButton" Command="{Binding AccountCommand}" Content="KONTA" Style="{StaticResource lineBttn}" />
+            <Button x:Name="CategoriesButton" Command="{Binding CategoriesCommand}" Content="KATEGORIE" Style="{StaticResource lineBttn}" />
+            <Button x:Name="SettingsButton" Command="{Binding SettingsCommand}" Content="USTAWIENIA" Style="{StaticResource lineBttn}" IsDefault="False" />
             <Button Content="WYLOGUJ SIĘ" Command="{Binding LogoutCommand}" Style="{StaticResource lineBttn}" />
         </StackPanel>
 

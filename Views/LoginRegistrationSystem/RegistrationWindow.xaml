@@ -13,14 +13,6 @@
         <viewModels:RegistrationViewModel />
     </Window.DataContext>
 
-    <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Themes/Style.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>
-
     <Grid Margin="60,100,30,20">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" MinHeight="42"/>

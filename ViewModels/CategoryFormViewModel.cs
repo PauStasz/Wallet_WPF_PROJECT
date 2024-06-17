@@ -2,12 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
@@ -18,12 +15,13 @@ using Wallet.Views.DialogsWindows;
 
 namespace Wallet.ViewModels
 {
-    class CategoryFormViewModel : INotifyPropertyChanged
+    class CategoryFormViewModel : INotifyPropertyChanged, IDataErrorInfo
     {
         private Category _category;
         private User _user;
         private bool _isEditedOrAddedNew;
         private BitmapImage _icon;
+        private bool _isUploaded;
 
 
         public CategoryFormViewModel()
@@ -32,6 +30,7 @@ namespace Wallet.ViewModels
             _category = new Category();
             _user.GetCurrentUser();
             _isEditedOrAddedNew = false;
+            _isUploaded = false;
 
             _saveCommand = new RelayCommand(execute => CreateCategory());
             _cancelCommand = new RelayCommand(execute => CancelAction());
@@ -50,9 +49,22 @@ namespace Wallet.ViewModels
                 BitmapImage bitmap = new BitmapImage();
                 bitmap.BeginInit();
                 bitmap.UriSource = new Uri(openFileDialog.FileName);
+                bitmap.CacheOption = BitmapCacheOption.OnLoad;
                 bitmap.EndInit();
-                _icon = bitmap;
-            }     
+                
+
+                if (bitmap.PixelWidth > 0 && bitmap.PixelHeight > 0)
+                {
+                    _icon = bitmap;
+                    _isUploaded = true;
+                    
+                }
+                else
+                { 
+                    _isUploaded = false;
+                }
+                
+            }  
         }
 
         private ICommand _addIconCommand;
@@ -70,6 +82,7 @@ namespace Wallet.ViewModels
             _user = new User();
             _user.GetCurrentUser();
             _isEditedOrAddedNew = true;
+            _isUploaded = false;
 
             _saveCommand = new RelayCommand(execute => CreateCategory());
             _cancelCommand = new RelayCommand(execute => CancelAction());
@@ -123,44 +136,66 @@ namespace Wallet.ViewModels
 
                 MessageHolder msg = MessageHolder.Instance;
 
-                if (!_isEditedOrAddedNew)
+                if (_isUploaded)
                 {
-                    _category.Create(Name, _user.Id);
-                    msg.Text = "Kategoria została dodana.";
+                    if (!_isEditedOrAddedNew)
+                    {
+                        _category.Create(Name, _user.Id);
+                        msg.Text = "Kategoria została dodana.";
 
-                    var category = _category.GetCategoriesByIdUserName(_user.Id, Name);
-                    SaveImage(category);
+                        var category = _category.GetCategoriesByIdUserName(_user.Id, Name);
+                        SaveImage(category);
+                    }
+                    else
+                    {
+                        _category.UpdateOne(Name, _user.Id);
+                        msg.Text = "Kategoria została edytowana.";
+
+                        SaveImage(_category);
+                    }
+
+                    InfoWindow window = new InfoWindow();
+                    window.Show();
+
+                    if (currentWindow != null)
+                    {
+                        currentWindow.Close();
+                    }
                 }
                 else
                 {
-                    _category.UpdateOne(Name, _user.Id);
-                    msg.Text = "Kategoria została edytowana.";
+                    Window currentWindow1 = Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive);
 
-                    SaveImage(_category);
+
+                    MessageHolder msg1 = MessageHolder.Instance;
+                    msg1.Text = "Brak zdjęcia";
+
+                    InfoWindow window1 = new InfoWindow();
+                    window1.Show();
+
+                    if (currentWindow1 is not null)
+                    {
+
+                        currentWindow1.Close();
+
+                    }
                 }
 
-                InfoWindow window = new InfoWindow();
-                window.Show();
-
-                if (currentWindow is not null)
-                {
-                    currentWindow.Close();
-                }
             }
             else
             {
-                Window currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive);
+                Window currentWindow2 = Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive);
 
-                MessageHolder msg = MessageHolder.Instance;
-                msg.Text = "Brak dostępu do internetu";
+                MessageHolder msg2 = MessageHolder.Instance;
+                msg2.Text = "Brak dostępu do internetu";
 
                 InfoWindow window = new InfoWindow();
                 window.Show();
 
-                if (currentWindow is not null)
+                if (currentWindow2 != null)
                 {
 
-                    currentWindow.Close();
+                    currentWindow2.Close();
 
                 }
             }
@@ -170,22 +205,32 @@ namespace Wallet.ViewModels
         {
             string path = AppDomain.CurrentDomain.BaseDirectory;
 
-            string nameFile = _user.Id.ToString() + "_" + category.Id.ToString() + ".png";
+            Random rand = new Random();
+            int version = rand.Next(1,10);
+            string nameFile = _user.Id.ToString() + "_" + category.Id.ToString() + "_" + version + ".png";
             _category.Icon = nameFile;
             string outputPath = Path.Combine(path, "Assets", "UserIcons", nameFile);
+
 
             if (!Directory.Exists(Path.Combine(path, "Assets", "UserIcons")))
             {
                 Directory.CreateDirectory(Path.Combine(path, "Assets", "UserIcons"));
             }
-
-            BitmapEncoder encoder = new PngBitmapEncoder();
-            encoder.Frames.Add(BitmapFrame.Create(_icon));
-
-            using (FileStream fileStream = new FileStream(outputPath, FileMode.Create))
+             
+            try
             {
+                BitmapEncoder encoder = new PngBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(_icon));
+                FileStream fileStream = new FileStream(outputPath, FileMode.Create);
                 encoder.Save(fileStream);
+                fileStream.Close();
             }
+            catch (IOException ex)
+            {
+                Debug.Write(ex.ToString());
+            }
+
+            _category.Image = outputPath;
         }
 
         private ICommand _cancelCommand;
@@ -211,9 +256,10 @@ namespace Wallet.ViewModels
 
         public string Error
         {
-
-            get { throw new NotImplementedException(); }
-
+            get
+            {
+                return string.Empty;
+            }
         }
 
         public string this[string columnName]

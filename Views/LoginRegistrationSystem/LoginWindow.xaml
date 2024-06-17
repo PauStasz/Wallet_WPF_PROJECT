@@ -14,13 +14,6 @@
         <viewModels:LoginViewModel/>
     </Window.DataContext>
     
-    <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Themes/Style.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>
 
     <Grid Margin="60,100,30,40">
         <Grid.RowDefinitions>

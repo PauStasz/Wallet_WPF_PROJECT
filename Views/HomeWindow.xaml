@@ -4,10 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wallet.Views" 
-        xmlns:UserControls="clr-namespace:Wallet.Themes.UserControls" xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+        xmlns:viewModels="clr-namespace:Wallet.ViewModels"
+        xmlns:UserControls="clr-namespace:Wallet.Themes.UserControls" 
+        xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
         mc:Ignorable="d"
         Title="Home" Height="650" Width="900" WindowStartupLocation="CenterScreen" Background="#FF1A1919">
 
+
+    <Window.DataContext>
+        <viewModels:HomeViewModel/>
+    </Window.DataContext>
 
     <DockPanel>
         <UserControls:SidebarMenu DockPanel.Dock="Left"/>

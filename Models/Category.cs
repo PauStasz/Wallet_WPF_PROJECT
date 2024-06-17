@@ -5,6 +5,7 @@ using Wallet.Models.Users;
 using System.Windows.Media.Imaging;
 using System.IO;
 using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace Wallet.Models
 {
@@ -26,9 +27,34 @@ namespace Wallet.Models
         }
 
         public int IdUser { get; set; }
-        public string Icon { get; set; }
 
-        public string Image { get; set; }
+        private string _icon;
+        public string Icon
+        {
+            get => _icon;
+            set
+            {
+                if (_icon != value)
+                {
+                    _icon = value;
+                    OnPropertyChanged(nameof(Icon));
+                }
+            }
+        }
+
+        private string _image;
+        public string Image
+        {
+            get => _image;
+            set
+            {
+                if (_image != value)
+                {
+                    _image = value;
+                    OnPropertyChanged(nameof(Image));
+                }
+            }
+        }
 
         private IGenericRepository<Category> _repository = new GenericRepository<Category>();
 
@@ -38,6 +64,8 @@ namespace Wallet.Models
             IdUser = idUser;
 
             _repository.SetData("categories", this);
+
+
         }
 
         public List<Category> GetCategoriesById(int idUser)

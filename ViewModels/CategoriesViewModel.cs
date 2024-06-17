@@ -35,7 +35,6 @@ namespace Wallet.ViewModels
             _editCommand = new RelayCommand(EditCategory);
             
 
-
             SetItems();
 
         }
@@ -55,9 +54,28 @@ namespace Wallet.ViewModels
         {
             if (parameter is Category item)
             {
-                CategoryFormWindow window = new CategoryFormWindow(item);
-                window.Show();
+                OpenEditAccountDialog(UpdateEditedItems, item);
             }
+        }
+
+        private void UpdateEditedItems(Category item)
+        {
+            int index = Items.IndexOf(item);
+            if (index > -1)
+            {
+                string temp = Items[index].Image;
+                Items[index].Image = "null";
+                Thread.Sleep(1000);
+                Items[index].Image = temp;
+            }
+            
+        }
+        private void OpenEditAccountDialog(Action<Category> callback, Category item)
+        {
+            CategoryFormWindow window = new CategoryFormWindow(item);
+            bool done = true;
+            window.Closed += (sender, args) => callback(window.GetCategory());
+            window.Show();
         }
 
         private void SetItems()
