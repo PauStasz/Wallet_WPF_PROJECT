@@ -32,8 +32,10 @@ namespace Wallet.Models
             List<Category> categories = _categoryRepository.GetAllData("categories");
             List<ExpenseRevenue> result = new List<ExpenseRevenue>();
 
+
             if (expenses != null)
-                foreach (ExpenseRevenue expense in expenses) 
+            {
+                foreach (ExpenseRevenue expense in expenses)
                 {
                     if (expense.IdAccount == id)
                     {
@@ -41,8 +43,9 @@ namespace Wallet.Models
 
                         result.Add(expense);
                     }
-                
+
                 }
+            }
 
             return result;
         }
@@ -53,7 +56,8 @@ namespace Wallet.Models
             List<Category> categories = _categoryRepository.GetAllData("categories");
             List<ExpenseRevenue> result = new List<ExpenseRevenue>();
 
-            if(revenues != null)
+            if (revenues != null)
+            {
                 foreach (ExpenseRevenue revenue in revenues)
                 {
                     if (revenue.IdAccount == id)
@@ -64,6 +68,7 @@ namespace Wallet.Models
                     }
 
                 }
+            }
 
             return result;
         }

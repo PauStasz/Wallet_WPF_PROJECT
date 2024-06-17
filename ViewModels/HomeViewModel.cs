@@ -25,6 +25,8 @@ namespace Wallet.ViewModels
         private ICommand _expanses;
         private ICommand _futureExpanses;
         private ICommand _revenues;
+        private ICommand _searchCommand;
+        private ObservableCollection<ExpenseRevenue> _beforeSearch;
         public HomeViewModel()
         {
             _user = new User();
@@ -37,8 +39,23 @@ namespace Wallet.ViewModels
             _expanses = new RelayCommand(execute => SetListToExpanses());
             _futureExpanses = new RelayCommand(execute => SetListToFutureExpanses());
             _revenues = new RelayCommand(execute => SetListToRevenues());
+            _searchCommand = new RelayCommand(execute => SearchInItems());
 
             SetListToExpanses();
+        }
+
+        private void SearchInItems()
+        {
+            if (!string.IsNullOrEmpty(Search))
+            {
+                var list = _beforeSearch.Where(i => i.Name.ToLower().Contains(Search.ToLower())).ToList();
+                Items = [.. list];
+            }
+            else
+            {
+                Items = _beforeSearch;
+            }
+            
         }
 
         private void SetListToRevenues()
@@ -57,6 +74,8 @@ namespace Wallet.ViewModels
             {
                 Items = new ObservableCollection<ExpenseRevenue>();
             }
+
+            _beforeSearch = Items;
         }
 
         private void SetListToFutureExpanses()
@@ -75,6 +94,8 @@ namespace Wallet.ViewModels
             {
                 Items = new ObservableCollection<ExpenseRevenue>();
             }
+
+            _beforeSearch = Items;
         }
 
 
@@ -83,7 +104,7 @@ namespace Wallet.ViewModels
 
             List<ExpenseRevenue> data = _expense.GetAllExpensesByAccountId(_account.Id).Where(d => d.Date <= DateTime.Now).ToList();
 
-
+           
             if (data != null && data.Count() > 0)
             {
 
@@ -95,6 +116,8 @@ namespace Wallet.ViewModels
             {
                 Items = new ObservableCollection<ExpenseRevenue>();
             }
+
+            _beforeSearch = Items;
         }
 
         public ICommand ExpansesCommand
@@ -148,7 +171,29 @@ namespace Wallet.ViewModels
             }
         }
 
-       
+        private string _search;
+
+        public string Search
+        {
+            get => _search;
+            set
+            {
+                _search = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        public ICommand SearchCommand
+        {
+            get => _searchCommand;
+            set
+            {
+                _searchCommand = value;
+                OnPropertyChanged();
+            }
+        }
+
         protected void OnPropertyChanged([CallerMemberName] string name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
