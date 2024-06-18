@@ -3,10 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Wallet.Views" xmlns:UserControls="clr-namespace:Wallet.Themes.UserControls"
-        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        xmlns:local="clr-namespace:Wallet.Views"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" xmlns:UserControls="clr-namespace:Wallet.Themes.UserControls" xmlns:viewModels="clr-namespace:Wallet.ViewModels"
         mc:Ignorable="d"
         Title="Forecast" Height="650" Width="900" WindowStartupLocation="CenterScreen" Background="#FF1A1919">
+
+    <Window.DataContext>
+        <viewModels:ExpensesViewModel/>
+    </Window.DataContext>
 
     <DockPanel>
         <UserControls:SidebarMenu DockPanel.Dock="Left"/>
@@ -29,14 +33,13 @@
                     <TextBlock Text="Prognoza" Foreground="#f0eff6" FontSize="18" FontWeight="SemiBold" Margin="40,25,0,0"/>
                     <TextBlock Text="Miesięcznie" Foreground="#f0eff6" FontSize="16" FontWeight="SemiBold" Margin="0,27,17,0" HorizontalAlignment="Right" Width="93"/>
 
-                    <lvc:CartesianChart LegendLocation="Bottom" Margin="10,10,10,9" Grid.RowSpan="2" >
+                    <lvc:CartesianChart LegendLocation="Bottom" Margin="10,10,10,9" Grid.RowSpan="2" Series="{Binding ChartSeries}">
                         <lvc:CartesianChart.ToolTip>
                             <lvc:DefaultTooltip Background="#5a5080" Foreground="#f4f3f6" BulletSize="0"/>
                         </lvc:CartesianChart.ToolTip>
 
-
                         <lvc:CartesianChart.AxisX>
-                            <lvc:Axis Foreground="#a79fd1" FontSize="14" ShowLabels="True" Labels=" Styczeń, Luty, Marzec, Kwiecień, Maj, Czerwiec, Lipiec, Sierpień, Wrzesień, Październik, Listopad, Grudzień">
+                            <lvc:Axis Foreground="#a79fd1" FontSize="14" ShowLabels="True" Labels="Styczeń, Luty, Marzec, Kwiecień, Maj, Czerwiec, Lipiec, Sierpień, Wrzesień, Październik, Listopad, Grudzień">
                                 <lvc:Axis.Separator>
                                     <lvc:Separator StrokeThickness="0" Step="1"/>
                                 </lvc:Axis.Separator>
@@ -44,35 +47,19 @@
                         </lvc:CartesianChart.AxisX>
 
                         <lvc:CartesianChart.AxisY>
-                            <lvc:Axis ShowLabels="True" MinValue="0" MaxValue="170">
+                            <lvc:Axis ShowLabels="True" MinValue="0" MaxValue="1000">
                                 <lvc:Axis.Separator>
                                     <lvc:Separator StrokeThickness="0"/>
                                 </lvc:Axis.Separator>
                             </lvc:Axis>
                         </lvc:CartesianChart.AxisY>
 
-                        <lvc:CartesianChart.Series>
-                            <lvc:LineSeries Title="Series" Fill="#7164b2" StrokeThickness="4" PointGeometrySize="0" Values="10, 100, 20, 150, 5, 30, 10, 100, 20, 150, 5, 30">
-                                <lvc:LineSeries.Stroke>
-                                    <LinearGradientBrush>
-                                        <GradientStop Color="Transparent" Offset="0"/>
-                                        <GradientStop Color="#f782ab" Offset="0.23"/>
-                                        <GradientStop Color="Transparent" Offset="2.5"/>
-                                    </LinearGradientBrush>
-                                </lvc:LineSeries.Stroke>
-                            </lvc:LineSeries>
-                        </lvc:CartesianChart.Series>
                     </lvc:CartesianChart>
-
-                    <Grid Grid.Row="1" Margin="10,20,10,15">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                    </Grid>
                 </Grid>
             </Border>
         </StackPanel>
     </DockPanel>
 </Window>
+
+
+

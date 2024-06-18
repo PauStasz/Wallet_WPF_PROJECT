@@ -1,8 +1,6 @@
 ﻿using Wallet.Repositories.IRepositories;
 using Wallet.Repositories;
 using System.ComponentModel;
-using Wallet.Models.Users;
-using System;
 using System.IO;
 
 namespace Wallet.Models
@@ -67,7 +65,6 @@ namespace Wallet.Models
         }
 
         public int IdUser { get; set; }
-        public string Icon { get; set; }
         public string Image { get; set; }
 
         private IGenericRepository<Expense> _repository = new GenericRepository<Expense>();
