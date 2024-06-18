@@ -108,7 +108,7 @@
                         <Button Grid.Column="2" Command="{Binding FutureExpansesCommand}" Content="PLANOWANE WYDATKI" Margin="10"  Height="30" Width="150" FontWeight="Bold" FontSize="12" BorderBrush="#FF1A1919" Background="#FF1A1919" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Grid>
 
-                    <ListBox x:Name="ExpensesRevenuesListBox" ItemsSource="{Binding Items, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="auto" Height="auto" Margin="20" Background="#FFF6E0" BorderThickness="0">
+                    <ListBox MaxHeight="200" x:Name="ExpensesRevenuesListBox" ItemsSource="{Binding Items, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="auto" Height="auto" Margin="20" Background="#FFF6E0" BorderThickness="0">
                         <ListBox.ItemTemplate>
                             <DataTemplate >
                                 <StackPanel Background="#FF1A1919" HorizontalAlignment="Center" Orientation="Horizontal" Margin="20,0,0,0"  Width="500" MaxWidth="500" Height="60">
