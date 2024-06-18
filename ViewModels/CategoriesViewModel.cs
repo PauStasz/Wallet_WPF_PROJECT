@@ -81,10 +81,18 @@ namespace Wallet.ViewModels
         private void SetItems()
         {
             List<Category> data = _category.GetCategoriesById(_user.Id);
-            
 
-            ObservableCollection<Category> temp = [.. data];
-            _items = temp;
+            if (data != null && data.Count() > 0)
+            {
+                ObservableCollection<Category> temp = [.. data];
+                _items = temp;
+
+
+            }
+            else
+            {
+                Items = new ObservableCollection<Category>();
+            }
         }
 
         private Category selectedItem;
