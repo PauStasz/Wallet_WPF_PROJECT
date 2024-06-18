@@ -58,6 +58,7 @@ namespace Wallet.Models
         public int IdUser { get; set; }
 
         private IGenericRepository<Expense> _repository = new GenericRepository<Expense>();
+        private IGenericRepository<Account> _accountRepository = new GenericRepository<Account>();
 
         private Account _account = new Account();
         public void Create(string name, double amount, DateTime date, Category category, int idUser)
@@ -71,7 +72,10 @@ namespace Wallet.Models
             IdUser = idUser;
             IdAccount = _account.Id;
 
+            _account.Salary = -_amount;
+
             _repository.SetData("expenses", this);
+            _accountRepository.UpdateData("accounts", _account);
         }
 
         public List<Expense> GetExpensesById(int idUser)
@@ -122,7 +126,10 @@ namespace Wallet.Models
             IdUser = id;
             IdAccount = _account.Id;
 
+            _account.Salary = -_amount;
+
             _repository.UpdateData("expenses", this);
+            _accountRepository.UpdateData("accounts", _account);
         }
 
         internal void Delete(int id)
