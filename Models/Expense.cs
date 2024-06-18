@@ -4,16 +4,18 @@ using System.ComponentModel;
 using Wallet.Models.Users;
 using System;
 using System.IO;
+using System.Diagnostics;
 
 namespace Wallet.Models
 {
     public class Expense : BaseEntity, INotifyPropertyChanged
     {
         private string _name;
-        private decimal _amount;
+        private double _amount;
         private DateTime _date;
-        private string _category;
+        public int IdCategory { get; set; }
 
+        public int IdAccount { get; set; }
         public string Name
         {
             get => _name;
@@ -27,7 +29,7 @@ namespace Wallet.Models
             }
         }
 
-        public decimal Amount
+        public double Amount
         {
             get => _amount;
             set
@@ -53,32 +55,21 @@ namespace Wallet.Models
             }
         }
 
-        public string Category
-        {
-            get => _category;
-            set
-            {
-                if (_category != value)
-                {
-                    _category = value;
-                    OnPropertyChanged(nameof(Category));
-                }
-            }
-        }
-
         public int IdUser { get; set; }
-        public string Icon { get; set; }
-        public string Image { get; set; }
 
         private IGenericRepository<Expense> _repository = new GenericRepository<Expense>();
 
-        public void Create(string name, decimal amount, DateTime date, string category, int idUser)
+        private Account _account = new Account();
+        public void Create(string name, double amount, DateTime date, Category category, int idUser)
         {
+
+            _account.GetMainActive(idUser);
             Name = name;
             Amount = amount;
             Date = date;
-            Category = category;
+            IdCategory = category.Id;
             IdUser = idUser;
+            IdAccount = _account.Id;
 
             _repository.SetData("expenses", this);
         }
@@ -86,29 +77,13 @@ namespace Wallet.Models
         public List<Expense> GetExpensesById(int idUser)
         {
             List<Expense> expenses = _repository.GetAllData("expenses");
+            
+            _account.GetMainActive(idUser);
 
-            if (expenses is not null)
+            if (expenses != null)
             {
-                var list =  expenses.Where(e => e.IdUser == idUser).ToList();
-
-                string path = AppDomain.CurrentDomain.BaseDirectory;
-                string inputPath = Path.Combine(path, "Assets", "UserIcons");
-
-                if (!Directory.Exists(inputPath))
-                {
-                    foreach (Expense item in list)
-                    {
-                        string nameFile = idUser.ToString() + "_" + item.Id.ToString() + ".png";
-                        string fullPath = System.IO.Path.Combine(inputPath, nameFile);
-                        
-                        if (File.Exists(fullPath))
-                        {
-                            item.Image = fullPath;
-                        }
-                    }
-
-                }
-
+                var list =  expenses.Where(e => e.IdAccount == _account.Id).ToList();
+                
                 return list;
 
             }
@@ -137,13 +112,15 @@ namespace Wallet.Models
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        internal void UpdateOne(string name, decimal amount, DateTime date, string category, int id)
+        internal void UpdateOne(string name, double amount, DateTime date, Category category, int id)
         {
+            _account.GetMainActive(id);
             Name = name;
             Amount = amount;
             Date = date;
-            Category = category;
+            IdCategory = category.Id;
             IdUser = id;
+            IdAccount = _account.Id;
 
             _repository.UpdateData("expenses", this);
         }

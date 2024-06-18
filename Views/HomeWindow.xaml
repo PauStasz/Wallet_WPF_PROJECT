@@ -4,83 +4,95 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wallet.Views" 
-        xmlns:viewModels="clr-namespace:Wallet.ViewModels"
         xmlns:UserControls="clr-namespace:Wallet.Themes.UserControls" 
-        xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+        xmlns:svgc="http://sharpvectors.codeplex.com/svgc/" 
+        xmlns:viewModels="clr-namespace:Wallet.ViewModels"
         mc:Ignorable="d"
         Title="Home" Height="650" Width="900" WindowStartupLocation="CenterScreen" Background="#FF1A1919">
 
 
     <Window.DataContext>
-        <viewModels:HomeViewModel/>
+        <viewModels:HomeViewModel />
     </Window.DataContext>
 
     <DockPanel>
         <UserControls:SidebarMenu DockPanel.Dock="Left"/>
         <StackPanel DockPanel.Dock="Right">
-            <Grid Grid.Column="0" MaxHeight="60" MinHeight="40" MaxWidth="600" Margin="20">
+            <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Height="50" Width="650" Margin="40,20,0,20">
                 <TextBox Text="{Binding Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  x:Name="TextBoxSearch" Style="{StaticResource Searchbar}" Padding="30,11,11,20"/>
-                
-                <Button Command="{Binding SearchCommand}" HorizontalAlignment="Right"  Background="Transparent" Width="50" >
+
+                <Button BorderThickness="0" Command="{Binding SearchCommand}" HorizontalAlignment="Right"  Background="Transparent" Width="50" >
                     <Button.Content >
                         <svgc:SvgViewbox   Grid.Column="1" Width="20" Height="20"  VerticalAlignment="Center" Margin="4,4,20,4" Source="/Assets/Vectors/search-svgrepo-com.svg">
                         </svgc:SvgViewbox>
                     </Button.Content>
                 </Button>
-                
+
             </Grid>
             <Grid >
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" MinWidth="350"/>
+                    <ColumnDefinition Width="*" MinWidth="340"/>
                     <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>  
-            
-            <Border Grid.Column="0" MinHeight="130" MaxWidth="200" BorderThickness="2" BorderBrush="#FFF6E0" CornerRadius="20" Background="#FFF6E0">
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" MinHeight="130" MaxWidth="200" BorderThickness="2" BorderBrush="#FFF6E0" CornerRadius="20" Background="#FFF6E0">
                     <StackPanel Orientation="Vertical">
-                    <Label Content="SALDO" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="18"/>
-                    <Label Content="{Binding Account.Salary}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15"/>
-                    <Label Content="Z konta" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="18"/>
-                    <Label Content="{Binding Account.Name}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15"/>
+                        <Label Content="SALDO" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="18"/>
+                        <Label Content="{Binding Account.Salary}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15"/>
+                        <Label Content="Z konta" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="18"/>
+                        <Label Content="{Binding Account.Name}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15"/>
                     </StackPanel>
-             </Border>
+                </Border>
 
 
-                <TreeView  MaxHeight="150" Height="150" Grid.Column="1" Style="{StaticResource treeViewStyle}" >
-                    <TreeViewItem Header="FILTRY" BorderBrush="#FFF6E0" >
-                        <TreeViewItem Header="KATEGORIE"/>
-                        <ItemsControl ItemsSource="{Binding Categories}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
-                                        <RadioButton GroupName="CategoriesSelection"/>
-                                        <TextBlock Text="{Binding nameCategory}"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </TreeViewItem>
-                    <TreeViewItem Header="SORTWANIE">
-                        <TreeViewItem Header="PO DACIE"/>
-                        <StackPanel Orientation="Horizontal">
-                            <RadioButton GroupName="DataSelection" IsChecked="True"/>
-                            <TextBlock Text="Rosnąco"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <RadioButton GroupName="DataSelection" IsChecked="True"/>
-                            <TextBlock Text="Malejąco"/>
-                        </StackPanel>
-                        <TreeViewItem Header="PO KWOCIE">
-                            <StackPanel Orientation="Horizontal">
-                                <RadioButton GroupName="DataSelection" IsChecked="True"/>
-                                <TextBlock Text="Rosnąco"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <RadioButton GroupName="DataSelection" IsChecked="True"/>
-                                <TextBlock Text="Malejąco"/>
-                            </StackPanel>
+                <Border Grid.Column="1" Height="150" MaxWidth="300" BorderThickness="2" BorderBrush="#FFF6E0" CornerRadius="20" Background="#FFF6E0">
+                    <TreeView Margin="10" Height="130" Background="Transparent" BorderThickness="0" Grid.Column="1" >
+                        <TreeViewItem  Header="FILTRY" BorderBrush="#FFF6E0" >
+                            <TreeViewItem  Header="KATEGORIE"/>
+                            <ItemsControl ItemsSource="{Binding Items, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Content="{Binding Category.Name}" IsChecked="{Binding IsSelectedCategory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" >
+                                            <CheckBox.Style>
+                                                <Style TargetType="CheckBox">
+                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Path=DistinctCategory}" Value="True">
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </CheckBox.Style>
+                                        </CheckBox>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
                         </TreeViewItem>
-                    </TreeViewItem>
-                </TreeView>
+                        <TreeViewItem Header="SORTWANIE">
+                            <TreeViewItem Header="PO DACIE">
+                                <StackPanel Orientation="Horizontal">
+                                    <RadioButton GroupName="DataSelection" IsChecked="{Binding IsSelected1ForData}"/>
+                                    <TextBlock Text="Rosnąco"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <RadioButton GroupName="DataSelection" IsChecked="{Binding IsSelectedForData}"/>
+                                    <TextBlock Text="Malejąco"/>
+                                </StackPanel>
+                            </TreeViewItem>
+                            <TreeViewItem Header="PO KWOCIE">
+                                <StackPanel Orientation="Horizontal">
+                                    <RadioButton GroupName="SalarySelection" IsChecked="{Binding IsSelected1ForSalary}" />
+                                    <TextBlock Text="Rosnąco"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <RadioButton GroupName="DataSelection" IsChecked="{Binding IsSelected2ForSalary}" />
+                                    <TextBlock Text="Malejąco"/>
+                                </StackPanel>
+                            </TreeViewItem>
+                        </TreeViewItem>
+                    </TreeView>
+                </Border>
+
             </Grid>
             <Border MinHeight="300" Width="600" Margin="50" BorderThickness="2" BorderBrush="#FFF6E0" CornerRadius="20" Background="#FFF6E0">
                 <StackPanel Orientation="Vertical">
@@ -95,17 +107,29 @@
                         <Button Grid.Column="1" Command="{Binding RevenuesCommand}" Content="WPŁYWY" Margin="10"  Height="30" Width="150" FontWeight="Bold" FontSize="12" BorderBrush="#FF1A1919" Background="#FF1A1919" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
                         <Button Grid.Column="2" Command="{Binding FutureExpansesCommand}" Content="PLANOWANE WYDATKI" Margin="10"  Height="30" Width="150" FontWeight="Bold" FontSize="12" BorderBrush="#FF1A1919" Background="#FF1A1919" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Grid>
-                    
+
                     <ListBox x:Name="ExpensesRevenuesListBox" ItemsSource="{Binding Items, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="auto" Height="auto" Margin="20" Background="#FFF6E0" BorderThickness="0">
                         <ListBox.ItemTemplate>
-                        <DataTemplate >
+                            <DataTemplate >
                                 <StackPanel Background="#FF1A1919" HorizontalAlignment="Center" Orientation="Horizontal" Margin="20,0,0,0"  Width="500" MaxWidth="500" Height="60">
                                     <Image Source="{Binding Category.Image}" Height="30" Margin="10, 0, 20, 0" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    <Label Content="{Binding Category.Name}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" Width="100" HorizontalContentAlignment="Center"/>
                                     <Label Content="{Binding Name}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" Width="100" HorizontalContentAlignment="Center"/>
                                     <Label Content="{Binding Date}" Padding="0" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" Width="100" HorizontalContentAlignment="Center"/>
-                                <Label Content="{Binding Salary}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" Width="100" HorizontalContentAlignment="Center"/>
-                            </StackPanel>
-                        </DataTemplate>
+
+                                    <Label Content="{Binding Amount}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" Width="100" HorizontalContentAlignment="Center"/>
+                                    <StackPanel.Style>
+                                        <Style TargetType="StackPanel">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsSelectedCategory}" Value="True">
+                                                    <Setter Property="Visibility" Value="Visible" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </StackPanel.Style>
+                                </StackPanel>
+                            </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
                 </StackPanel>

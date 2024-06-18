@@ -6,22 +6,26 @@
         xmlns:local="clr-namespace:Wallet.Views.DialogsWindows"
         xmlns:viewModels="clr-namespace:Wallet.ViewModels" d:DataContext="{d:DesignInstance Type=viewModels:AddExpenseViewModel}"
         mc:Ignorable="d"
-        Title="AddExpenseWindow" Height="344" Width="400" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Background="#FF1A1919">
+        Title="AddExpenseWindow"  Width="400" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Background="#FF1A1919">
  
     <Window.DataContext>
         <viewModels:AddExpenseViewModel />
     </Window.DataContext>
 
-    <StackPanel Orientation="Vertical">
+    <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
         <StackPanel Margin="20">
             <Label Content="Nazwa" HorizontalAlignment="Center" Foreground="White" Padding="0 5 0 5" />
-            <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Padding="0 5 0 5" FontSize="16" Style="{StaticResource textbox1}" />
+            <TextBox x:Name="NameTextBox" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Padding="0 5 0 5" FontSize="16" Style="{StaticResource textbox1}" />
+            <TextBlock Margin="20" Foreground="White" Text="{Binding (Validation.Errors)[0].ErrorContent, ElementName=NameTextBox}"/>
 
             <Label Content="Kwota" HorizontalAlignment="Center" Foreground="White" Padding="0 5 0 5" />
-            <TextBox Text="{Binding Amount, UpdateSourceTrigger=PropertyChanged}" Padding="0 5 0 5" FontSize="16" Style="{StaticResource textbox1}" />
-
+            <TextBox x:Name="AmountTextBox" Text="{Binding Amount, StringFormat={}{0:C}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Padding="0 5 0 5" FontSize="16" Style="{StaticResource textbox1}" />
+            <TextBlock Margin="20" Foreground="White" Text="{Binding (Validation.Errors)[0].ErrorContent, ElementName=AmountTextBox}"/>
+            
             <Label Content="Kategoria" HorizontalAlignment="Center" Foreground="White" Padding="0 5 0 5" />
-            <TextBox Text="{Binding Category, UpdateSourceTrigger=PropertyChanged}" Padding="0 5 0 5" FontSize="16" Style="{StaticResource textbox1}" />
+            <ListBox ItemsSource="{Binding Categories}" Grid.Row="1" Margin="10" Foreground="Black" Width="270"
+                 SelectedItem="{Binding SelectedCategory, Mode=TwoWay}" DisplayMemberPath="Name" />
+
         </StackPanel>
 
         <DatePicker Margin="60,0,60,0" SelectedDate="{Binding Date}" />

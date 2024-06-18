@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Wallet.ViewModels;
 
 namespace Wallet.Views
 {
@@ -22,6 +23,7 @@ namespace Wallet.Views
         public HomeWindow()
         {
             InitializeComponent();
+            DataContext = new HomeViewModel();
         }
     }
 }

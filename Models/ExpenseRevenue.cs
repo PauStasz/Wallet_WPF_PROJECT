@@ -6,11 +6,15 @@ using System.Threading.Tasks;
 using Wallet.Repositories.IRepositories;
 using Wallet.Repositories;
 using System.Diagnostics;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Wallet.Models
 {
     internal class ExpenseRevenue : BaseEntity
     {
+        public int IdUser { get; set; }
         public int IdAccount { get; set; }
 
         public int IdCategory { get; set; }
@@ -19,19 +23,64 @@ namespace Wallet.Models
 
         public DateTime Date { get; set; }
 
-        public double Salary { get; set; }
+        public double Amount { get; set; }
 
-        public Category Category { get; set; }
+        public Category Category
+        {
+            get => _category;
+            set
+            {
+                if (_category != value)
+                {
+                    _category = value;
+                    OnPropertyChanged(nameof(Category));
+                }
+            }
+        }
+
+        public bool DistinctCategory
+        {
+            get => _distinctcategory;
+            set
+            {
+                if (_distinctcategory != value)
+                {
+                    _distinctcategory = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public bool IsSelectedCategory
+        {
+            get => _isSelectedCategory;
+            set
+            {
+                if (_isSelectedCategory != value)
+                {
+
+                    _isSelectedCategory = value;
+                    OnPropertyChanged();
+
+                }
+            }
+        }
 
 
         private IGenericRepository<ExpenseRevenue> _repository = new GenericRepository<ExpenseRevenue>();
         private IGenericRepository<Category> _categoryRepository = new GenericRepository<Category>();
+        private Category _category;
+
+        private bool _isSelectedCategory;
+        private bool _distinctcategory;
+
+        public event NotifyCollectionChangedEventHandler? CollectionChanged;
+
         internal List<ExpenseRevenue> GetAllExpensesByAccountId(int id)
         {
             List<ExpenseRevenue> expenses = _repository.GetAllData("expenses");
             List<Category> categories = _categoryRepository.GetAllData("categories");
             List<ExpenseRevenue> result = new List<ExpenseRevenue>();
-
 
             if (expenses != null)
             {
@@ -47,9 +96,15 @@ namespace Wallet.Models
                 }
             }
 
+
             return result;
         }
-        
+
+        public ExpenseRevenue()
+        {
+            _isSelectedCategory = true;
+        }
+
         internal List<ExpenseRevenue> GetAllRevenuesByAccountId(int id)
         {
             List<ExpenseRevenue> revenues = _repository.GetAllData("revenues");
@@ -71,6 +126,13 @@ namespace Wallet.Models
             }
 
             return result;
+        }
+
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
     }
 }

@@ -21,20 +21,23 @@ namespace Wallet.ViewModels
         private User _user;
         private Account _account;
         private ExpenseRevenue _expense;
+        private Category _category;
 
         private ICommand _expanses;
         private ICommand _futureExpanses;
         private ICommand _revenues;
         private ICommand _searchCommand;
-        private ObservableCollection<ExpenseRevenue> _beforeSearch;
-        public HomeViewModel()
+        private ObservableCollection<ExpenseRevenue> _rawData;
+        internal HomeViewModel()
         {
             _user = new User();
             _account = new Account();
             _expense = new ExpenseRevenue();
+            _category = new Category();
 
             _user.GetCurrentUser();
             _account.GetMainActive(_user.Id);
+
 
             _expanses = new RelayCommand(execute => SetListToExpanses());
             _futureExpanses = new RelayCommand(execute => SetListToFutureExpanses());
@@ -42,22 +45,158 @@ namespace Wallet.ViewModels
             _searchCommand = new RelayCommand(execute => SearchInItems());
 
             SetListToExpanses();
+
         }
 
         private void SearchInItems()
         {
             if (!string.IsNullOrEmpty(Search))
             {
-                var list = _beforeSearch.Where(i => i.Name.ToLower().Contains(Search.ToLower())).ToList();
+                var list = _rawData.Where(i => i.Name.ToLower().Contains(Search.ToLower())).ToList();
                 Items = [.. list];
             }
             else
             {
-                Items = _beforeSearch;
+                Items = _rawData;
             }
-            
+
         }
 
+        public bool IsSelected2ForData
+        {
+            get { return _isSelected2ForData; }
+            set
+            {
+                if (_isSelected2ForData != value)
+                {
+                    _isSelected2ForData = value;
+                    OnPropertyChanged(nameof(IsSelected2ForData));
+                    if (value)
+                    {
+                        IsSelected1ForData = false;
+                        IsSelected1ForSalary = false;
+                        IsSelected2ForSalary = false;
+                        SortByDataDESC();
+                    }
+                }
+            }
+        }
+
+        private void SortByDataDESC()
+        {
+            var toSort = _rawData.ToList();
+
+            toSort.Sort((t1, t2) => t1.Date > t2.Date ? -1 : (t1.Date == t2.Date ? 0 : 1));
+
+            Items = [.. toSort];
+        }
+
+        public bool IsSelected1ForData
+        {
+            get { return _isSelected1ForData; }
+            set
+            {
+                if (_isSelected2ForData != value)
+                {
+                    _isSelected1ForData = value;
+                    OnPropertyChanged(nameof(IsSelected1ForData));
+                    if (value)
+                    {
+                        IsSelected2ForData = false;
+                        IsSelected1ForSalary = false;
+                        IsSelected2ForSalary = false;
+                        SortByDataASC();
+                    }
+                }
+            }
+        }
+
+        private void SortByDataASC()
+        {
+            var toSort = _rawData.ToList();
+
+            toSort.Sort((t1, t2) => t1.Date < t2.Date ? -1 : (t1.Date == t2.Date ? 0 : 1));
+
+            Items = [.. toSort];
+        }
+
+        public bool IsSelected1ForSalary
+        {
+            get { return _isSelected1ForSalary; }
+            set
+            {
+                if (_isSelected1ForSalary != value)
+                {
+                    _isSelected1ForSalary = value;
+
+                    if (value)
+                    {
+                        IsSelected2ForSalary = false;
+                        IsSelected2ForData = false;
+                        IsSelected1ForData = false;
+                        SortBySalaryASC();
+                    }
+
+                    OnPropertyChanged(nameof(IsSelected1ForSalary));
+                }
+
+
+            }
+        }
+
+        public bool IsSelected2ForSalary
+        {
+            get { return _isSelected2ForSalary; }
+            set
+            {
+                if (_isSelected2ForSalary != value)
+                {
+                    _isSelected2ForSalary = value;
+
+                    if (value)
+                    {
+                        IsSelected1ForSalary = false;
+                        IsSelected2ForData = false;
+                        IsSelected1ForData = false;
+                        SortBySalaryDESC();
+                    }
+
+                    OnPropertyChanged(nameof(IsSelected2ForSalary));
+                }
+            }
+        }
+
+
+        private void SortBySalaryASC()
+        {
+            var toSort = _rawData.ToList();
+
+            toSort.Sort((t1, t2) => t1.Amount < t2.Amount ? -1 : (t1.Amount == t2.Amount ? 0 : 1));
+
+            foreach (var item in toSort)
+            {
+                Debug.WriteLine(item.Name + " " + item.Amount);
+            }
+
+            Items = [.. toSort];
+
+        }
+
+        private void SortBySalaryDESC()
+        {
+
+            var toSort = _rawData.ToList();
+
+            toSort.Sort((t1, t2) => t1.Amount > t2.Amount ? -1 : (t1.Amount == t2.Amount ? 0 : 1));
+
+            foreach (var item in toSort)
+            {
+                Debug.WriteLine(item.Name + " " + item.Amount);
+            }
+
+            Items = [.. toSort];
+
+        }
         private void SetListToRevenues()
         {
             List<ExpenseRevenue> data = _expense.GetAllRevenuesByAccountId(_account.Id);
@@ -75,7 +214,7 @@ namespace Wallet.ViewModels
                 Items = new ObservableCollection<ExpenseRevenue>();
             }
 
-            _beforeSearch = Items;
+            _rawData = Items;
         }
 
         private void SetListToFutureExpanses()
@@ -95,7 +234,7 @@ namespace Wallet.ViewModels
                 Items = new ObservableCollection<ExpenseRevenue>();
             }
 
-            _beforeSearch = Items;
+            _rawData = Items;
         }
 
 
@@ -104,7 +243,15 @@ namespace Wallet.ViewModels
 
             List<ExpenseRevenue> data = _expense.GetAllExpensesByAccountId(_account.Id).Where(d => d.Date <= DateTime.Now).ToList();
 
-           
+            var getDistinct = data.GroupBy(b => b.Category.Name, StringComparer.OrdinalIgnoreCase).Select(g => g.First()).ToList();
+
+            foreach (var item in data)
+            {
+                item.DistinctCategory = getDistinct.Any(t => t.Id == item.Id) ? true : false;
+
+
+            }
+
             if (data != null && data.Count() > 0)
             {
 
@@ -117,13 +264,14 @@ namespace Wallet.ViewModels
                 Items = new ObservableCollection<ExpenseRevenue>();
             }
 
-            _beforeSearch = Items;
+
+            _rawData = Items;
         }
 
         public ICommand ExpansesCommand
         {
             get
-            { 
+            {
                 return _expanses;
             }
         }
@@ -155,6 +303,7 @@ namespace Wallet.ViewModels
             set
             {
                 _items = value;
+
                 OnPropertyChanged();
             }
         }
@@ -172,6 +321,11 @@ namespace Wallet.ViewModels
         }
 
         private string _search;
+        private bool _isSelected1ForSalary;
+        private bool _isSelected2ForSalary;
+        private bool _isSelected1ForData;
+        private bool _isSelected2ForData;
+        private ObservableCollection<Category> _categories;
 
         public string Search
         {
@@ -200,3 +354,4 @@ namespace Wallet.ViewModels
         }
     }
 }
+

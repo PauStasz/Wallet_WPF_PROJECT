@@ -9,7 +9,7 @@
         xmlns:viewModels="clr-namespace:Wallet.ViewModels"
         d:DataContext="{d:DesignInstance Type=viewModels:ExpensesViewModel}"
         mc:Ignorable="d"
-        Title="Expense Planning" Height="650" Width="900" WindowStartupLocation="CenterScreen" Background="#FF1A1919">
+        Title="Expense Planning" Height="650" Width="920" WindowStartupLocation="CenterScreen" Background="#FF1A1919">
 
     <Window.DataContext>
         <viewModels:ExpensesViewModel/>
@@ -27,7 +27,7 @@
             </Grid>
 
             <StackPanel Grid.Row="0">
-                <Label Content="PLANOWANIE WYDATKÓW" Foreground="White" HorizontalAlignment="Center" FontWeight="Bold" FontSize="30" VerticalAlignment="Center" Margin="30"/>
+                <Label Content="WYDATKI" Foreground="White" HorizontalAlignment="Center" FontWeight="Bold" FontSize="30" VerticalAlignment="Center" Margin="30"/>
                 <Border BorderThickness="0,0,0,2" BorderBrush="White" VerticalAlignment="Bottom"/>
             </StackPanel>
 
@@ -52,7 +52,7 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <Label Content="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" Grid.Column="0" HorizontalContentAlignment="Center"/>
-                            <Label Content="{Binding Date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" Grid.Column="1" HorizontalContentAlignment="Center"/>
+                            <Label Content="{Binding Date, StringFormat='yyyy-MM-dd HH:mm', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" Grid.Column="1" HorizontalContentAlignment="Center"/>
                             <Label Content="{Binding Amount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" Grid.Column="2" HorizontalContentAlignment="Center"/>
                             <Label Content="{Binding Category, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" Grid.Column="3" HorizontalContentAlignment="Center"/>
                             <Button Content="EDYTUJ" Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding}" Margin="10" Padding="5" FontWeight="Bold" FontSize="12" BorderBrush="#FFFFFEFE" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource transBttn}" Grid.Column="4"/>

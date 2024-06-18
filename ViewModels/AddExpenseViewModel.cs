@@ -8,19 +8,23 @@ using System.Windows.Media.Imaging;
 using Microsoft.Win32;
 using System.IO;
 using Wallet.Views.DialogsWindows;
+using System.Collections.ObjectModel;
+using System.Xml.Linq;
+using System.Diagnostics;
 
 namespace Wallet.ViewModels
 {
-    class AddExpenseViewModel : INotifyPropertyChanged
+    class AddExpenseViewModel : INotifyPropertyChanged, IDataErrorInfo
     {
         private Expense _expense;
         private User _user;
         private bool _isEditedOrAddedNew;
         private string _name;
         private bool _isValidationEnabledForName = false;
-        private decimal _amount;
+        private double _amount;
         private DateTime _date;
-        private string _category;
+        private Category _categoryManager;
+        private ObservableCollection<Category> _category;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -32,16 +36,18 @@ namespace Wallet.ViewModels
                 _name = value;
                 OnPropertyChanged(nameof(Name));
                 _isValidationEnabledForName = true;
+
             }
         }
 
-        public decimal Amount
+        public double Amount
         {
             get { return _amount; }
             set
             {
                 _amount = value;
                 OnPropertyChanged(nameof(Amount));
+                _isValidationEnabledForAmount = true;
             }
         }
 
@@ -55,13 +61,23 @@ namespace Wallet.ViewModels
             }
         }
 
-        public string Category
+        private Category _selectedCategory;
+        public Category SelectedCategory
+        {
+            get => _selectedCategory;
+            set
+            {
+                _selectedCategory = value;
+                OnPropertyChanged(nameof(SelectedCategory));
+            }
+        }
+        public ObservableCollection<Category> Categories
         {
             get { return _category; }
             set
             {
                 _category = value;
-                OnPropertyChanged(nameof(Category));
+                OnPropertyChanged(nameof(Categories));
             }
         }
 
@@ -72,6 +88,23 @@ namespace Wallet.ViewModels
             _user.GetCurrentUser();
             _isEditedOrAddedNew = false;
 
+            _categoryManager = new Category();
+
+            Date = DateTime.Now;
+
+            var list = _categoryManager.GetCategoriesById(_user.Id);
+
+            if (list != null && list.Count() > 0)
+            {
+                Categories = [.. list];
+            }
+            else
+            {
+                Categories = new ObservableCollection<Category>();
+            }
+
+
+            
             _saveCommand = new RelayCommand(execute => CreateExpense());
             _cancelCommand = new RelayCommand(execute => CancelAction());
         }
@@ -83,6 +116,22 @@ namespace Wallet.ViewModels
             _user = new User();
             _user.GetCurrentUser();
             _isEditedOrAddedNew = true;
+
+            _categoryManager = new Category();
+
+            Date = DateTime.Now;
+
+            var list = _categoryManager.GetCategoriesById(_user.Id);
+
+            if (list != null && list.Count() > 0)
+            {
+                Categories = [.. list];
+            }
+            else
+            {
+                Categories = new ObservableCollection<Category>();
+            }
+
 
             _saveCommand = new RelayCommand(execute => CreateExpense());
             _cancelCommand = new RelayCommand(execute => CancelAction());
@@ -101,6 +150,19 @@ namespace Wallet.ViewModels
                 _isValidationEnabledForName = true;
                 OnPropertyChanged(nameof(Name));
             }
+            else if(Amount <= 0)
+            {
+                _isValidationEnabledForAmount = true;
+                OnPropertyChanged(nameof(Amount));
+            }
+            else if(SelectedCategory == null)
+            {
+                MessageHolder msg = MessageHolder.Instance;
+                msg.Text = "Wybierz kategorię";
+
+                InfoWindow window = new InfoWindow();
+                window.Show();
+            }
             else if (Internet.IsConnected())
             {
                 Window currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive);
@@ -109,14 +171,14 @@ namespace Wallet.ViewModels
 
                 if (!_isEditedOrAddedNew)
                 {
-                    _expense.Create(Name, Amount, Date, Category, _user.Id);
+                    _expense.Create(Name, Amount, Date, SelectedCategory, _user.Id);
                     msg.Text = "Wydatek został dodany.";
 
                     var expense = _expense.GetExpensesByIdUserName(_user.Id, Name);
                 }
                 else
                 {
-                    _expense.UpdateOne(Name, Amount, Date, Category, _user.Id);
+                    _expense.UpdateOne(Name, Amount, Date, SelectedCategory, _user.Id);
                     msg.Text = "Wydatek został zaktualizowany.";
                 }
 
@@ -157,6 +219,7 @@ namespace Wallet.ViewModels
         }
 
         private ICommand _cancelCommand;
+        private bool _isValidationEnabledForAmount;
 
         public ICommand CancelCommand
         {
@@ -180,6 +243,39 @@ namespace Wallet.ViewModels
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public string this[string columnName]
+        {
+            get
+            {
+                if (columnName == "Name" && _isValidationEnabledForName)
+                {
+                    if (string.IsNullOrEmpty(Name))
+                    {
+                        return "Nie może być puste.";
+                    }
+                }
+                if (columnName == "Amount" && _isValidationEnabledForAmount)
+                {
+                    if (Amount <= 0)
+                    {
+                        return "Wydatek nie może być ujemny.";
+                    }
+                }
+
+                return String.Empty;
+
+            }
+
+
+        }
+        public string Error
+        {
+            get
+            {
+                return string.Empty;
+            }
         }
     }
 }
