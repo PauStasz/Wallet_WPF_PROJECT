@@ -12,14 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Wallet.Views.DialogsWindows
+namespace Wallet.Views
 {
     /// <summary>
-    /// Logika interakcji dla klasy AddIncomeWindow.xaml
+    /// Logika interakcji dla klasy Revenue.xaml
     /// </summary>
-    public partial class AddIncomeWindow : Window
+    public partial class Revenue : Window
     {
-        public AddIncomeWindow()
+        public Revenue()
         {
             InitializeComponent();
         }

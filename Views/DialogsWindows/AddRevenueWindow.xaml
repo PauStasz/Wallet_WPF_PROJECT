@@ -1,16 +1,16 @@
-﻿<Window x:Class="Wallet.Views.DialogsWindows.AddExpenseWindow"
+﻿<Window x:Class="Wallet.Views.DialogsWindows.AddRevenueWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wallet.Views.DialogsWindows"
-        xmlns:viewModels="clr-namespace:Wallet.ViewModels" 
-        d:DataContext="{d:DesignInstance Type=viewModels:AddExpenseViewModel}"
         mc:Ignorable="d"
-        Title="AddExpenseWindow"  Width="400" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Background="#FF1A1919">
- 
+        xmlns:viewModels="clr-namespace:Wallet.ViewModels" 
+    
+        Title="AddRevenueWindow"  Width="400" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Background="#FF1A1919">
+
     <Window.DataContext>
-        <viewModels:AddExpenseViewModel />
+        <viewModels:AddRevenueViewModel />
     </Window.DataContext>
 
     <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
@@ -22,10 +22,10 @@
             <Label Content="Kwota" HorizontalAlignment="Center" Foreground="White" Padding="0 5 0 5" />
             <TextBox x:Name="AmountTextBox" Text="{Binding Amount, StringFormat={}{0:C}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Padding="0 5 0 5" FontSize="16" Style="{StaticResource textbox1}" />
             <TextBlock Margin="20" Foreground="White" Text="{Binding (Validation.Errors)[0].ErrorContent, ElementName=AmountTextBox}"/>
-            
+
             <Label Content="Kategoria" HorizontalAlignment="Center" Foreground="White" Padding="0 5 0 5" />
             <ListBox MaxHeight="40" ItemsSource="{Binding Categories}" Grid.Row="1" Margin="10" Foreground="Black" Width="270"
-                 SelectedItem="{Binding SelectedCategory, Mode=TwoWay}" DisplayMemberPath="Name" />
+             SelectedItem="{Binding SelectedCategory, Mode=TwoWay}" DisplayMemberPath="Name" />
 
         </StackPanel>
 
@@ -40,4 +40,5 @@
             <Button Grid.Column="1" Content="ANULUJ" Command="{Binding CancelCommand}" Margin="10" Padding="2" FontWeight="Bold" FontSize="12" BorderBrush="#FFFFFEFE" Background="White" Width="100" Style="{StaticResource whiteBttn}" />
         </Grid>
     </StackPanel>
+    
 </Window>

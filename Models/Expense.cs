@@ -55,12 +55,26 @@ namespace Wallet.Models
             }
         }
 
+        public Category Category
+        {
+            get => _category;
+            set
+            {
+                if (_category != value)
+                {
+                    _category = value;
+                    OnPropertyChanged(nameof(Category));
+                }
+            }
+        }
         public int IdUser { get; set; }
 
         private IGenericRepository<Expense> _repository = new GenericRepository<Expense>();
         private IGenericRepository<Account> _accountRepository = new GenericRepository<Account>();
 
         private Account _account = new Account();
+        private Category _category;
+
         public void Create(string name, double amount, DateTime date, Category category, int idUser)
         {
 

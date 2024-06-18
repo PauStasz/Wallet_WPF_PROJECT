@@ -18,7 +18,7 @@
     <DockPanel>
         <UserControls:SidebarMenu DockPanel.Dock="Left"/>
         <StackPanel DockPanel.Dock="Right">
-            <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Height="50" Width="650" Margin="40,20,0,20">
+            <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Height="50" Width="650" Margin="30,20,0,20">
                 <TextBox Text="{Binding Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  x:Name="TextBoxSearch" Style="{StaticResource Searchbar}" Padding="30,11,11,20"/>
 
                 <Button BorderThickness="0" Command="{Binding SearchCommand}" HorizontalAlignment="Right"  Background="Transparent" Width="50" >
@@ -31,7 +31,7 @@
             </Grid>
             <Grid >
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" MinWidth="340"/>
+                    <ColumnDefinition Width="*" MaxWidth="380"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
@@ -94,7 +94,7 @@
                 </Border>
 
             </Grid>
-            <Border MinHeight="300" Width="600" Margin="50" BorderThickness="2" BorderBrush="#FFF6E0" CornerRadius="20" Background="#FFF6E0">
+            <Border MinHeight="300" Width="650" Margin="40, 50, 0,0" BorderThickness="2" BorderBrush="#FFF6E0" CornerRadius="20" Background="#FFF6E0">
                 <StackPanel Orientation="Vertical">
                     <Grid Width="500"  Background="#FF1A1919" HorizontalAlignment="Center" Margin="0,20,0,0">
                         <Grid.ColumnDefinitions>

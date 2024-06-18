@@ -27,6 +27,7 @@ namespace Wallet.ViewModels
         private ICommand _expensePlanningCommand;
         private ICommand _logoutCommand;
         private ICommand _accountCommand;
+        private ICommand _revenueCommand;
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -45,7 +46,20 @@ namespace Wallet.ViewModels
             _raportCommand = new RelayCommand(execute => GoRaport());
             _categoriesCommand = new RelayCommand(execute => GoCategories());
             _expensePlanningCommand = new RelayCommand(execute => GoExpensePlanning());
+            _revenueCommand = new RelayCommand(execute => GoRevenue());
 
+        }
+
+        private void GoRevenue()
+        {
+            Window currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive); ;
+
+            if (currentWindow != null)
+            {
+                Revenue window = new Revenue();
+                currentWindow.Close();
+                window.Show();
+            }
         }
 
         private void GoExpensePlanning()
@@ -159,6 +173,13 @@ namespace Wallet.ViewModels
             }
         }
 
+        public ICommand RevenueCommand
+        {
+            get
+            {
+                return _revenueCommand;
+            }
+        }
         public ICommand SettingsCommand
         {
             get

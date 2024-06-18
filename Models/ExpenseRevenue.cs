@@ -134,5 +134,10 @@ namespace Wallet.Models
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
+
+        internal void DeleteRevenue(int id)
+        {
+            _repository.DeleteData("revenues", id);
+        }
     }
 }

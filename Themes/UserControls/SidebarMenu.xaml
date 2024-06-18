@@ -38,6 +38,7 @@
             <StackPanel Grid.Row="1">
             <Button x:Name="HomeButton" Command="{Binding HomeCommand}" Content="HOME" Style="{StaticResource lineBttn}" IsDefault="True"/>
             <Button x:Name="ExpensePlanningButton" Command="{Binding ExpensePlanningCommand}" Content="WYDATKI" Style="{StaticResource lineBttn}" />
+            <Button x:Name="RevenueButton" Command="{Binding RevenueCommand}" Content="WPŁYWY" Style="{StaticResource lineBttn}" />
             <Button x:Name="RaportButton" Command="{Binding RaportCommand}" Content="RAPORTY I STATYSTKI" Style="{StaticResource lineBttn}" />
             <Button x:Name="ForecastButton" Command="{Binding ForecastCommand}" Content="PROGNOZA" Style="{StaticResource lineBttn}" />
             <Button x:Name="AccountButton" Command="{Binding AccountCommand}" Content="KONTA" Style="{StaticResource lineBttn}" />
