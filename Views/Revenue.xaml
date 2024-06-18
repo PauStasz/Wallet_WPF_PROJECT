@@ -7,7 +7,7 @@
         xmlns:UserControls="clr-namespace:Wallet.Themes.UserControls" 
         xmlns:viewModels="clr-namespace:Wallet.ViewModels"
         mc:Ignorable="d"
-        Title="Revenue" Height="650" Width="920" WindowStartupLocation="CenterScreen" Background="#FF1A1919">
+        Title="Revenue" Height="650" Width="950" WindowStartupLocation="CenterScreen" Background="#FF1A1919">
 
     <Window.DataContext>
         <viewModels:RevenueViewModel />
@@ -29,7 +29,7 @@
                 <Border BorderThickness="0,0,0,2" BorderBrush="White" VerticalAlignment="Bottom"/>
             </StackPanel>
 
-            <ListBox Grid.Row="1" ItemsSource="{Binding Items, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="777" Height="380" Margin="20" Style="{StaticResource ListBox}" RenderTransformOrigin="0.5,0.5">
+            <ListBox Grid.Row="1" ItemsSource="{Binding Items, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="677" Height="380" Margin="20" Style="{StaticResource ListBox}" RenderTransformOrigin="0.5,0.5">
                 <ListBox.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>

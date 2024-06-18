@@ -69,6 +69,7 @@ namespace Wallet.Models
 
         private IGenericRepository<ExpenseRevenue> _repository = new GenericRepository<ExpenseRevenue>();
         private IGenericRepository<Category> _categoryRepository = new GenericRepository<Category>();
+        private IGenericRepository<Account> _accountRepository = new GenericRepository<Account>();
         private Category _category;
 
         private bool _isSelectedCategory;
@@ -105,6 +106,8 @@ namespace Wallet.Models
             _isSelectedCategory = true;
         }
 
+        private Account _account = new Account();
+
         internal List<ExpenseRevenue> GetAllRevenuesByAccountId(int id)
         {
             List<ExpenseRevenue> revenues = _repository.GetAllData("revenues");
@@ -138,6 +141,38 @@ namespace Wallet.Models
         internal void DeleteRevenue(int id)
         {
             _repository.DeleteData("revenues", id);
+        }
+
+        internal void Create(string name, double amount, DateTime date, Category selectedCategory, int id)
+        {
+            Name = name;
+            Amount = amount;
+            Date = date;
+            IdCategory = selectedCategory.Id;
+            IdUser = id;
+             _account.GetMainActive(id);
+            IdAccount = _account.Id;
+
+            _account.Salary += Amount;
+
+            _accountRepository.UpdateData("accounts", _account);
+            _repository.SetData("revenues", this);
+        }
+
+        internal void UpdateOne(string name, double amount, DateTime date, Category selectedCategory, int id)
+        {
+            Name = name;
+            Amount = amount;
+            Date = date;
+            IdCategory = selectedCategory.Id;
+            IdUser = id;
+            _account.GetMainActive(id);
+            IdAccount = _account.Id;
+
+            _account.Salary += Amount;
+
+            _accountRepository.UpdateData("accounts", _account);
+            _repository.SetData("revenues", this);
         }
     }
 }

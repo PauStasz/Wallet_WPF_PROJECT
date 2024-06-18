@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         xmlns:viewModels="clr-namespace:Wallet.ViewModels" 
     
-        Title="AddRevenueWindow"  Width="400" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Background="#FF1A1919">
+        Title="AddRevenueWindow" MinHeight="400" Width="400" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Background="#FF1A1919">
 
     <Window.DataContext>
         <viewModels:AddRevenueViewModel />
@@ -17,11 +17,11 @@
         <StackPanel Margin="20">
             <Label Content="Nazwa" HorizontalAlignment="Center" Foreground="White" Padding="0 5 0 5" />
             <TextBox x:Name="NameTextBox" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Padding="0 5 0 5" FontSize="16" Style="{StaticResource textbox1}" />
-            <TextBlock Margin="20" Foreground="White" Text="{Binding (Validation.Errors)[0].ErrorContent, ElementName=NameTextBox}"/>
+            <TextBlock Margin="20,0,20,0" Foreground="White" Text="{Binding (Validation.Errors)[0].ErrorContent, ElementName=NameTextBox}"/>
 
             <Label Content="Kwota" HorizontalAlignment="Center" Foreground="White" Padding="0 5 0 5" />
             <TextBox x:Name="AmountTextBox" Text="{Binding Amount, StringFormat={}{0:C}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Padding="0 5 0 5" FontSize="16" Style="{StaticResource textbox1}" />
-            <TextBlock Margin="20" Foreground="White" Text="{Binding (Validation.Errors)[0].ErrorContent, ElementName=AmountTextBox}"/>
+            <TextBlock Margin="20,0,20,0" Foreground="White" Text="{Binding (Validation.Errors)[0].ErrorContent, ElementName=AmountTextBox}"/>
 
             <Label Content="Kategoria" HorizontalAlignment="Center" Foreground="White" Padding="0 5 0 5" />
             <ListBox MaxHeight="40" ItemsSource="{Binding Categories}" Grid.Row="1" Margin="10" Foreground="Black" Width="270"

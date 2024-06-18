@@ -260,7 +260,7 @@ namespace Wallet.ViewModels
                 {
                     if (Amount <= 0)
                     {
-                        return "Wydatek nie może być ujemny.";
+                        return "Wydatek nie może być ujemny lub zerowy.";
                     }
                 }
 

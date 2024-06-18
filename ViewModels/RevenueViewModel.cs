@@ -99,7 +99,7 @@ namespace Wallet.ViewModels
 
         private void Add()
         {
-            var window = new AddExpenseWindow();
+            var window = new AddRevenueWindow();
             window.Closed += (sender, args) => SetItems();
             window.Show();
         }
