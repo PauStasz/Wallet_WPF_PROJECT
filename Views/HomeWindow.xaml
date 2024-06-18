@@ -61,15 +61,16 @@
                         </ItemsControl>
                     </TreeViewItem>
                     <TreeViewItem Header="SORTWANIE">
-                        <TreeViewItem Header="PO DACIE"/>
+                            <TreeViewItem Header="PO DACIE">
                         <StackPanel Orientation="Horizontal">
                                 <RadioButton GroupName="DataSelection" IsChecked="{Binding IsSelected1ForData}"/>
                             <TextBlock Text="Rosnąco"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                                <RadioButton GroupName="DataSelection" IsChecked="{Binding IsSelected2ForData}"/>
+                                <RadioButton GroupName="DataSelection" IsChecked="{Binding IsSelectedForData}"/>
                             <TextBlock Text="Malejąco"/>
                         </StackPanel>
+                        </TreeViewItem>
                         <TreeViewItem Header="PO KWOCIE">
                             <StackPanel Orientation="Horizontal">
                                     <RadioButton GroupName="SalarySelection" IsChecked="{Binding IsSelected1ForSalary}" />
@@ -104,6 +105,7 @@
                         <DataTemplate >
                                 <StackPanel Background="#FF1A1919" HorizontalAlignment="Center" Orientation="Horizontal" Margin="20,0,0,0"  Width="500" MaxWidth="500" Height="60">
                                     <Image Source="{Binding Category.Image}" Height="30" Margin="10, 0, 20, 0" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    <Label Content="{Binding Category.Name}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" Width="100" HorizontalContentAlignment="Center"/>
                                     <Label Content="{Binding Name}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" Width="100" HorizontalContentAlignment="Center"/>
                                     <Label Content="{Binding Date}" Padding="0" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" Width="100" HorizontalContentAlignment="Center"/>
                                 <Label Content="{Binding Salary}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" Width="100" HorizontalContentAlignment="Center"/>
