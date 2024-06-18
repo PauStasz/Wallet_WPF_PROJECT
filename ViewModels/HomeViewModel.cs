@@ -58,6 +58,141 @@ namespace Wallet.ViewModels
             
         }
 
+        public bool IsSelected2ForData
+        {
+            get { return _isSelected2ForData; }
+            set
+            {
+                if (_isSelected2ForData != value)
+                {
+                    _isSelected2ForData = value;
+                    OnPropertyChanged(nameof(IsSelected2ForData));
+                    if (value)
+                    {
+                        IsSelected1ForData = false;
+                        IsSelected1ForSalary = false;
+                        IsSelected2ForSalary = false;
+                        SortByDataDESC();
+                    }
+                }
+            }
+        }
+
+        private void SortByDataDESC()
+        {
+            var toSort = _beforeSearch.ToList();
+
+            toSort.Sort((t1, t2) => t1.Date > t2.Date ? -1 : (t1.Date == t2.Date ? 0 : 1));
+
+            Items = [.. toSort];
+        }
+
+        public bool IsSelected1ForData
+        {
+            get { return _isSelected1ForData; }
+            set
+            {
+                if (_isSelected2ForData != value)
+                {
+                    _isSelected1ForData = value;
+                    OnPropertyChanged(nameof(IsSelected1ForData));
+                    if (value)
+                    {
+                        IsSelected2ForData = false;
+                        IsSelected1ForSalary = false;
+                        IsSelected2ForSalary = false;
+                        SortByDataASC();
+                    }
+                }
+            }
+        }
+
+        private void SortByDataASC()
+        {
+            var toSort = _beforeSearch.ToList();
+
+            toSort.Sort((t1, t2) => t1.Date < t2.Date ? -1 : (t1.Date == t2.Date ? 0 : 1));
+
+            Items = [.. toSort];
+        }
+
+        public bool IsSelected1ForSalary
+        {
+            get { return _isSelected1ForSalary; }
+            set
+            {
+                if (_isSelected1ForSalary != value)
+                {
+                    _isSelected1ForSalary = value;
+                    
+                    if (value)
+                    {
+                        IsSelected2ForSalary = false;
+                        IsSelected2ForData = false;
+                        IsSelected1ForData = false;
+                        SortBySalaryASC();
+                    }
+
+                    OnPropertyChanged(nameof(IsSelected1ForSalary));
+                }
+
+
+            }
+        }
+
+        public bool IsSelected2ForSalary
+        {
+            get { return _isSelected2ForSalary; }
+            set
+            {
+                if (_isSelected2ForSalary != value)
+                {
+                    _isSelected2ForSalary = value;
+                    
+                    if (value)
+                    {
+                        IsSelected1ForSalary = false;
+                        IsSelected2ForData = false;
+                        IsSelected1ForData = false;
+                        SortBySalaryDESC();
+                    }
+
+                    OnPropertyChanged(nameof(IsSelected2ForSalary));
+                }
+            }
+        }
+
+
+        private void SortBySalaryASC()
+        {
+            var toSort = _beforeSearch.ToList();
+
+            toSort.Sort((t1, t2) => t1.Salary < t2.Salary ? -1 : (t1.Salary == t2.Salary ? 0 : 1));
+
+            foreach (var item in toSort)
+            {
+                Debug.WriteLine(item.Name + " " + item.Salary);
+            }
+
+            Items = [.. toSort];
+
+        }
+
+        private void SortBySalaryDESC()
+        {
+
+            var toSort = _beforeSearch.ToList();
+
+            toSort.Sort((t1, t2) => t1.Salary > t2.Salary ? -1 : (t1.Salary == t2.Salary ? 0 : 1));
+
+            foreach (var item in toSort)
+            {
+                Debug.WriteLine(item.Name + " " + item.Salary);
+            }
+
+            Items = [.. toSort];
+
+        }
         private void SetListToRevenues()
         {
             List<ExpenseRevenue> data = _expense.GetAllRevenuesByAccountId(_account.Id);
@@ -172,6 +307,10 @@ namespace Wallet.ViewModels
         }
 
         private string _search;
+        private bool _isSelected1ForSalary;
+        private bool _isSelected2ForSalary;
+        private bool _isSelected1ForData;
+        private bool _isSelected2ForData;
 
         public string Search
         {

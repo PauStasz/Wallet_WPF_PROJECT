@@ -18,10 +18,10 @@
     <DockPanel>
         <UserControls:SidebarMenu DockPanel.Dock="Left"/>
         <StackPanel DockPanel.Dock="Right">
-            <Grid Grid.Column="0" MaxHeight="60" MinHeight="40" MaxWidth="600" Margin="20">
+            <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Height="50" Width="650" Margin="40,20,0,20">
                 <TextBox Text="{Binding Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  x:Name="TextBoxSearch" Style="{StaticResource Searchbar}" Padding="30,11,11,20"/>
                 
-                <Button Command="{Binding SearchCommand}" HorizontalAlignment="Right"  Background="Transparent" Width="50" >
+                <Button BorderThickness="0" Command="{Binding SearchCommand}" HorizontalAlignment="Right"  Background="Transparent" Width="50" >
                     <Button.Content >
                         <svgc:SvgViewbox   Grid.Column="1" Width="20" Height="20"  VerticalAlignment="Center" Margin="4,4,20,4" Source="/Assets/Vectors/search-svgrepo-com.svg">
                         </svgc:SvgViewbox>
@@ -31,7 +31,7 @@
             </Grid>
             <Grid >
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" MinWidth="350"/>
+                    <ColumnDefinition Width="*" MinWidth="340"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>  
             
@@ -45,9 +45,10 @@
              </Border>
 
 
-                <TreeView  MaxHeight="150" Height="150" Grid.Column="1" Style="{StaticResource treeViewStyle}" >
-                    <TreeViewItem Header="FILTRY" BorderBrush="#FFF6E0" >
-                        <TreeViewItem Header="KATEGORIE"/>
+            <Border Grid.Column="1" Height="150" MaxWidth="300" BorderThickness="2" BorderBrush="#FFF6E0" CornerRadius="20" Background="#FFF6E0">
+                    <TreeView Margin="10" Height="130" Background="Transparent" BorderThickness="0" Grid.Column="1" >
+                    <TreeViewItem  Header="FILTRY" BorderBrush="#FFF6E0" >
+                        <TreeViewItem  Header="KATEGORIE"/>
                         <ItemsControl ItemsSource="{Binding Categories}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
@@ -62,25 +63,27 @@
                     <TreeViewItem Header="SORTWANIE">
                         <TreeViewItem Header="PO DACIE"/>
                         <StackPanel Orientation="Horizontal">
-                            <RadioButton GroupName="DataSelection" IsChecked="True"/>
+                                <RadioButton GroupName="DataSelection" IsChecked="{Binding IsSelected1ForData}"/>
                             <TextBlock Text="Rosnąco"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <RadioButton GroupName="DataSelection" IsChecked="True"/>
+                                <RadioButton GroupName="DataSelection" IsChecked="{Binding IsSelected2ForData}"/>
                             <TextBlock Text="Malejąco"/>
                         </StackPanel>
                         <TreeViewItem Header="PO KWOCIE">
                             <StackPanel Orientation="Horizontal">
-                                <RadioButton GroupName="DataSelection" IsChecked="True"/>
+                                    <RadioButton GroupName="SalarySelection" IsChecked="{Binding IsSelected1ForSalary}" />
                                 <TextBlock Text="Rosnąco"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <RadioButton GroupName="DataSelection" IsChecked="True"/>
+                                    <RadioButton GroupName="DataSelection" IsChecked="{Binding IsSelected2ForSalary}" />
                                 <TextBlock Text="Malejąco"/>
                             </StackPanel>
                         </TreeViewItem>
                     </TreeViewItem>
                 </TreeView>
+            </Border>
+                
             </Grid>
             <Border MinHeight="300" Width="600" Margin="50" BorderThickness="2" BorderBrush="#FFF6E0" CornerRadius="20" Background="#FFF6E0">
                 <StackPanel Orientation="Vertical">
