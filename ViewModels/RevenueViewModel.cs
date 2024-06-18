@@ -44,11 +44,11 @@ namespace Wallet.ViewModels
 
         private void Edit(object parameter)
         {
-            if (parameter is Expense item)
+            if (parameter is ExpenseRevenue item)
             {
-                AddExpenseWindow window = new AddExpenseWindow
+                AddRevenueWindow window = new AddRevenueWindow
                 {
-                    DataContext = new AddExpenseViewModel(item)
+                    DataContext = new AddRevenueViewModel(item)
                 };
                 window.Show();
             }

@@ -116,10 +116,11 @@ namespace Wallet.ViewModels
             _user = new User();
             _user.GetCurrentUser();
             _isEditedOrAddedNew = true;
+            Amount = _expense.Amount;
+            Date = _expense.Date;
 
             _categoryManager = new Category();
 
-            Date = DateTime.Now;
 
             var list = _categoryManager.GetCategoriesById(_user.Id);
 

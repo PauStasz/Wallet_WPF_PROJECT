@@ -12,18 +12,62 @@ using System.Runtime.CompilerServices;
 
 namespace Wallet.Models
 {
-    internal class ExpenseRevenue : BaseEntity
+    internal class ExpenseRevenue : BaseEntity, INotifyPropertyChanged
     {
         public int IdUser { get; set; }
         public int IdAccount { get; set; }
 
-        public int IdCategory { get; set; }
+        public int IdCategory
+        {
+            get => _idCategory;
+            set
+            {
+                if (_idCategory != value)
+                {
+                    _idCategory = value;
+                    OnPropertyChanged(nameof(IdCategory));
+                }
+            }
+        }
 
-        public string Name { get; set; }
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                if (_name != value)
+                {
+                    _name = value;
+                    OnPropertyChanged(nameof(Name));
+                }
+            }
+        }
 
-        public DateTime Date { get; set; }
+        public DateTime Date
+        {
+            get => _date;
+            set
+            {
+                if (_date != value)
+                {
+                    _date = value;
+                    OnPropertyChanged(nameof(Date));
+                }
+            }
+        }
 
-        public double Amount { get; set; }
+        public double Amount
+        {
+            get => _amount;
+            set
+            {
+                if (_amount != value)
+                {
+                    _amount = value;
+                    OnPropertyChanged(nameof(Amount));
+                }
+            }
+        }
 
         public Category Category
         {
@@ -107,6 +151,10 @@ namespace Wallet.Models
         }
 
         private Account _account = new Account();
+        private double _amount;
+        private string _name;
+        private int _idCategory;
+        private DateTime _date;
 
         internal List<ExpenseRevenue> GetAllRevenuesByAccountId(int id)
         {
@@ -159,8 +207,12 @@ namespace Wallet.Models
             _repository.SetData("revenues", this);
         }
 
-        internal void UpdateOne(string name, double amount, DateTime date, Category selectedCategory, int id)
+        internal void UpdateOne(string name, double amount, DateTime date, Category selectedCategory, int id, int idData)
         {
+            _repository.GetOneData("revenues", idData);
+            _account.GetMainActive(id);
+            _account.Salary -= Amount;
+
             Name = name;
             Amount = amount;
             Date = date;
@@ -169,6 +221,7 @@ namespace Wallet.Models
             _account.GetMainActive(id);
             IdAccount = _account.Id;
 
+            
             _account.Salary += Amount;
 
             _accountRepository.UpdateData("accounts", _account);

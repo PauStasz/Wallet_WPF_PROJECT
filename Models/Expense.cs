@@ -13,7 +13,18 @@ namespace Wallet.Models
         private string _name;
         private double _amount;
         private DateTime _date;
-        public int IdCategory { get; set; }
+        public int IdCategory
+        {
+            get => _idCategory;
+            set
+            {
+                if (_idCategory != value)
+                {
+                    _idCategory = value;
+                    OnPropertyChanged(nameof(IdCategory));
+                }
+            }
+        }
 
         public int IdAccount { get; set; }
         public string Name
@@ -75,6 +86,7 @@ namespace Wallet.Models
 
         private Account _account = new Account();
         private Category _category;
+        private int _idCategory;
 
         public void Create(string name, double amount, DateTime date, Category category, int idUser)
         {
@@ -155,6 +167,8 @@ namespace Wallet.Models
         internal void UpdateOne(string name, double amount, DateTime date, Category category, int id)
         {
             _account.GetMainActive(id);
+            _account.Salary += amount;
+
             Name = name;
             Amount = amount;
             Date = date;

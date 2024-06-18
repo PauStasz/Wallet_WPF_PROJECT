@@ -45,6 +45,35 @@ namespace Wallet.ViewModels
             _cancelCommand = new RelayCommand(execute => CancelAction());
         }
 
+        public AddRevenueViewModel(ExpenseRevenue revenue)
+        {
+            _revenue = revenue;
+            Name = _revenue.Name;
+            _user = new User();
+            _user.GetCurrentUser();
+            _isEditedOrAddedNew = true;
+            Amount = _revenue.Amount;
+            Date = _revenue.Date;
+
+            _categoryManager = new Category();
+
+            var list = _categoryManager.GetCategoriesById(_user.Id);
+
+            if (list != null && list.Count() > 0)
+            {
+                Categories = [.. list];
+            }
+            else
+            {
+                Categories = new ObservableCollection<Category>();
+            }
+
+
+            _saveCommand = new RelayCommand(execute => CreateExpense());
+            _cancelCommand = new RelayCommand(execute => CancelAction());
+        }
+
+
         private ExpenseRevenue _revenue;
         private User _user;
         private bool _isEditedOrAddedNew;
@@ -154,7 +183,7 @@ namespace Wallet.ViewModels
                 }
                 else
                 {
-                    _revenue.UpdateOne(Name, Amount, Date, SelectedCategory, _user.Id);
+                    _revenue.UpdateOne(Name, Amount, Date, SelectedCategory, _user.Id, _revenue.Id);
                     msg.Text = "Wpływ został zaktualizowany.";
                 }
 
