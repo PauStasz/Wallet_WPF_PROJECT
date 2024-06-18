@@ -96,7 +96,7 @@
             </Grid>
             <Border MinHeight="300" Width="650" Margin="40, 50, 0,0" BorderThickness="2" BorderBrush="#FFF6E0" CornerRadius="20" Background="#FFF6E0">
                 <StackPanel Orientation="Vertical">
-                    <Grid Width="500"  Background="#FF1A1919" HorizontalAlignment="Center" Margin="0,20,0,0">
+                    <Grid Width="500"  Background="#FF1A1919" HorizontalAlignment="Center" Margin="0,20,55,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>

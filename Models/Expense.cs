@@ -70,6 +70,7 @@ namespace Wallet.Models
         public int IdUser { get; set; }
 
         private IGenericRepository<Expense> _repository = new GenericRepository<Expense>();
+        private IGenericRepository<Category> _categoryRepository = new GenericRepository<Category>();
         private IGenericRepository<Account> _accountRepository = new GenericRepository<Account>();
 
         private Account _account = new Account();
@@ -95,12 +96,24 @@ namespace Wallet.Models
         public List<Expense> GetExpensesById(int idUser)
         {
             List<Expense> expenses = _repository.GetAllData("expenses");
-            
+            List<Category> categories = _categoryRepository.GetAllData("categories");
+            List<Expense> list = new List<Expense>();
+
             _account.GetMainActive(idUser);
 
             if (expenses != null)
             {
-                var list =  expenses.Where(e => e.IdAccount == _account.Id).ToList();
+                foreach (Expense expense in expenses)
+                {
+                    if (expense.IdAccount == _account.Id)
+                    {
+                        expense.Category = categories.FirstOrDefault(c => c.Id == expense.IdCategory);
+
+                        list.Add(expense);
+                    }
+
+                }
+                
                 
                 return list;
 
@@ -113,11 +126,20 @@ namespace Wallet.Models
         public Expense GetExpensesByIdUserName(int idUser, string name)
         {
 
-            List<Expense> expense = _repository.GetAllData("expenses");
+            List<Expense> expenses = _repository.GetAllData("expenses");
+            List<Category> categories = _categoryRepository.GetAllData("categories");
 
-            if (expense is not null)
+            if (expenses != null)
             {
-                return expense.FirstOrDefault(a => a.IdUser == idUser && a.Name == name);
+                foreach (Expense expense in expenses)
+                {
+                    if (expense.IdAccount == _account.Id)
+                    {
+                        expense.Category = categories.FirstOrDefault(c => c.Id == expense.IdCategory && c.IdUser == idUser && name == c.Name); 
+                        
+                        return expense;
+                    }
+                }
             }
 
             return new Expense();
