@@ -56,14 +56,102 @@ namespace Wallet.Models
             }
         }
 
+        public string DeleteTitle
+        {
+            get { return _deleteTitle; }
+            set
+            {
+                if (_deleteTitle != value)
+                {
+                    _deleteTitle = value;
+                    OnPropertyChanged(nameof(DeleteTitle));
+
+                }
+            }
+        }
+
+        public string EditTitle
+        {
+            get { return _editTitle; }
+            set
+            {
+                if (_editTitle != value)
+                {
+                    _editTitle = value;
+                    OnPropertyChanged(nameof(EditTitle));
+
+                }
+            }
+        }
+
         private IGenericRepository<Category> _repository = new GenericRepository<Category>();
+        private string _deleteTitle;
+        private string _editTitle;
+
+        private User _user;
+        private Settings _settingsManger;
+        public Category()
+        {
+            _user = new User();
+            _settingsManger = new Settings();
+            _user.GetCurrentUser();
+
+            if (!(_user.HasCustomSettings))
+            {
+                _editTitle = "EDYTUJ";
+                _deleteTitle = "USUŃ";
+            }
+            else
+            {
+                _settingsManger.GetSettings(_user.Id);
+
+                if (_settingsManger.Language) //polish
+                {
+
+                    _editTitle = "EDYTUJ";
+                    _deleteTitle = "USUŃ";
+
+                }
+                else//engslish
+                {
+                    _editTitle = "EDIT";
+                    _deleteTitle = "DELETE";
+                }
+            }
+        }
 
         public void Create(string name, int idUser)
         {
             Name = name;
             IdUser = idUser;
 
+            _editTitle = null;
+            _deleteTitle = null;
+
             _repository.SetData("categories", this);
+
+            if (!(_user.HasCustomSettings))
+            {
+                _editTitle = "EDYTUJ";
+                _deleteTitle = "USUŃ";
+            }
+            else
+            {
+                _settingsManger.GetSettings(_user.Id);
+
+                if (_settingsManger.Language) //polish
+                {
+
+                    _editTitle = "EDYTUJ";
+                    _deleteTitle = "USUŃ";
+
+                }
+                else//engslish
+                {
+                    _editTitle = "EDIT";
+                    _deleteTitle = "DELETE";
+                }
+            }
 
 
         }
@@ -124,7 +212,33 @@ namespace Wallet.Models
             Name = name;
             IdUser = id;
 
+            _editTitle = null;
+            _deleteTitle = null;
+
             _repository.UpdateData("categories", this);
+
+            if (!(_user.HasCustomSettings))
+            {
+                _editTitle = "EDYTUJ";
+                _deleteTitle = "USUŃ";
+            }
+            else
+            {
+                _settingsManger.GetSettings(_user.Id);
+
+                if (_settingsManger.Language) //polish
+                {
+
+                    _editTitle = "EDYTUJ";
+                    _deleteTitle = "USUŃ";
+
+                }
+                else//engslish
+                {
+                    _editTitle = "EDIT";
+                    _deleteTitle = "DELETE";
+                }
+            }
         }
 
         internal void Delete(int id)

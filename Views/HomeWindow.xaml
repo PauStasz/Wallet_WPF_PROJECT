@@ -68,31 +68,31 @@
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
                         </TreeViewItem>
-                        <TreeViewItem Header="SORTWANIE">
+                        <TreeViewItem Header="SORTOWANIE">
                             <TreeViewItem Header="PO DACIE">
                                 <StackPanel Orientation="Horizontal">
-                                    <RadioButton GroupName="DataSelection" IsChecked="{Binding IsSelected1ForData}"/>
+                                    <RadioButton GroupName="Selection" IsChecked="{Binding IsSelected1ForData}"/>
                                     <TextBlock Text="Rosnąco"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
-                                    <RadioButton GroupName="DataSelection" IsChecked="{Binding IsSelectedForData}"/>
+                                    <RadioButton GroupName="Selection" IsChecked="{Binding IsSelected2ForData}"/>
                                     <TextBlock Text="Malejąco"/>
                                 </StackPanel>
                             </TreeViewItem>
                             <TreeViewItem Header="PO KWOCIE">
                                 <StackPanel Orientation="Horizontal">
-                                    <RadioButton GroupName="SalarySelection" IsChecked="{Binding IsSelected1ForSalary}" />
+                                    <RadioButton GroupName="Selection" IsChecked="{Binding IsSelected1ForSalary}" />
                                     <TextBlock Text="Rosnąco"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
-                                    <RadioButton GroupName="DataSelection" IsChecked="{Binding IsSelected2ForSalary}" />
+                                    <RadioButton GroupName="Selection" IsChecked="{Binding IsSelected2ForSalary}" />
                                     <TextBlock Text="Malejąco"/>
                                 </StackPanel>
                             </TreeViewItem>
                         </TreeViewItem>
                     </TreeView>
                 </Border>
-
+                
             </Grid>
             <Border MinHeight="300" Width="650" Margin="40, 50, 0,0" BorderThickness="2" BorderBrush="#FFF6E0" CornerRadius="20" Background="#FFF6E0">
                 <StackPanel Orientation="Vertical">

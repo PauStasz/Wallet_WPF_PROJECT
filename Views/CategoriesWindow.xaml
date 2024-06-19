@@ -26,7 +26,7 @@
             </Grid>
 
             <StackPanel Grid.Row="0">
-                <Label Content="KATEGORIE" Foreground="White" HorizontalAlignment="Center" FontWeight="Bold" FontSize="30" VerticalAlignment="Center" Margin="30"/>
+                <Label Content="{Binding CategoriesTitle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Foreground="White" HorizontalAlignment="Center" FontWeight="Bold" FontSize="30" VerticalAlignment="Center" Margin="30"/>
                 <Border BorderThickness="0,0,0,2" BorderBrush="White" VerticalAlignment="Bottom"/>
             </StackPanel>
 
@@ -36,14 +36,14 @@
                         <StackPanel Orientation="Horizontal" Background="White" Width="580" MaxWidth="580" Margin="0,5,0,2">
                             <Image Source="{Binding Image,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="50" Height="30" Margin="10, 0, 40, 0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             <Label Content="{Binding Name,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" Width="100" HorizontalContentAlignment="Center"/>
-                            <Button  Content="EDYTUJ" Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding}" Margin="0,5,0,5" Padding="5" FontWeight="Bold" FontSize="12" BorderBrush="#FFFFFEFE" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource transBttn}" />
-                            <Button  Content="USUŃ" Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding}"  Margin="0,5,0,5" Padding="5" FontWeight="Bold" FontSize="12" BorderBrush="#FFFFFEFE" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource transBttn}" />
+                            <Button  Content="{Binding EditTitle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" Foreground="Black" CommandParameter="{Binding}" Margin="0,5,0,5" Padding="5" FontWeight="Bold" FontSize="12" BorderBrush="#FFFFFEFE" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource transBttn}" />
+                            <Button  Content="{Binding DeleteTitle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" Foreground="Black" CommandParameter="{Binding}"  Margin="0,5,0,5" Padding="5" FontWeight="Bold" FontSize="12" BorderBrush="#FFFFFEFE" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource transBttn}" />
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
 
-            <Button Command="{Binding AddCategoryCommand}" Grid.Row="2" Content="DODAJ NOWĄ KATEGORIĘ" Margin="5,18,5,20" Padding="5 5 5 5" FontWeight="Bold" FontSize="16" BorderBrush="#FFFFFEFE" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource whiteBttn}" />
+            <Button Command="{Binding AddCategoryCommand}" Grid.Row="2" Content="{Binding AddCategoriesTitle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5,18,5,20" Padding="5 5 5 5" FontWeight="Bold" FontSize="16" BorderBrush="#FFFFFEFE" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource whiteBttn}" />
 
         </StackPanel>
     </DockPanel>

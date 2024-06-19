@@ -24,10 +24,12 @@ namespace Wallet.ViewModels
         private User _user;
         private Category _category;
         public event PropertyChangedEventHandler? PropertyChanged;
+        private Settings _settingsManger;
         public CategoriesViewModel()
         {
             _user = new User();
             _category = new Category();
+            _settingsManger = new Settings();
             _user.GetCurrentUser();
 
             _addCategoryCommand = new RelayCommand(execute => AddCategory());
@@ -37,9 +39,65 @@ namespace Wallet.ViewModels
 
             SetItems();
 
+            if (!(_user.HasCustomSettings))
+            {
+                SetLanguage();//polish
+            }
+            else
+            {
+                _settingsManger.GetSettings(_user.Id);
+
+                if (_settingsManger.Language) //polish
+                {
+
+                    SetLanguage();
+
+                }
+                else//engslish
+                {
+                    _CategoriesTitle = "CATEGORIES";
+                    _AddCategoriesTitle = "ADD A NEW CATEGORY";
+                }
+            }
+
         }
 
-     
+        private void SetLanguage()
+        {
+            _CategoriesTitle = "KATEGORIE";
+            _AddCategoriesTitle = "DODAJ NOWĄ KATEGORIĘ";
+         
+        }
+
+
+        public string AddCategoriesTitle
+        {
+            get { return _AddCategoriesTitle; }
+            set
+            {
+                if (_AddCategoriesTitle != value)
+                {
+                    _AddCategoriesTitle = value;
+                    OnPropertyChanged(nameof(AddCategoriesTitle));
+
+                }
+            }
+        }
+
+        public string CategoriesTitle
+        {
+            get { return _CategoriesTitle; }
+            set
+            {
+                if (_CategoriesTitle != value)
+                {
+                    _CategoriesTitle = value;
+                    OnPropertyChanged(nameof(CategoriesTitle));
+
+                }
+            }
+        }
+
 
         private ICommand _editCommand;
         public ICommand EditCommand
@@ -140,6 +198,11 @@ namespace Wallet.ViewModels
 
 
         private ICommand _deleteCommand;
+        private string _CategoriesTitle;
+        private string _AddCategoriesTitle;
+        private string _editTitle;
+        private string _deleteTitle;
+
         public ICommand DeleteCommand
         {
             get

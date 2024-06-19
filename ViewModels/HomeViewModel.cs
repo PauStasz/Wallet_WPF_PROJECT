@@ -28,7 +28,7 @@ namespace Wallet.ViewModels
         private ICommand _revenues;
         private ICommand _searchCommand;
         private ObservableCollection<ExpenseRevenue> _rawData;
-        internal HomeViewModel()
+        public HomeViewModel()
         {
             _user = new User();
             _account = new Account();
@@ -107,6 +107,7 @@ namespace Wallet.ViewModels
                         IsSelected2ForSalary = false;
                         SortByDataASC();
                     }
+                    
                 }
             }
         }

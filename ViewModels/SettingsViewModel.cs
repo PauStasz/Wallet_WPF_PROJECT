@@ -232,10 +232,24 @@ namespace Wallet.ViewModels
                     _user.HasCustomSettings = true;
                     userRepository.UpdateData("users", _user);
 
-                    _settingsManger.Language = _lanPlIsSelected;
-                    _settingsManger.Format = _format1IsSelected;
+                    Settings newSettings = new Settings();
 
-                    repository.UpdateData("settings", _settingsManger);
+
+                    newSettings.IdUser = _user.Id;
+                    newSettings.Language = _lanPlIsSelected;
+                    newSettings.Format = _format1IsSelected;
+
+                    List<Settings> temps = repository.GetAllData("settings");
+
+                    foreach (var item in temps)
+                    {
+                        repository.DeleteData("settings", item.Id);
+                    }
+                    
+
+                    repository.SetData("settings", newSettings);
+
+                    
 
                 }
 

@@ -23,7 +23,6 @@ namespace Wallet.Views
         public HomeWindow()
         {
             InitializeComponent();
-            DataContext = new HomeViewModel();
         }
     }
 }

@@ -37,14 +37,14 @@
 
             <StackPanel Grid.Row="1">
             <Button x:Name="HomeButton" Command="{Binding HomeCommand}" Content="HOME" Style="{StaticResource lineBttn}" IsDefault="True"/>
-            <Button x:Name="ExpensePlanningButton" Command="{Binding ExpensePlanningCommand}" Content="WYDATKI" Style="{StaticResource lineBttn}" />
-            <Button x:Name="RevenueButton" Command="{Binding RevenueCommand}" Content="WPŁYWY" Style="{StaticResource lineBttn}" />
-            <Button x:Name="RaportButton" Command="{Binding RaportCommand}" Content="RAPORTY I STATYSTKI" Style="{StaticResource lineBttn}" />
-            <Button x:Name="ForecastButton" Command="{Binding ForecastCommand}" Content="PROGNOZA" Style="{StaticResource lineBttn}" />
-            <Button x:Name="AccountButton" Command="{Binding AccountCommand}" Content="KONTA" Style="{StaticResource lineBttn}" />
-            <Button x:Name="CategoriesButton" Command="{Binding CategoriesCommand}" Content="KATEGORIE" Style="{StaticResource lineBttn}" />
-            <Button x:Name="SettingsButton" Command="{Binding SettingsCommand}" Content="USTAWIENIA" Style="{StaticResource lineBttn}" IsDefault="False" />
-            <Button Content="WYLOGUJ SIĘ" Command="{Binding LogoutCommand}" Style="{StaticResource lineBttn}" />
+            <Button x:Name="ExpensePlanningButton" Command="{Binding ExpensePlanningCommand}" Content="{Binding ExpenseNameBttn, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource lineBttn}" />
+            <Button x:Name="RevenueButton" Command="{Binding RevenueCommand}" Content="{Binding RevenueNameBttn, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource lineBttn}" />
+            <Button x:Name="RaportButton" Command="{Binding RaportCommand}" Content="{Binding RaportsNameBttn, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource lineBttn}" />
+            <Button x:Name="ForecastButton" Command="{Binding ForecastCommand}" Content="{Binding ForecastNameBttn, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource lineBttn}" />
+            <Button x:Name="AccountButton" Command="{Binding AccountCommand}" Content="{Binding AccountNameBttn, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource lineBttn}" />
+            <Button x:Name="CategoriesButton" Command="{Binding CategoriesCommand}" Content="{Binding CategoryNameBttn, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource lineBttn}" />
+            <Button x:Name="SettingsButton" Command="{Binding SettingsCommand}" Content="{Binding SettingsNameBttn, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource lineBttn}" IsDefault="False" />
+            <Button Content="{Binding LogoutNameBttn, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Command="{Binding LogoutCommand}" Style="{StaticResource lineBttn}" />
         </StackPanel>
 
     </Grid>
