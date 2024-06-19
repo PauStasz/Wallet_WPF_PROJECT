@@ -83,6 +83,8 @@ namespace Wallet.Models.Users
                 Email = user.Email;
                 Id = user.Id;
                 Nick = user.Nick;
+                HashPassword = user.HashPassword;
+                HasCustomSettings = user.HasCustomSettings;
             }
 
             

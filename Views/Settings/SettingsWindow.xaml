@@ -38,58 +38,27 @@
                                 <RowDefinition Height="auto"/>
                             </Grid.RowDefinitions>
 
-                            <Label Grid.Column="1" Content="Język domyślny" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="101,0,0,0" />
+                            <Label Grid.Column="1" Content="{Binding Language, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="101,0,0,0" />
                             <ComboBox Grid.Column="2" HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="100,5,100,5" Width="340" >
-                                <ComboBoxItem IsSelected="{Binding LanEnIsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">ANGIESLKI (ANGLIA)</ComboBoxItem>
-                                <ComboBoxItem IsSelected="{Binding LanPlnIsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">POLSKI (POLSKA)</ComboBoxItem>
+                                <ComboBoxItem Content="{Binding English, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsSelected="{Binding LanEnIsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></ComboBoxItem>
+                                <ComboBoxItem Content="{Binding Polish, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsSelected="{Binding LanPlnIsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></ComboBoxItem>
                             </ComboBox>
 
-                            <Label Grid.Row="1" Grid.Column="1" Content="Format czasu" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="107,0,0,0" />
+                            <Label Grid.Row="1" Grid.Column="1" Content="{Binding TimeFormat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="107,0,0,0" />
                             <ComboBox Grid.Row="1" Grid.Column="2" HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="100,5,100,5" Width="340" >
-                                <ComboBoxItem IsSelected="{Binding Format1IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">ROK-MIESIĄC-DZIEŃ-GODZINA</ComboBoxItem>
-                                <ComboBoxItem IsSelected="{Binding Format2IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">DZIEŃ-MIESIĄC-ROK-GODZINA</ComboBoxItem>
+                                <ComboBoxItem Content="{Binding Format1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsSelected="{Binding Format1IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></ComboBoxItem>
+                                <ComboBoxItem Content="{Binding Format2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsSelected="{Binding Format2IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></ComboBoxItem>
                             </ComboBox>
 
                         </Grid>
                     </StackPanel>
 
                 </GroupBox>
-                <GroupBox Grid.Row="1" Header="POWIADOMIENIA" Margin="30" Padding="10" Foreground="White">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                        </Grid.RowDefinitions>
-
-                        <Label Grid.Row="0" Grid.Column="0" Content="Dźwięk powiadomienia" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        <ComboBox Grid.Row="0" Grid.Column="1" HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="100,5,100,5" Width="340" >
-                            <ComboBoxItem>Ptaszki</ComboBoxItem>
-                            <ComboBoxItem IsSelected="True">Ćwiergotanie</ComboBoxItem>
-                        </ComboBox>
-
-                        <Label Grid.Row="2" Grid.Column="0" Content="Dźwięk" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal"  HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <RadioButton  Foreground="White" Margin="10">Włączony</RadioButton>
-                            <RadioButton Foreground="White" Margin="10" IsChecked="True">Wyłączony</RadioButton>
-                        </StackPanel>
-
-                        <Label Grid.Row="1" Grid.Column="0" Content="Powiadomienia w tle" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal"  HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <RadioButton  Foreground="White" Margin="10" IsChecked="True">Tak</RadioButton>
-                            <RadioButton Foreground="White" Margin="10">Nie</RadioButton>
-                        </StackPanel>
-                    </Grid>
-                </GroupBox>
 
 
 
-                <Button Command="{Binding Save}" Grid.Row="2" Content="ZAPISZ ZMIANY" Margin="50" Height="60" FontWeight="Bold" FontSize="16" BorderBrush="#FFFFFEFE" Background="White"  Style="{StaticResource whiteBttn}" />
+
+                <Button Command="{Binding Save}"  Content="{Binding Saver, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Margin="50" Height="60" FontWeight="Bold" FontSize="16" BorderBrush="#FFFFFEFE" Background="White"  Style="{StaticResource whiteBttn}" />
 
 
             </Grid>

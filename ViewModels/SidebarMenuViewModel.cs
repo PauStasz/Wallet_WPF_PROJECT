@@ -13,7 +13,7 @@ using Wallet.Views.LoginRegistrationSystemViews;
 
 namespace Wallet.ViewModels
 {
-    public class SidebarMenuViewModel : INotifyPropertyChanged
+    internal class SidebarMenuViewModel : INotifyPropertyChanged
     {
         
         private User _user;
@@ -31,7 +31,7 @@ namespace Wallet.ViewModels
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        public SidebarMenuViewModel()
+        internal SidebarMenuViewModel()
         {
             _user = new User();
             _user.GetCurrentUser();
