@@ -4,20 +4,19 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
+using System.Windows;
 using Wallet.Helpers;
 using Wallet.Models.Users;
-using Wallet.Views;
 using Wallet.Views.LoginRegistrationSystemViews;
+using Wallet.Views;
 
 namespace Wallet.ViewModels
 {
-    internal class SidebarMenuViewModel : INotifyPropertyChanged
+    internal class SidebarMenuViewModel: INotifyPropertyChanged
     {
-        
         private User _user;
-        private string _name;
+        private string _name = string.Empty;
 
         private ICommand _settingsCommand;
         private ICommand _forecastCommand;
@@ -31,13 +30,12 @@ namespace Wallet.ViewModels
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        internal SidebarMenuViewModel()
+        public SidebarMenuViewModel()
         {
             _user = new User();
             _user.GetCurrentUser();
 
-            Name = _user.Name.ToString() + " " + _user.Surname.ToString();
-
+             Name = (_user.Name + " " + _user.Surname);
             _logoutCommand = new RelayCommand(execute => Logout());
             _accountCommand = new RelayCommand(execute => GoAccount());
             _homeCommand = new RelayCommand(execute => GoHome());
@@ -152,6 +150,7 @@ namespace Wallet.ViewModels
             get { return _name; }
             set
             {
+               
                 _name = value;
                 OnPropertyChanged(nameof(Name));
             }
