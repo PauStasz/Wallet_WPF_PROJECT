@@ -17,10 +17,12 @@ namespace Wallet.ViewModels
 {
     internal class AddRevenueViewModel : INotifyPropertyChanged, IDataErrorInfo
     {
+        private Settings _settingsManager;
         public AddRevenueViewModel()
         {
             _user = new User();
             _revenue = new ExpenseRevenue();
+            _settingsManager = new Settings();
             _user.GetCurrentUser();
             _isEditedOrAddedNew = false;
 
@@ -43,13 +45,96 @@ namespace Wallet.ViewModels
 
             _saveCommand = new RelayCommand(execute => CreateExpense());
             _cancelCommand = new RelayCommand(execute => CancelAction());
+
+            if (!(_user.HasCustomSettings))
+            {
+
+                SetLanguage();
+            }
+            else
+            {
+                _settingsManager.GetSettings(_user.Id);
+
+                if (_settingsManager.Language)
+                {
+
+                    SetLanguage();
+
+                }
+                else
+                {
+                    NameLabel = "Name";
+                    SaveLabel = "Save";
+                    CancelLabel = "Cancel";
+                    AmountLabel = "Amount";
+                    CategoryLabel = "Categories";
+
+                }
+            }
         }
 
+        public string NameLabel
+        {
+            get => _NameLabel;
+            set
+            {
+                _NameLabel = value;
+                OnPropertyChanged(nameof(NameLabel));
+            }
+        }
+
+        public string SaveLabel
+        {
+            get => _SaveLabel;
+            set
+            {
+                _SaveLabel = value;
+                OnPropertyChanged(nameof(SaveLabel));
+            }
+        }
+
+        public string CancelLabel
+        {
+            get => _CancelLabel;
+            set
+            {
+                _CancelLabel = value;
+                OnPropertyChanged(nameof(CancelLabel));
+            }
+        }
+
+        public string CategoryLabel
+        {
+            get => _CategoryLabel;
+            set
+            {
+                _CategoryLabel = value;
+                OnPropertyChanged(nameof(CategoryLabel));
+            }
+        }
+        public string AmountLabel
+        {
+            get => _AmountLabel;
+            set
+            {
+                _AmountLabel = value;
+                OnPropertyChanged(nameof(AmountLabel));
+            }
+        }
+        private void SetLanguage()
+        {
+            Name = "Nazwa";
+            SaveLabel = "ZAPISZ";
+            CancelLabel = "ANULUJ";
+            AmountLabel = "Kwota";
+            CategoryLabel = "Kategorie";
+        }
         public AddRevenueViewModel(ExpenseRevenue revenue)
         {
             _revenue = revenue;
             Name = _revenue.Name;
             _user = new User();
+            _settingsManager = new Settings();
             _user.GetCurrentUser();
             _isEditedOrAddedNew = true;
             Amount = _revenue.Amount;
@@ -71,6 +156,35 @@ namespace Wallet.ViewModels
 
             _saveCommand = new RelayCommand(execute => CreateExpense());
             _cancelCommand = new RelayCommand(execute => CancelAction());
+
+
+            
+            if (!(_user.HasCustomSettings))
+            {
+
+                SetLanguage();
+            }
+            else
+            {
+                _settingsManager.GetSettings(_user.Id);
+
+                if (_settingsManager.Language)
+                {
+
+                    SetLanguage();
+
+                }
+                else
+                {
+                    NameLabel = "Name";
+                    SaveLabel = "Save";
+                    CancelLabel = "Cancel";
+                    AmountLabel = "Amount";
+                    CategoryLabel = "Categories";
+
+                }
+            }
+
         }
 
 
@@ -164,7 +278,27 @@ namespace Wallet.ViewModels
             else if (SelectedCategory == null)
             {
                 MessageHolder msg = MessageHolder.Instance;
-                msg.Text = "Wybierz kategorię";
+                if (!(_user.HasCustomSettings))
+                {
+
+                    msg.Text = "Wybierz kategorię";
+                }
+                else
+                {
+                    _settingsManager.GetSettings(_user.Id);
+
+                    if (_settingsManager.Language)
+                    {
+
+                        msg.Text = "Wybierz kategorię";
+
+                    }
+                    else
+                    {
+                        msg.Text = "Select a category";
+
+                    }
+                }
 
                 InfoWindow window = new InfoWindow();
                 window.Show();
@@ -179,12 +313,52 @@ namespace Wallet.ViewModels
                 {
                     
                     _revenue.Create(Name, Amount, Date, SelectedCategory, _user.Id);
-                    msg.Text = "Wpływ został dodany.";
+                    if (!(_user.HasCustomSettings))
+                    {
+
+                        msg.Text = "Wpływ został dodany.";
+                    }
+                    else
+                    {
+                        _settingsManager.GetSettings(_user.Id);
+
+                        if (_settingsManager.Language)
+                        {
+
+                            msg.Text = "Wpływ został dodany.";
+
+                        }
+                        else
+                        {
+                            msg.Text = "The revenue has been added.";
+
+                        }
+                    }
                 }
                 else
                 {
                     _revenue.UpdateOne(Name, Amount, Date, SelectedCategory, _user.Id, _revenue.Id);
-                    msg.Text = "Wpływ został zaktualizowany.";
+                    if (!(_user.HasCustomSettings))
+                    {
+
+                        msg.Text = "Wpływ został edytowany.";
+                    }
+                    else
+                    {
+                        _settingsManager.GetSettings(_user.Id);
+
+                        if (_settingsManager.Language)
+                        {
+
+                            msg.Text = "Wpływ został edytowany.";
+
+                        }
+                        else
+                        {
+                            msg.Text = "The revenue has been edited.";
+
+                        }
+                    }
                 }
 
                 InfoWindow window = new InfoWindow();
@@ -200,7 +374,27 @@ namespace Wallet.ViewModels
                 Window currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive);
 
                 MessageHolder msg = MessageHolder.Instance;
-                msg.Text = "Brak dostępu do internetu";
+                if (!(_user.HasCustomSettings))
+                {
+
+                    msg.Text = "Brak dostępu do internetu";
+                }
+                else
+                {
+                    _settingsManager.GetSettings(_user.Id);
+
+                    if (_settingsManager.Language)
+                    {
+
+                        msg.Text = "Brak dostępu do internetu";
+
+                    }
+                    else
+                    {
+                        msg.Text = "No internet access.";
+
+                    }
+                }
 
                 InfoWindow window = new InfoWindow();
                 window.Show();
@@ -224,6 +418,11 @@ namespace Wallet.ViewModels
         }
 
         private ICommand _cancelCommand;
+        private string _SaveLabel;
+        private string _AmountLabel;
+        private string _CategoryLabel;
+        private string _CancelLabel;
+        private string _NameLabel;
 
         public ICommand CancelCommand
         {
@@ -257,14 +456,60 @@ namespace Wallet.ViewModels
                 {
                     if (string.IsNullOrEmpty(Name))
                     {
-                        return "Nie może być puste.";
+                        string temp = string.Empty;
+                        if (!(_user.HasCustomSettings))
+                        {
+
+                            temp = "Nie może być puste.";
+                        }
+                        else
+                        {
+                            _settingsManager.GetSettings(_user.Id);
+
+                            if (_settingsManager.Language)
+                            {
+
+                                temp = "Nie może być puste.";
+
+                            }
+                            else
+                            {
+                                temp = "It can't be empty.";
+
+                            }
+                        }
+
+                        return temp;
                     }
                 }
                 if (columnName == "Amount" && _isValidationEnabledForAmount)
                 {
                     if (Amount <= 0)
                     {
-                        return "Wpływ nie może być ujemny lub zerowy.";
+                         string temp = string.Empty;
+                        if (!(_user.HasCustomSettings))
+                        {
+
+                            temp = "Wartość musi być większa od 0";
+                        }
+                        else
+                        {
+                            _settingsManager.GetSettings(_user.Id);
+
+                            if (_settingsManager.Language)
+                            {
+
+                                temp = "Wartość musi być większa od 0";
+
+                            }
+                            else
+                            {
+                                temp = "The value must be greater than 0";
+
+                            }
+                        }
+
+                        return temp;
                     }
                 }
 

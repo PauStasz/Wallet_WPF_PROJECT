@@ -79,8 +79,8 @@ namespace Wallet.ViewModels
                     _saver = "SAVE";
                     _english = "ENGLISH";
                     _polish = "POLISH";
-                    _format1 = "YEAR-MONTH-DAY-HOUR";
-                    _format2 = "DAY-MONTH-YEAR-HOUR";
+                    _format1 = "YEAR-DAY-MONTH";
+                    _format2 = "DAY-MONTH-YEAR";
                 }
             }
             _save = new RelayCommand(execute => SaveSettings());
@@ -94,8 +94,8 @@ namespace Wallet.ViewModels
             _saver = "ZAPISZ ZMIANY";
             _english = "ANGIELSKI";
             _polish = "POLSKI";
-            _format1 = "ROK-MIESIĄC-DZIEŃ-GODZINA";
-            _format2 = "DZIEŃ-MIESIĄC-ROK-GODZINA";
+            _format1 = "ROK-DZIEŃ-MIESIĄC";
+            _format2 = "DZIEŃ-MIESIĄC-ROK";
 
         }
 

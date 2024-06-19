@@ -21,6 +21,7 @@ namespace Wallet.ViewModels
         private User _user;
         private ExpenseRevenue _expenseRevenue;
         private Account _account;
+        private Settings _settingsManager;
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -29,6 +30,7 @@ namespace Wallet.ViewModels
             _user = new User();
             _expenseRevenue = new ExpenseRevenue();
             _account = new Account();
+            _settingsManager = new Settings();
             _user.GetCurrentUser();
             _account.GetMainActive(_user.Id);
 
@@ -37,6 +39,54 @@ namespace Wallet.ViewModels
             _editCommand = new RelayCommand(Edit);
 
             SetItems();
+
+
+            if (!(_user.HasCustomSettings))
+            {
+
+                SetLanguage();
+            }
+            else
+            {
+                _settingsManager.GetSettings(_user.Id);
+
+                if (_settingsManager.Language)
+                {
+
+                    SetLanguage();
+
+                }
+                else
+                {
+                    TitleWindow = "REVENUES";
+                    AddBttnTitle = "ADD NEW REVENUE";
+                }
+            }
+        }
+
+        public string AddBttnTitle
+        {
+            get => _AddBttnTitle;
+            set
+            {
+                _AddBttnTitle = value;
+                OnPropertyChanged();
+            }
+        }
+        public string TitleWindow
+        {
+            get => _TitleWindow;
+            set
+            {
+                _TitleWindow = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private void SetLanguage()
+        {
+            TitleWindow = "WPŁYWY";
+            AddBttnTitle = "DODAJ NOWY WPŁYW";
         }
 
         private ICommand _editCommand;
@@ -105,6 +155,9 @@ namespace Wallet.ViewModels
         }
 
         private ICommand _deleteCommand;
+        private string _AddBttnTitle;
+        private string _TitleWindow;
+
         public ICommand DeleteCommand => _deleteCommand;
 
         private void Delete(object parameter)

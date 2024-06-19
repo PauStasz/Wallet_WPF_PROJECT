@@ -87,6 +87,70 @@ namespace Wallet.Models
         private Account _account = new Account();
         private Category _category;
         private int _idCategory;
+        private string _deleteTitle;
+        private string _editTitle;
+
+        private Settings _settingsManger;
+        private User _user;
+
+        public Expense()
+        {
+            _user = new User();
+            _settingsManger = new Settings();
+            _user.GetCurrentUser();
+
+            if (!(_user.HasCustomSettings))
+            {
+                _editTitle = "EDYTUJ";
+                _deleteTitle = "USUŃ";
+            }
+            else
+            {
+                _settingsManger.GetSettings(_user.Id);
+
+                if (_settingsManger.Language) //polish
+                {
+
+                    _editTitle = "EDYTUJ";
+                    _deleteTitle = "USUŃ";
+
+                }
+                else//engslish
+                {
+                    _editTitle = "EDIT";
+                    _deleteTitle = "DELETE";
+                }
+            }
+        }
+
+        public string DeleteTitle
+        {
+            get { return _deleteTitle; }
+            set
+            {
+                if (_deleteTitle != value)
+                {
+                    _deleteTitle = value;
+                    OnPropertyChanged(nameof(DeleteTitle));
+
+                }
+            }
+        }
+
+        public string EditTitle
+        {
+            get { return _editTitle; }
+            set
+            {
+                if (_editTitle != value)
+                {
+                    _editTitle = value;
+                    OnPropertyChanged(nameof(EditTitle));
+
+                }
+            }
+        }
+
 
         public void Create(string name, double amount, DateTime date, Category category, int idUser)
         {
@@ -101,8 +165,34 @@ namespace Wallet.Models
 
             _account.Salary = -_amount;
 
+            _deleteTitle = null;
+            _editTitle = null;
+
             _repository.SetData("expenses", this);
             _accountRepository.UpdateData("accounts", _account);
+
+            if (!(_user.HasCustomSettings))
+            {
+                _editTitle = "EDYTUJ";
+                _deleteTitle = "USUŃ";
+            }
+            else
+            {
+                _settingsManger.GetSettings(_user.Id);
+
+                if (_settingsManger.Language) //polish
+                {
+
+                    _editTitle = "EDYTUJ";
+                    _deleteTitle = "USUŃ";
+
+                }
+                else//engslish
+                {
+                    _editTitle = "EDIT";
+                    _deleteTitle = "DELETE";
+                }
+            }
         }
 
         public List<Expense> GetExpensesById(int idUser)
@@ -178,8 +268,34 @@ namespace Wallet.Models
 
             _account.Salary = -_amount;
 
+            _editTitle = null;
+            _deleteTitle = null;
+
             _repository.UpdateData("expenses", this);
             _accountRepository.UpdateData("accounts", _account);
+
+            if (!(_user.HasCustomSettings))
+            {
+                _editTitle = "EDYTUJ";
+                _deleteTitle = "USUŃ";
+            }
+            else
+            {
+                _settingsManger.GetSettings(_user.Id);
+
+                if (_settingsManger.Language) //polish
+                {
+
+                    _editTitle = "EDYTUJ";
+                    _deleteTitle = "USUŃ";
+
+                }
+                else//engslish
+                {
+                    _editTitle = "EDIT";
+                    _deleteTitle = "DELETE";
+                }
+            }
         }
 
         internal void Delete(int id)

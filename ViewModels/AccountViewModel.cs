@@ -17,11 +17,13 @@ namespace Wallet.ViewModels
         private User _user;
         private Account _account;
         public event PropertyChangedEventHandler? PropertyChanged;
+        private Settings _settingsManager;
         public AccountViewModel()
         {
             _user = new User();
             _account = new Account();
             _user.GetCurrentUser();
+            _settingsManager = new Settings();
 
             _deleteCommand = new RelayCommand(DeleteAccount);
             _addAccountCommand = new RelayCommand(execute => AddAccount());
@@ -30,7 +32,51 @@ namespace Wallet.ViewModels
 
             SetItems();
 
+            if (!(_user.HasCustomSettings))
+            {
 
+                SetLanguage();
+            }
+            else
+            {
+                _settingsManager.GetSettings(_user.Id);
+
+                if (_settingsManager.Language)
+                {
+
+                    SetLanguage();
+
+                }
+                else
+                {
+                    TitleWindow = "ACCOUNTS";
+                    AddBttnTitle = "ADD NEW ACCOUNT";
+                }
+            }
+        }
+
+        public string AddBttnTitle
+        {
+            get => _AddBttnTitle;
+            set
+            {
+                _AddBttnTitle = value;
+                OnPropertyChanged();
+            }
+        }
+        public string TitleWindow
+        {
+            get => _TitleWindow;
+            set
+            {
+                _TitleWindow = value;
+                OnPropertyChanged();
+            }
+        }
+        private void SetLanguage()
+        {
+            TitleWindow = "KONTA";
+            AddBttnTitle = "DODAJ NOWE KONTO";
         }
 
         private ICommand _selectMainAccountCommand;
@@ -130,6 +176,9 @@ namespace Wallet.ViewModels
         }
 
         private Account selectedItem;
+        private string _AddBttnTitle;
+        private string _TitleWindow;
+
         public Account SelectedItem
         {
             get => selectedItem;

@@ -6,13 +6,18 @@
         xmlns:local="clr-namespace:Wallet.Views"
         xmlns:UserControls="clr-namespace:Wallet.Themes.UserControls"
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        xmlns:viewModels="clr-namespace:Wallet.ViewModels"
         mc:Ignorable="d"
         Title="Report And Statistics" Height="721" Width="1300" WindowStartupLocation="CenterScreen" Background="#FF1A1919">
 
+
+    <Window.DataContext>
+        <viewModels:ForecastViewModel />
+    </Window.DataContext>
+    
     <DockPanel>
         <UserControls:SidebarMenu DockPanel.Dock="Left"/>
         <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
-            <!--<checkbox content="checkbox"/>-->
             <Border Grid.Row="1" Grid.ColumnSpan="2" CornerRadius="30" Margin="20 40 20 50" Height="500" Width="400">
                 <Border.Background>
                     <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
@@ -28,17 +33,16 @@
                     </Grid.RowDefinitions>
                     <Border Background="#6e60b5" BorderThickness="2" BorderBrush="#8276c0" CornerRadius="30" Margin="0,0,0,25" Grid.RowSpan="2"/>
 
-                    <TextBlock Text="Statystyki" Foreground="#f0eff6" FontSize="18" FontWeight="SemiBold" Margin="40,25,0,0"/>
-                    <TextBlock Text="Tygodniowo" Foreground="#f0eff6" FontSize="16" FontWeight="SemiBold" Margin="0,27,17,0" HorizontalAlignment="Right" Width="93"/>
+                    <TextBlock Text="{Binding Label}" Foreground="#f0eff6" FontSize="18" FontWeight="SemiBold" Margin="40,25,0,0"/>
+                    <TextBlock Text="{Binding WeekLabel}" Foreground="#f0eff6" FontSize="16" FontWeight="SemiBold" Margin="0,27,17,0" HorizontalAlignment="Right" Width="93"/>
 
-                    <lvc:CartesianChart LegendLocation="Bottom" Margin="10,10,10,9" Grid.RowSpan="2" >
+                    <lvc:CartesianChart LegendLocation="Bottom" Margin="10,10,10,9" Grid.RowSpan="2" Series="{Binding ChartSeries2}">
                         <lvc:CartesianChart.ToolTip>
                             <lvc:DefaultTooltip Background="#5a5080" Foreground="#f4f3f6" BulletSize="0"/>
                         </lvc:CartesianChart.ToolTip>
 
-
                         <lvc:CartesianChart.AxisX>
-                            <lvc:Axis Foreground="#a79fd1" FontSize="14" ShowLabels="True" Labels="tydz1, tydz2, tydz3, tydz4, tydz5, tydz6">
+                            <lvc:Axis Foreground="#a79fd1" FontSize="14" ShowLabels="True" Labels="{Binding WeeksLabels}" >
                                 <lvc:Axis.Separator>
                                     <lvc:Separator StrokeThickness="0" Step="1"/>
                                 </lvc:Axis.Separator>
@@ -52,18 +56,6 @@
                                 </lvc:Axis.Separator>
                             </lvc:Axis>
                         </lvc:CartesianChart.AxisY>
-
-                        <lvc:CartesianChart.Series>
-                            <lvc:LineSeries Title="Series" Fill="#7164b2" StrokeThickness="4" PointGeometrySize="0" Values="10, 100, 20, 150, 5, 30,">
-                                <lvc:LineSeries.Stroke>
-                                    <LinearGradientBrush>
-                                        <GradientStop Color="Transparent" Offset="0"/>
-                                        <GradientStop Color="#f782ab" Offset="0.23"/>
-                                        <GradientStop Color="Transparent" Offset="2.5"/>
-                                    </LinearGradientBrush>
-                                </lvc:LineSeries.Stroke>
-                            </lvc:LineSeries>
-                        </lvc:CartesianChart.Series>
                     </lvc:CartesianChart>
 
                     <Grid Grid.Row="1" Margin="10,20,10,15">
@@ -76,9 +68,7 @@
                 </Grid>
             </Border>
 
-            <Button Content="POBIERZ PDF STATYSTYK" Margin="-190 600 -200 0" Padding="5 5 5 5" FontWeight="Bold" FontSize="16" BorderBrush="#FFFFFEFE" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource whiteBttn}" />
-
-            <Border Grid.Row="1" Grid.ColumnSpan="2" CornerRadius="30" Margin="20 40 20 50" Height="500" Width="600">
+             <Border Grid.Row="1" Grid.ColumnSpan="2" CornerRadius="30" Margin="20 40 20 50" Height="500" Width="600">
                 <Border.Background>
                     <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
                         <GradientStop Color="#6a5dae" Offset="0"/>
@@ -93,16 +83,16 @@
                     </Grid.RowDefinitions>
                     <Border Background="#6e60b5" BorderThickness="2" BorderBrush="#8276c0" CornerRadius="30" Margin="0,0,0,25" Grid.RowSpan="2"/>
 
-                    <TextBlock Text="Statystyki" Foreground="#f0eff6" FontSize="18" FontWeight="SemiBold" Margin="42,25,0,0"/>
-                    <TextBlock Text="Miesięcznie" Foreground="#f0eff6" FontSize="16" FontWeight="SemiBold" Margin="0 27 35 0" HorizontalAlignment="Right" Width="88"/>
+                    <TextBlock Text="{Binding Label}" Foreground="#f0eff6" FontSize="18" FontWeight="SemiBold" Margin="42,25,0,0"/>
+                    <TextBlock Text="{Binding MonthLabel}" Foreground="#f0eff6" FontSize="16" FontWeight="SemiBold" Margin="0 27 35 0" HorizontalAlignment="Right" Width="88"/>
 
-                    <lvc:CartesianChart LegendLocation="Bottom" Margin="10,10,10,10" Grid.RowSpan="2" >
+                    <lvc:CartesianChart LegendLocation="Bottom" Margin="10,10,10,10" Grid.RowSpan="2" Series="{Binding ChartSeries3}">
                         <lvc:CartesianChart.ToolTip>
                             <lvc:DefaultTooltip Background="#5a5080" Foreground="#f4f3f6" BulletSize="0"/>
                         </lvc:CartesianChart.ToolTip>
 
                         <lvc:CartesianChart.AxisX>
-                            <lvc:Axis Foreground="#a79fd1" FontSize="14" ShowLabels="True" Labels=" Styczeń, Marzec, Maj, Lipiec, Wrzesień, Listopad">
+                            <lvc:Axis Foreground="#a79fd1" FontSize="14" ShowLabels="True" Labels="{Binding MonthLabels}">
                                 <lvc:Axis.Separator>
                                     <lvc:Separator StrokeThickness="0" Step="1"/>
                                 </lvc:Axis.Separator>
@@ -116,18 +106,6 @@
                                 </lvc:Axis.Separator>
                             </lvc:Axis>
                         </lvc:CartesianChart.AxisY>
-
-                        <lvc:CartesianChart.Series>
-                            <lvc:LineSeries Title="Series" Fill="#7164b2" StrokeThickness="4" PointGeometrySize="0" Values="10, 100, 20, 150, 5, 30">
-                                <lvc:LineSeries.Stroke>
-                                    <LinearGradientBrush>
-                                        <GradientStop Color="Transparent" Offset="0"/>
-                                        <GradientStop Color="#f782ab" Offset="0.23"/>
-                                        <GradientStop Color="Transparent" Offset="2.5"/>
-                                    </LinearGradientBrush>
-                                </lvc:LineSeries.Stroke>
-                            </lvc:LineSeries>
-                        </lvc:CartesianChart.Series>
                     </lvc:CartesianChart>
 
                     <Grid Grid.Row="1" Margin="10,20,10,15">
@@ -139,14 +117,6 @@
                     </Grid>
                 </Grid>
             </Border>
-            <!--<checkbox content="checkbox"/>
-            <checkbox content="checkbox"/>-->
-
-
         </StackPanel>
-
-
-
-
     </DockPanel>
 </Window>

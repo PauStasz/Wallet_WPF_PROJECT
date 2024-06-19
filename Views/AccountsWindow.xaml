@@ -26,7 +26,7 @@
             </Grid>
 
             <StackPanel Grid.Row="0">
-                <Label Content="KONTA" Foreground="White" HorizontalAlignment="Center" FontWeight="Bold" FontSize="30" VerticalAlignment="Center" Margin="30"/>
+                <Label Content="{Binding TitleWindow}" Foreground="White" HorizontalAlignment="Center" FontWeight="Bold" FontSize="30" VerticalAlignment="Center" Margin="30"/>
                 <Border BorderThickness="0,0,0,2" BorderBrush="White" VerticalAlignment="Bottom"/>
             </StackPanel>
 
@@ -38,15 +38,15 @@
                             <Label Content="{Binding Name,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" Width="100" HorizontalContentAlignment="Center"/>
                             <Label Content="{Binding Salary, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" Width="100" HorizontalContentAlignment="Center"/>
                             <Button  Content="{Binding MainAccount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Command="{Binding DataContext.SelectMainAccountCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding}" Margin="0,5,0,5" Padding="5" FontWeight="Bold" FontSize="12" BorderBrush="#FFFFFEFE" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource transBttn}" />
-                            <Button  Content="EDYTUJ" Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding}" Margin="0,5,0,5" Padding="5" FontWeight="Bold" FontSize="12" BorderBrush="#FFFFFEFE" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource transBttn}" />
-                            <Button  Content="USUŃ" Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding}"  Margin="0,5,0,5" Padding="5" FontWeight="Bold" FontSize="12" BorderBrush="#FFFFFEFE" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource transBttn}" />
+                            <Button  Content="{Binding EditTitle}" Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding}" Margin="0,5,0,5" Padding="5" FontWeight="Bold" FontSize="12" BorderBrush="#FFFFFEFE" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource transBttn}" />
+                            <Button  Content="{Binding DeleteTitle}" Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding}"  Margin="0,5,0,5" Padding="5" FontWeight="Bold" FontSize="12" BorderBrush="#FFFFFEFE" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource transBttn}" />
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
             
 
-            <Button Command="{Binding AddAccountCommand}" Grid.Row="2" Content="DODAJ NOWE KONTO" Margin="5,18,5,20" Padding="5 5 5 5" FontWeight="Bold" FontSize="16" BorderBrush="#FFFFFEFE" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource whiteBttn}" />
+            <Button Command="{Binding AddAccountCommand}" Grid.Row="2" Content="{Binding AddBttnTitle}" Margin="5,18,5,20" Padding="5 5 5 5" FontWeight="Bold" FontSize="16" BorderBrush="#FFFFFEFE" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource whiteBttn}" />
 
         </StackPanel>
     </DockPanel>

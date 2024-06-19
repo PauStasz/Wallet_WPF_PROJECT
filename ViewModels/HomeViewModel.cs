@@ -28,24 +28,243 @@ namespace Wallet.ViewModels
         private ICommand _revenues;
         private ICommand _searchCommand;
         private ObservableCollection<ExpenseRevenue> _rawData;
+        private Settings _settingsManager;
         public HomeViewModel()
         {
             _user = new User();
             _account = new Account();
             _expense = new ExpenseRevenue();
             _category = new Category();
+            
 
             _user.GetCurrentUser();
             _account.GetMainActive(_user.Id);
 
+            _settingsManager = new Settings();
+
+            if (!(_user.HasCustomSettings))
+            {
+
+                SetLanguage();
+            }
+            else
+            {
+                _settingsManager.GetSettings(_user.Id);
+
+                if (_settingsManager.Language)
+                {
+
+                    SetLanguage();
+
+                }
+                else
+                {
+                    _AccountTitle = "From account";
+                    _CategoryTitle = "Categories";
+                    _FiltersTitle = "Filters";
+                    _FilterTitleBttn = "Filter categories";
+                    SortTitle = "Sort";
+                    SortByDateTitle = "By date";
+                    SortBySalaryTitle = "By salary";
+                    SortASCTitle = "Ascending";
+                    SortDESCTitle = "Descending";
+                    ExpenseTitle = "EXPENSES";
+                    PlanningExpenseTitle = "PLANNING EXPENSES";
+                    RevenueTitle = "REVENUES";
+                }
+            }
 
             _expanses = new RelayCommand(execute => SetListToExpanses());
             _futureExpanses = new RelayCommand(execute => SetListToFutureExpanses());
             _revenues = new RelayCommand(execute => SetListToRevenues());
             _searchCommand = new RelayCommand(execute => SearchInItems());
+            _Filter = new RelayCommand(execute => FilterByCategories());
 
             SetListToExpanses();
 
+            SetCategoryList();
+
+        }
+
+        private void SetLanguage()
+        {
+            _AccountTitle = "Z konta";
+            _CategoryTitle = "Kategorie";
+            _FiltersTitle = "Filtry";
+            _FilterTitleBttn = "Filtruj kategorie";
+            SortTitle = "Sortowanie";
+            SortByDateTitle = "Po dacie";
+            SortBySalaryTitle = "Po kwocie";
+            SortASCTitle = "Rosnąco";
+            SortDESCTitle = "Malejąco";
+            ExpenseTitle = "WYDATKI";
+            PlanningExpenseTitle = "PLANOWANE WYDATKI";
+            RevenueTitle = "WPŁYWY";
+
+        }
+
+        public string SortASCTitle
+        {
+            get => _SortASCTitle;
+            set
+            {
+                _SortASCTitle = value;
+                OnPropertyChanged();
+            }
+        }
+        public string RevenueTitle
+        {
+            get => _RevenueTitle;
+            set
+            {
+                _RevenueTitle = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string PlanningExpenseTitle
+        {
+            get => _PlanningExpenseTitle;
+            set
+            {
+                _PlanningExpenseTitle = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string ExpenseTitle
+        {
+            get => _ExpenseTitle;
+            set
+            {
+                _ExpenseTitle = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string SortDESCTitle
+        {
+            get => _SortDESCTitle;
+            set
+            {
+                _SortDESCTitle = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string SortBySalaryTitle
+        {
+            get => _SortBySalaryTitle;
+            set
+            {
+                _SortBySalaryTitle = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string SortByDateTitle
+        {
+            get => _SortByDateTitle;
+            set
+            {
+                _SortByDateTitle = value;
+                OnPropertyChanged();
+            }
+        }
+        public string SortTitle
+        {
+            get => _SortTitle;
+            set
+            {
+                _SortTitle = value;
+                OnPropertyChanged();
+            }
+        }
+        public string AccountTitle
+        {
+            get => _AccountTitle;
+            set
+            {
+                _AccountTitle = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string FilterTitleBttn
+        {
+            get => _FilterTitleBttn;
+            set
+            {
+                _FilterTitleBttn = value;
+                OnPropertyChanged();
+            }
+        }
+        public string FiltersTitle
+        {
+            get => _FiltersTitle;
+            set
+            {
+                _FiltersTitle = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string CategoryTitle
+        {
+            get => _CategoryTitle;
+            set
+            {
+                _CategoryTitle = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        public ObservableCollection<Category> ItemsCategory
+        {
+            get => _itemscatgeory;
+            set
+            {
+                _itemscatgeory = value;
+
+                OnPropertyChanged();
+            }
+        }
+        private void SetCategoryList()
+        {
+            List<Category> temp = _category.GetCategoriesById(_user.Id);
+
+            if(temp != null && temp.Count() > 0)
+            {
+                ItemsCategory = [.. temp];
+            }
+            else
+            {
+                ItemsCategory = new ObservableCollection<Category>();
+            }
+        }
+
+        private void FilterByCategories()
+        {
+            var selectedCat = ItemsCategory.ToList();
+            var result = new List<ExpenseRevenue>();
+
+            selectedCat = selectedCat.Where(s => s.IsSelectedCategory == true).ToList();
+
+
+            foreach (var temp in _rawData) 
+            {
+
+                if (selectedCat.Any(t => t.Name == temp.Category.Name))
+                {
+                    Debug.WriteLine(temp.Name);
+                    result.Add(temp);
+                }
+            }
+
+
+
+            Items = [.. result];
         }
 
         private void SearchInItems()
@@ -60,6 +279,14 @@ namespace Wallet.ViewModels
                 Items = _rawData;
             }
 
+        }
+
+        public ICommand Filter
+        {
+            get
+            {
+                return _Filter;
+            }
         }
 
         public bool IsSelected2ForData
@@ -327,6 +554,20 @@ namespace Wallet.ViewModels
         private bool _isSelected1ForData;
         private bool _isSelected2ForData;
         private ObservableCollection<Category> _categories;
+        private ICommand _Filter;
+        private ObservableCollection<Category> _itemscatgeory;
+        private string _AccountTitle;
+        private string _CategoryTitle;
+        private string _FiltersTitle;
+        private string _FilterTitleBttn;
+        private string _SortTitle;
+        private string _SortByDateTitle;
+        private string _SortBySalaryTitle;
+        private string _SortASCTitle;
+        private string _SortDESCTitle;
+        private string _ExpenseTitle;
+        private string _PlanningExpenseTitle;
+        private string _RevenueTitle;
 
         public string Search
         {

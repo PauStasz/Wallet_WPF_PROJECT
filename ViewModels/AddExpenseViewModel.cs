@@ -11,6 +11,7 @@ using Wallet.Views.DialogsWindows;
 using System.Collections.ObjectModel;
 using System.Xml.Linq;
 using System.Diagnostics;
+using System.Xml;
 
 namespace Wallet.ViewModels
 {
@@ -25,6 +26,7 @@ namespace Wallet.ViewModels
         private DateTime _date;
         private Category _categoryManager;
         private ObservableCollection<Category> _category;
+        private Settings _settingsManager;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -85,6 +87,7 @@ namespace Wallet.ViewModels
         {
             _user = new User();
             _expense = new Expense();
+            _settingsManager = new Settings();
             _user.GetCurrentUser();
             _isEditedOrAddedNew = false;
 
@@ -107,13 +110,98 @@ namespace Wallet.ViewModels
             
             _saveCommand = new RelayCommand(execute => CreateExpense());
             _cancelCommand = new RelayCommand(execute => CancelAction());
+
+            if (!(_user.HasCustomSettings))
+            {
+
+                SetLanguage();
+            }
+            else
+            {
+                _settingsManager.GetSettings(_user.Id);
+
+                if (_settingsManager.Language)
+                {
+
+                    SetLanguage();
+
+                }
+                else
+                {
+                    NameLabel = "Name";
+                    SaveLabel = "Save";
+                    CancelLabel = "Cancel";
+                    AmountLabel = "Amount";
+                    CategoryLabel = "Categories";
+
+                }
+            }
         }
+
+        public string NameLabel
+        {
+            get => _NameLabel;
+            set
+            {
+                _NameLabel = value;
+                OnPropertyChanged(nameof(NameLabel));
+            }
+        }
+
+        public string SaveLabel
+        {
+            get => _SaveLabel;
+            set
+            {
+                _SaveLabel = value;
+                OnPropertyChanged(nameof(SaveLabel));
+            }
+        }
+
+        public string CancelLabel
+        {
+            get => _CancelLabel;
+            set
+            {
+                _CancelLabel = value;
+                OnPropertyChanged(nameof(CancelLabel));
+            }
+        }
+
+        public string CategoryLabel
+        {
+            get => _CategoryLabel;
+            set
+            {
+                _CategoryLabel = value;
+                OnPropertyChanged(nameof(CategoryLabel));
+            }
+        }
+        public string AmountLabel
+        {
+            get => _AmountLabel;
+            set
+            {
+                _AmountLabel = value;
+                OnPropertyChanged(nameof(AmountLabel));
+            }
+        }
+        private void SetLanguage()
+        {
+            Name = "Nazwa";
+            SaveLabel = "ZAPISZ";
+            CancelLabel = "ANULUJ";
+            AmountLabel = "Kwota";
+            CategoryLabel = "Kategorie";
+        }
+
 
         public AddExpenseViewModel(Expense expense)
         {
             _expense = expense;
             Name = _expense.Name;
             _user = new User();
+            _settingsManager = new Settings();
             _user.GetCurrentUser();
             _isEditedOrAddedNew = true;
             Amount = _expense.Amount;
@@ -136,6 +224,32 @@ namespace Wallet.ViewModels
 
             _saveCommand = new RelayCommand(execute => CreateExpense());
             _cancelCommand = new RelayCommand(execute => CancelAction());
+
+            if (!(_user.HasCustomSettings))
+            {
+
+                SetLanguage();
+            }
+            else
+            {
+                _settingsManager.GetSettings(_user.Id);
+
+                if (_settingsManager.Language)
+                {
+
+                    SetLanguage();
+
+                }
+                else
+                {
+                    NameLabel = "Name";
+                    SaveLabel = "Save";
+                    CancelLabel = "Cancel";
+                    AmountLabel = "Amount";
+                    CategoryLabel = "Categories";
+
+                }
+            }
         }
 
         public Expense GetExpense()
@@ -159,7 +273,29 @@ namespace Wallet.ViewModels
             else if(SelectedCategory == null)
             {
                 MessageHolder msg = MessageHolder.Instance;
-                msg.Text = "Wybierz kategorię";
+
+                if (!(_user.HasCustomSettings))
+                {
+
+                    msg.Text = "Wybierz kategorię";
+                }
+                else
+                {
+                    _settingsManager.GetSettings(_user.Id);
+
+                    if (_settingsManager.Language)
+                    {
+
+                        msg.Text = "Wybierz kategorię";
+
+                    }
+                    else
+                    {
+                        msg.Text = "Select a category";
+
+                    }
+                }
+                
 
                 InfoWindow window = new InfoWindow();
                 window.Show();
@@ -173,14 +309,56 @@ namespace Wallet.ViewModels
                 if (!_isEditedOrAddedNew)
                 {
                     _expense.Create(Name, Amount, Date, SelectedCategory, _user.Id);
-                    msg.Text = "Wydatek został dodany.";
+                    if (!(_user.HasCustomSettings))
+                    {
+
+                        msg.Text = "Wydatek został dodany.";
+                    }
+                    else
+                    {
+                        _settingsManager.GetSettings(_user.Id);
+
+                        if (_settingsManager.Language)
+                        {
+
+                            msg.Text = "Wydatek został dodany.";
+
+                        }
+                        else
+                        {
+                            msg.Text = "The expense has been added.";
+
+                        }
+                    }
 
                     var expense = _expense.GetExpensesByIdUserName(_user.Id, Name);
                 }
                 else
                 {
                     _expense.UpdateOne(Name, Amount, Date, SelectedCategory, _user.Id);
-                    msg.Text = "Wydatek został zaktualizowany.";
+
+                    if (!(_user.HasCustomSettings))
+                    {
+
+                        msg.Text = "Wydatek został edytowany.";
+                    }
+                    else
+                    {
+                        _settingsManager.GetSettings(_user.Id);
+
+                        if (_settingsManager.Language)
+                        {
+
+                            msg.Text = "Wydatek został edytowany.";
+
+                        }
+                        else
+                        {
+                            msg.Text = "The expense has been edited.";
+
+                        }
+                    }
+
                 }
 
                 InfoWindow window = new InfoWindow();
@@ -196,7 +374,28 @@ namespace Wallet.ViewModels
                 Window currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive);
 
                 MessageHolder msg = MessageHolder.Instance;
-                msg.Text = "Brak dostępu do internetu";
+
+                if (!(_user.HasCustomSettings))
+                {
+
+                    msg.Text = "Brak dostępu do internetu";
+                }
+                else
+                {
+                    _settingsManager.GetSettings(_user.Id);
+
+                    if (_settingsManager.Language)
+                    {
+
+                        msg.Text = "Brak dostępu do internetu";
+
+                    }
+                    else
+                    {
+                        msg.Text = "No internet access.";
+
+                    }
+                }
 
                 InfoWindow window = new InfoWindow();
                 window.Show();
@@ -221,6 +420,11 @@ namespace Wallet.ViewModels
 
         private ICommand _cancelCommand;
         private bool _isValidationEnabledForAmount;
+        private string _NameLabel;
+        private string _CancelLabel;
+        private string _SaveLabel;
+        private string _AmountLabel;
+        private string _CategoryLabel;
 
         public ICommand CancelCommand
         {
@@ -254,14 +458,60 @@ namespace Wallet.ViewModels
                 {
                     if (string.IsNullOrEmpty(Name))
                     {
-                        return "Nie może być puste.";
+                        string temp = string.Empty;
+                        if (!(_user.HasCustomSettings))
+                        {
+
+                            temp = "Nie może być puste.";
+                        }
+                        else
+                        {
+                            _settingsManager.GetSettings(_user.Id);
+
+                            if (_settingsManager.Language)
+                            {
+
+                                temp = "Nie może być puste.";
+
+                            }
+                            else
+                            {
+                                temp = "It can't be empty.";
+
+                            }
+                        }
+
+                        return temp;
                     }
                 }
                 if (columnName == "Amount" && _isValidationEnabledForAmount)
                 {
                     if (Amount <= 0)
                     {
-                        return "Wydatek nie może być ujemny lub zerowy.";
+                        string temp = string.Empty;
+                        if (!(_user.HasCustomSettings))
+                        {
+
+                            temp = "Wartość musi być większa od 0";
+                        }
+                        else
+                        {
+                            _settingsManager.GetSettings(_user.Id);
+
+                            if (_settingsManager.Language)
+                            {
+
+                                temp = "Wartość musi być większa od 0";
+
+                            }
+                            else
+                            {
+                                temp = "The value must be greater than 0";
+
+                            }
+                        }
+
+                        return temp;
                     }
                 }
 

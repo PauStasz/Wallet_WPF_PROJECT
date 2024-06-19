@@ -56,6 +56,20 @@ namespace Wallet.Models
             }
         }
 
+        public bool IsSelectedCategory
+        {
+            get => _isSelectedCategory;
+            set
+            {
+                if (_isSelectedCategory != value)
+                {
+
+                    _isSelectedCategory = value;
+                    OnPropertyChanged(nameof(IsSelectedCategory));
+
+                }
+            }
+        }
         public string DeleteTitle
         {
             get { return _deleteTitle; }
@@ -90,6 +104,8 @@ namespace Wallet.Models
 
         private User _user;
         private Settings _settingsManger;
+        private bool _isSelectedCategory;
+
         public Category()
         {
             _user = new User();

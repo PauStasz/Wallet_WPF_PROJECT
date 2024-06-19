@@ -61,17 +61,92 @@ namespace Wallet.Models
             }
         }
 
+        private User _user;
+        private Settings _settingsManager;
+
         public Account()
         {
-            if (!IsMain)
-                _mainAccount = "USTAW JAKO GŁÓWNE";
+            _user = new User();
+            _settingsManager = new Settings();
+
+            
+
+            _user = new User();
+            _settingsManager = new Settings();
+            _user.GetCurrentUser();
+
+            if (!(_user.HasCustomSettings))
+            {
+                _editTitle = "EDYTUJ";
+                _deleteTitle = "USUŃ";
+
+                if (!IsMain)
+                    _mainAccount = "USTAW JAKO GŁÓWNE";
+                else
+                    _mainAccount = "WYBRANO NA GŁÓWNE";
+            }
             else
-                _mainAccount = "WYBRANO NA GŁÓWNE";
+            {
+                _settingsManager.GetSettings(_user.Id);
+
+                if (_settingsManager.Language) //polish
+                {
+
+                    _editTitle = "EDYTUJ";
+                    _deleteTitle = "USUŃ";
+
+                    if (!IsMain)
+                        _mainAccount = "USTAW JAKO GŁÓWNE";
+                    else
+                        _mainAccount = "WYBRANO NA GŁÓWNE";
+
+                }
+                else//engslish
+                {
+                    _editTitle = "EDIT";
+                    _deleteTitle = "DELETE";
+
+                    if (!IsMain)
+                        _mainAccount = "SET AS MAIN";
+                    else
+                        _mainAccount = "SELECTED FOR MAIN";
+                }
+            }
+        }
+
+        public string DeleteTitle
+        {
+            get { return _deleteTitle; }
+            set
+            {
+                if (_deleteTitle != value)
+                {
+                    _deleteTitle = value;
+                    OnPropertyChanged(nameof(DeleteTitle));
+
+                }
+            }
+        }
+
+        public string EditTitle
+        {
+            get { return _editTitle; }
+            set
+            {
+                if (_editTitle != value)
+                {
+                    _editTitle = value;
+                    OnPropertyChanged(nameof(EditTitle));
+
+                }
+            }
         }
 
 
 
         private IGenericRepository<Account> _repository = new GenericRepository<Account>();
+        private string _editTitle;
+        private string _deleteTitle;
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -82,7 +157,48 @@ namespace Wallet.Models
             IdUser = idUser;
             IsMain = false;
 
+            _deleteTitle = null;
+            _editTitle = null;
+
             _repository.SetData("accounts", this);
+
+            if (!(_user.HasCustomSettings))
+            {
+                _editTitle = "EDYTUJ";
+                _deleteTitle = "USUŃ";
+
+                if (!IsMain)
+                    _mainAccount = "USTAW JAKO GŁÓWNE";
+                else
+                    _mainAccount = "WYBRANO NA GŁÓWNE";
+            }
+            else
+            {
+                _settingsManager.GetSettings(_user.Id);
+
+                if (_settingsManager.Language) //polish
+                {
+
+                    _editTitle = "EDYTUJ";
+                    _deleteTitle = "USUŃ";
+
+                    if (!IsMain)
+                        _mainAccount = "USTAW JAKO GŁÓWNE";
+                    else
+                        _mainAccount = "WYBRANO NA GŁÓWNE";
+
+                }
+                else//engslish
+                {
+                    _editTitle = "EDIT";
+                    _deleteTitle = "DELETE";
+
+                    if (!IsMain)
+                        _mainAccount = "SET AS MAIN";
+                    else
+                        _mainAccount = "SELECTED FOR MAIN";
+                }
+            }
         }
 
         public List<Account> GetAccountsById(int idUser)
@@ -119,7 +235,48 @@ namespace Wallet.Models
             Salary = salary;
             IdUser = id;
 
+            _editTitle = null;
+            _deleteTitle = null;
+
             _repository.UpdateData("accounts", this);
+
+            if (!(_user.HasCustomSettings))
+            {
+                _editTitle = "EDYTUJ";
+                _deleteTitle = "USUŃ";
+
+                if (!IsMain)
+                    _mainAccount = "USTAW JAKO GŁÓWNE";
+                else
+                    _mainAccount = "WYBRANO NA GŁÓWNE";
+            }
+            else
+            {
+                _settingsManager.GetSettings(_user.Id);
+
+                if (_settingsManager.Language) //polish
+                {
+
+                    _editTitle = "EDYTUJ";
+                    _deleteTitle = "USUŃ";
+
+                    if (!IsMain)
+                        _mainAccount = "USTAW JAKO GŁÓWNE";
+                    else
+                        _mainAccount = "WYBRANO NA GŁÓWNE";
+
+                }
+                else//engslish
+                {
+                    _editTitle = "EDIT";
+                    _deleteTitle = "DELETE";
+
+                    if (!IsMain)
+                        _mainAccount = "SET AS MAIN";
+                    else
+                        _mainAccount = "SELECTED FOR MAIN";
+                }
+            }
         }
 
         protected void OnPropertyChanged(string propertyName)
@@ -142,8 +299,46 @@ namespace Wallet.Models
                 MainAccount = temp.MainAccount;
                 Id = temp.Id;
             }
-            
-            
+
+            if (!(_user.HasCustomSettings))
+            {
+                _editTitle = "EDYTUJ";
+                _deleteTitle = "USUŃ";
+
+                if (!IsMain)
+                    _mainAccount = "USTAW JAKO GŁÓWNE";
+                else
+                    _mainAccount = "WYBRANO NA GŁÓWNE";
+            }
+            else
+            {
+                _settingsManager.GetSettings(_user.Id);
+
+                if (_settingsManager.Language) //polish
+                {
+
+                    _editTitle = "EDYTUJ";
+                    _deleteTitle = "USUŃ";
+
+                    if (!IsMain)
+                        _mainAccount = "USTAW JAKO GŁÓWNE";
+                    else
+                        _mainAccount = "WYBRANO NA GŁÓWNE";
+
+                }
+                else//engslish
+                {
+                    _editTitle = "EDIT";
+                    _deleteTitle = "DELETE";
+
+                    if (!IsMain)
+                        _mainAccount = "SET AS MAIN";
+                    else
+                        _mainAccount = "SELECTED FOR MAIN";
+                }
+            }
+
+
         }
     }
 }

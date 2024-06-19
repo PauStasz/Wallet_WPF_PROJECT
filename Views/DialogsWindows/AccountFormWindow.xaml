@@ -14,7 +14,7 @@
     
     <StackPanel Orientation="Vertical">
         <StackPanel Margin="20">
-            <Label Content="Nazwa" HorizontalAlignment="Center" Foreground="White" Padding="0 5 0 5" />
+            <Label Content="{Binding NameLabel}" HorizontalAlignment="Center" Foreground="White" Padding="0 5 0 5" />
             <TextBox Name="NameTextBox" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Padding="0 5 0 5" FontSize="16" Style="{StaticResource textbox1}" />
             <TextBlock Text="{Binding (Validation.Errors)[0].ErrorContent, ElementName=NameTextBox}"
 Foreground="Red" Margin="-0,10,0 0"   HorizontalAlignment="Center"/>
@@ -30,8 +30,8 @@ Foreground="Red" Margin="-0,10,0 0"   HorizontalAlignment="Center"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button Command="{Binding SaveCommand}" Grid.Column="0"  Content="ZAPISZ" Margin="10" Padding="2" FontWeight="Bold" FontSize="12" BorderBrush="#FFFFFEFE" Background="White" Width="100" Style="{StaticResource whiteBttn}" />
-            <Button Command="{Binding CancelCommand}" Grid.Column="1"  Content="ANULUJ" Margin="10" Padding="2" FontWeight="Bold" FontSize="12" BorderBrush="#FFFFFEFE" Background="White" Width="100"   Style="{StaticResource whiteBttn}" />
+            <Button Command="{Binding SaveCommand}" Grid.Column="0"  Content="{Binding SaveLabel}" Margin="10" Padding="2" FontWeight="Bold" FontSize="12" BorderBrush="#FFFFFEFE" Background="White" Width="100" Style="{StaticResource whiteBttn}" />
+            <Button Command="{Binding CancelCommand}" Grid.Column="1"  Content="{Binding CancelLabel}" Margin="10" Padding="2" FontWeight="Bold" FontSize="12" BorderBrush="#FFFFFEFE" Background="White" Width="100"   Style="{StaticResource whiteBttn}" />
         </Grid>
     </StackPanel>
 </Window>

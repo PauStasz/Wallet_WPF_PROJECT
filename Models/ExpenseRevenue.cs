@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Wallet.Models.Users;
 
 namespace Wallet.Models
 {
@@ -43,6 +44,35 @@ namespace Wallet.Models
             }
         }
 
+        public string DeleteTitle
+        {
+            get { return _deleteTitle; }
+            set
+            {
+                if (_deleteTitle != value)
+                {
+                    _deleteTitle = value;
+                    OnPropertyChanged(nameof(DeleteTitle));
+
+                }
+            }
+        }
+
+        public string EditTitle
+        {
+            get { return _editTitle; }
+            set
+            {
+                if (_editTitle != value)
+                {
+                    _editTitle = value;
+                    OnPropertyChanged(nameof(EditTitle));
+
+                }
+            }
+        }
+
+
         public DateTime Date
         {
             get => _date;
@@ -51,6 +81,40 @@ namespace Wallet.Models
                 if (_date != value)
                 {
                     _date = value;
+
+                    if (!_user.HasCustomSettings)
+                    {
+                        DateFormat = _date.ToString("yyyy-dd-MM");
+                    }
+                    else
+                    {
+                        _settingsManger.GetSettings(_user.Id);
+
+                        if (_settingsManger.Format) 
+                        {
+
+                            DateFormat = _date.ToString("yyyy-dd-MM");
+
+                        }
+                        else
+                        {
+                            DateFormat = _date.ToString("dd-MM-yyyy");
+                        }
+                    }
+                    
+                    OnPropertyChanged(nameof(Date));
+                }
+            }
+        }
+
+        public string DateFormat
+        {
+            get => _dateformat;
+            set
+            {
+                if (_dateformat != value)
+                {
+                    _dateformat = value;
                     OnPropertyChanged(nameof(Date));
                 }
             }
@@ -145,9 +209,37 @@ namespace Wallet.Models
             return result;
         }
 
+        private Settings _settingsManger;
+        private User _user;
         public ExpenseRevenue()
         {
             _isSelectedCategory = true;
+            _settingsManger = new Settings();
+            _user = new User();
+            _user.GetCurrentUser();
+
+            if (!(_user.HasCustomSettings))
+            {
+                _editTitle = "EDYTUJ";
+                _deleteTitle = "USUŃ";
+            }
+            else
+            {
+                _settingsManger.GetSettings(_user.Id);
+
+                if (_settingsManger.Language) //polish
+                {
+
+                    _editTitle = "EDYTUJ";
+                    _deleteTitle = "USUŃ";
+
+                }
+                else//engslish
+                {
+                    _editTitle = "EDIT";
+                    _deleteTitle = "DELETE";
+                }
+            }
         }
 
         private Account _account = new Account();
@@ -155,6 +247,9 @@ namespace Wallet.Models
         private string _name;
         private int _idCategory;
         private DateTime _date;
+        private string _dateformat;
+        private string _deleteTitle;
+        private string _editTitle;
 
         internal List<ExpenseRevenue> GetAllRevenuesByAccountId(int id)
         {
@@ -203,8 +298,34 @@ namespace Wallet.Models
 
             _account.Salary += Amount;
 
+            _editTitle = null;
+            _deleteTitle = null;
+
             _accountRepository.UpdateData("accounts", _account);
             _repository.SetData("revenues", this);
+
+            if (!(_user.HasCustomSettings))
+            {
+                _editTitle = "EDYTUJ";
+                _deleteTitle = "USUŃ";
+            }
+            else
+            {
+                _settingsManger.GetSettings(_user.Id);
+
+                if (_settingsManger.Language) //polish
+                {
+
+                    _editTitle = "EDYTUJ";
+                    _deleteTitle = "USUŃ";
+
+                }
+                else//engslish
+                {
+                    _editTitle = "EDIT";
+                    _deleteTitle = "DELETE";
+                }
+            }
         }
 
         internal void UpdateOne(string name, double amount, DateTime date, Category selectedCategory, int id, int idData)
@@ -224,8 +345,34 @@ namespace Wallet.Models
             
             _account.Salary += Amount;
 
+            _editTitle = null;
+            _deleteTitle = null;
+
             _accountRepository.UpdateData("accounts", _account);
             _repository.SetData("revenues", this);
+
+            if (!(_user.HasCustomSettings))
+            {
+                _editTitle = "EDYTUJ";
+                _deleteTitle = "USUŃ";
+            }
+            else
+            {
+                _settingsManger.GetSettings(_user.Id);
+
+                if (_settingsManger.Language) //polish
+                {
+
+                    _editTitle = "EDYTUJ";
+                    _deleteTitle = "USUŃ";
+
+                }
+                else//engslish
+                {
+                    _editTitle = "EDIT";
+                    _deleteTitle = "DELETE";
+                }
+            }
         }
     }
 }

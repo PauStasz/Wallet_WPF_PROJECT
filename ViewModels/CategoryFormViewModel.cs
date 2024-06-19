@@ -7,7 +7,9 @@ using System.Drawing;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media.Imaging;
+using System.Xml;
 using Wallet.Helpers;
 using Wallet.Models;
 using Wallet.Models.Users;
@@ -35,6 +37,32 @@ namespace Wallet.ViewModels
             _saveCommand = new RelayCommand(execute => CreateCategory());
             _cancelCommand = new RelayCommand(execute => CancelAction());
             _addIconCommand = new RelayCommand(execute => AddIcon());
+
+            _settingsManager = new Settings();
+            if (!(_user.HasCustomSettings))
+            {
+
+                SetLanguage();
+            }
+            else
+            {
+                _settingsManager.GetSettings(_user.Id);
+
+                if (_settingsManager.Language)
+                {
+
+                    SetLanguage();
+
+                }
+                else
+                {
+                    NameLabel = "Name";
+                    SaveLabel = "Save";
+                    CancelLabel = "Cancel";
+                    IconLabel = "Add icon";
+
+                }
+            }
 
         }
 
@@ -75,11 +103,14 @@ namespace Wallet.ViewModels
                 return _addIconCommand;
             }
         }
+
+        private Settings _settingsManager;
         public CategoryFormViewModel(Category category)
         {
             _category = category;
             Name = _category.Name;
             _user = new User();
+            
             _user.GetCurrentUser();
             _isEditedOrAddedNew = true;
             _isUploaded = false;
@@ -87,6 +118,80 @@ namespace Wallet.ViewModels
             _saveCommand = new RelayCommand(execute => CreateCategory());
             _cancelCommand = new RelayCommand(execute => CancelAction());
             _addIconCommand = new RelayCommand(execute => AddIcon());
+            
+            _settingsManager = new Settings();
+            if (!(_user.HasCustomSettings))
+            {
+
+                SetLanguage();
+            }
+            else
+            {
+                _settingsManager.GetSettings(_user.Id);
+
+                if (_settingsManager.Language)
+                {
+
+                    SetLanguage();
+
+                }
+                else
+                {
+                    NameLabel = "Name";
+                    SaveLabel = "Save";
+                    CancelLabel = "Cancel";
+                    IconLabel = "Add icon";
+
+                }
+            }
+        }
+
+        private void SetLanguage()
+        {
+            NameLabel = "Nazwa";
+            SaveLabel = "Zapisz";
+            CancelLabel = "Anuluj";
+            IconLabel = "Dodaj ikonę";
+        }
+
+        public string NameLabel
+        {
+            get => _NameLabel;
+            set
+            {
+                _NameLabel = value;
+                OnPropertyChanged(nameof(NameLabel));
+            }
+        }
+
+        public string SaveLabel
+        {
+            get => _SaveLabel;
+            set
+            {
+                _SaveLabel = value;
+                OnPropertyChanged(nameof(SaveLabel));
+            }
+        }
+
+        public string CancelLabel
+        {
+            get => _CancelLabel;
+            set
+            {
+                _CancelLabel = value;
+                OnPropertyChanged(nameof(CancelLabel));
+            }
+        }
+
+        public string IconLabel
+        {
+            get => _IconLabel;
+            set
+            {
+                _IconLabel = value;
+                OnPropertyChanged(nameof(IconLabel));
+            }
         }
 
         private string _name;
@@ -141,7 +246,29 @@ namespace Wallet.ViewModels
                     if (!_isEditedOrAddedNew)
                     {
                         _category.Create(Name, _user.Id);
-                        msg.Text = "Kategoria została dodana.";
+                        
+
+                        if (!(_user.HasCustomSettings))
+                        {
+
+                            msg.Text = "Kategoria została dodana.";
+                        }
+                        else
+                        {
+                            _settingsManager.GetSettings(_user.Id);
+
+                            if (_settingsManager.Language)
+                            {
+
+                                msg.Text = "Kategoria została dodana.";
+
+                            }
+                            else
+                            {
+                                msg.Text = "The category has been added.";
+
+                            }
+                        }
 
                         var category = _category.GetCategoriesByIdUserName(_user.Id, Name);
                         SaveImage(category);
@@ -149,7 +276,29 @@ namespace Wallet.ViewModels
                     else
                     {
                         _category.UpdateOne(Name, _user.Id);
-                        msg.Text = "Kategoria została edytowana.";
+                       
+
+                        if (!(_user.HasCustomSettings))
+                        {
+
+                            msg.Text = "Kategoria została edytowana.";
+                        }
+                        else
+                        {
+                            _settingsManager.GetSettings(_user.Id);
+
+                            if (_settingsManager.Language)
+                            {
+
+                                msg.Text = "Kategoria została edytowana.";
+
+                            }
+                            else
+                            {
+                                msg.Text = "The category has been edited.";
+
+                            }
+                        }
 
                         SaveImage(_category);
                     }
@@ -168,7 +317,27 @@ namespace Wallet.ViewModels
 
 
                     MessageHolder msg1 = MessageHolder.Instance;
-                    msg1.Text = "Brak zdjęcia";
+                    if (!(_user.HasCustomSettings))
+                    {
+
+                        msg1.Text = "Brak zdjęcia";
+                    }
+                    else
+                    {
+                        _settingsManager.GetSettings(_user.Id);
+
+                        if (_settingsManager.Language)
+                        {
+
+                            msg1.Text = "Brak zdjęcia";
+
+                        }
+                        else
+                        {
+                            msg1.Text = "No photo";
+
+                        }
+                    }
 
                     InfoWindow window1 = new InfoWindow();
                     window1.Show();
@@ -187,7 +356,27 @@ namespace Wallet.ViewModels
                 Window currentWindow2 = Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive);
 
                 MessageHolder msg2 = MessageHolder.Instance;
-                msg2.Text = "Brak dostępu do internetu";
+                if (!(_user.HasCustomSettings))
+                {
+
+                    msg2.Text = "Brak dostępu do internetu";
+                }
+                else
+                {
+                    _settingsManager.GetSettings(_user.Id);
+
+                    if (_settingsManager.Language)
+                    {
+
+                        msg2.Text = "Brak dostępu do internetu";
+
+                    }
+                    else
+                    {
+                        msg2.Text = "No internet access.";
+
+                    }
+                }
 
                 InfoWindow window = new InfoWindow();
                 window.Show();
@@ -234,6 +423,10 @@ namespace Wallet.ViewModels
         }
 
         private ICommand _cancelCommand;
+        private string _NameLabel;
+        private string _SaveLabel;
+        private string _CancelLabel;
+        private string _IconLabel;
 
         public ICommand CancelCommand
         {
@@ -270,15 +463,87 @@ namespace Wallet.ViewModels
                 {
                     if (string.IsNullOrEmpty(Name) || Name.Length <= 0)
                     {
-                        return "Nie może być puste.";
+                        string temp = string.Empty;
+                        if (!(_user.HasCustomSettings))
+                        {
+
+                            temp = "Nie może być puste.";
+                        }
+                        else
+                        {
+                            _settingsManager.GetSettings(_user.Id);
+
+                            if (_settingsManager.Language)
+                            {
+
+                                temp = "Nie może być puste.";
+
+                            }
+                            else
+                            {
+                                temp = "It can't be empty.";
+
+                            }
+                        }
+
+                        return temp;
                     }
                     else if (!System.Text.RegularExpressions.Regex.IsMatch(Name, @"[A-Z][a-z]+"))
                     {
-                        return "Imię powinien składać się z liter, w tym jednej dużej na początku.";
+
+                        string temp = string.Empty;
+                        if (!(_user.HasCustomSettings))
+                        {
+
+                            temp = "Imię powinien składać się z liter, w tym jednej dużej na początku.";
+                        }
+                        else
+                        {
+                            _settingsManager.GetSettings(_user.Id);
+
+                            if (_settingsManager.Language)
+                            {
+
+                                temp = "Imię powinien składać się z liter, w tym jednej dużej na początku.";
+
+                            }
+                            else
+                            {
+                                temp = "The name should consist of letters, including one capital letter at the beginning.";
+
+                            }
+                        }
+
+                        return temp;
+                        
                     }
                     else if (Name.Length > 20)
                     {
-                        return "Nie może przekraczać 20 znaków.";
+                        string temp = string.Empty;
+                        if (!(_user.HasCustomSettings))
+                        {
+
+                            temp = "Wartość musi być mniejsza od 20";
+                        }
+                        else
+                        {
+                            _settingsManager.GetSettings(_user.Id);
+
+                            if (_settingsManager.Language)
+                            {
+
+                                temp = "Wartość musi być mniejsza od 20";
+
+                            }
+                            else
+                            {
+                                temp = "The value must be less than 20";
+
+                            }
+                        }
+
+                        return temp;
+
                     }
                 }
 

@@ -150,16 +150,18 @@ namespace Wallet.ViewModels
         {
             get
             {
-                if (columnName == "Email" && _isValidationEnabledForEmail)
+                if (columnName == "Email")
                 {
-                    if (string.IsNullOrEmpty(Email))
+                    if (string.IsNullOrEmpty(Email) && _isValidationEnabledForEmail)
                     {
                         return "Nie może być puste.";
                     }
-                    else if (!System.Text.RegularExpressions.Regex.IsMatch(Email, @"[a-zA-Z0-9.]+@[a-zA-Z0-9]+.[a-zA-Z0-9]+"))
+                    else if (!System.Text.RegularExpressions.Regex.IsMatch(Email, @"[a-zA-Z0-9.]+@[a-zA-Z0-9]+.[a-zA-Z0-9]+") && _isValidationEnabledForEmail)
                     {
                         return "E-mail powinien składać się ze znaków taki jak cyfry, litery, kropki i @.";
                     }
+                    
+
                 }
                 if (columnName == "Password" && _isValidationEnabledForPassword)
                 {
@@ -172,6 +174,7 @@ namespace Wallet.ViewModels
                         return "Hasło musi mieć 6-20 znaków.";
                     }
                 }
+
                 return String.Empty;
 
             }

@@ -13,6 +13,7 @@ namespace Wallet.ViewModels
     {
         private User _user;
         private Expense _expense;
+        private Settings _settingsManager;
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -20,6 +21,7 @@ namespace Wallet.ViewModels
         {
             _user = new User();
             _expense = new Expense();
+            _settingsManager = new Settings();
             _user.GetCurrentUser();
 
             _addExpenseCommand = new RelayCommand(execute => AddExpense());
@@ -27,6 +29,53 @@ namespace Wallet.ViewModels
             _editCommand = new RelayCommand(EditExpense);
 
             SetItems();
+
+            if (!(_user.HasCustomSettings))
+            {
+
+                SetLanguage();
+            }
+            else
+            {
+                _settingsManager.GetSettings(_user.Id);
+
+                if (_settingsManager.Language)
+                {
+
+                    SetLanguage();
+
+                }
+                else
+                {
+                    TitleWindow = "EXPENSES";
+                    AddBttnTitle = "ADD NEW EXPENSE";
+                }
+            }
+        }
+
+        private void SetLanguage()
+        {
+            TitleWindow = "WYDATKI";
+            AddBttnTitle = "DODAJ NOWY WYDATEK";
+        }
+
+        public string AddBttnTitle
+        {
+            get => _AddBttnTitle;
+            set
+            {
+                _AddBttnTitle = value;
+                OnPropertyChanged();
+            }
+        }
+        public string TitleWindow
+        {
+            get => _TitleWindow;
+            set
+            {
+                _TitleWindow = value;
+                OnPropertyChanged();
+            }
         }
 
         private ICommand _editCommand;
@@ -83,6 +132,9 @@ namespace Wallet.ViewModels
         }
 
         private ICommand _deleteCommand;
+        private string _TitleWindow;
+        private string _AddBttnTitle;
+
         public ICommand DeleteCommand => _deleteCommand;
 
         private void DeleteExpense(object parameter)
