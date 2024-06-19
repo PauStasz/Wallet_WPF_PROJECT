@@ -16,11 +16,11 @@ namespace Wallet.Repositories
         public override void SetData(string nameTable, User entity)
         {
 
-            if (entity.Password is not null && entity.Password.Length > 0)
+            if (entity.Password != null && entity.Password.Length > 0)
             {
                 entity.HashPassword = Authentication.GetHashPassword(entity.Password);
-                entity.Password = "";
-                entity.ConfirmPassword = "";
+                entity.Password = null;
+                entity.ConfirmPassword = null;
             }
 
             base.SetData(nameTable, entity);    

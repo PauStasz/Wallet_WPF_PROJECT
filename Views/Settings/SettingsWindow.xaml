@@ -3,10 +3,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Wallet.Views" xmlns:UserControls="clr-namespace:Wallet.Themes.UserControls"
+        xmlns:local="clr-namespace:Wallet.Views" 
+        xmlns:UserControls="clr-namespace:Wallet.Themes.UserControls"
+        xmlns:viewModels="clr-namespace:Wallet.ViewModels"
         mc:Ignorable="d"
         Title="Settings" Height="650" Width="900" Foreground="White" WindowStartupLocation="CenterScreen" Background="#FF1A1919">
-    
+
+    <Window.DataContext>
+        <viewModels:SettingsViewModel />
+    </Window.DataContext>
+
     <DockPanel>
         <UserControls:SidebarMenu DockPanel.Dock="Left"/>
         <StackPanel DockPanel.Dock="Right">
@@ -17,12 +23,13 @@
                     <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
 
-                    <GroupBox Grid.Row="0" Header="JĘZYK I LOKALIZACJA" Margin="30" Padding="10" Foreground="White">
+                <GroupBox Grid.Row="0" Header="{Binding Title1}" Margin="30" Padding="10" Foreground="White">
                     <StackPanel Orientation="Vertical">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="16*"/>
+                                <ColumnDefinition Width="163*"/>
+                                <ColumnDefinition Width="179*"/>
                             </Grid.ColumnDefinitions>
 
                             <Grid.RowDefinitions>
@@ -31,25 +38,21 @@
                                 <RowDefinition Height="auto"/>
                             </Grid.RowDefinitions>
 
-                            <Label Grid.Row="0" Grid.Column="0" Content="Język domyślny" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                            <ComboBox Grid.Row="0" Grid.Column="1" HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="100,5,100,5" Width="340" >
-                                <ComboBoxItem>ANGIESLKI (ANGLIA)</ComboBoxItem>
-                                <ComboBoxItem IsSelected="True">POLSKI (POLSKA)</ComboBoxItem>
+                            <Label Grid.Column="1" Content="Język domyślny" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="101,0,0,0" />
+                            <ComboBox Grid.Column="2" HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="100,5,100,5" Width="340" >
+                                <ComboBoxItem IsSelected="{Binding LanEnIsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">ANGIESLKI (ANGLIA)</ComboBoxItem>
+                                <ComboBoxItem IsSelected="{Binding LanPlnIsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">POLSKI (POLSKA)</ComboBoxItem>
                             </ComboBox>
 
-                            <Label Grid.Row="1" Grid.Column="0" Content="Format czasu" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                            <ComboBox Grid.Row="1" Grid.Column="1" HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="100,5,100,5" Width="340" >
-                                <ComboBoxItem>ROK-DZIEŃ-GODZINA</ComboBoxItem>
-                                <ComboBoxItem IsSelected="True">GODZINA-DZIEŃ-ROK</ComboBoxItem>
+                            <Label Grid.Row="1" Grid.Column="1" Content="Format czasu" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="107,0,0,0" />
+                            <ComboBox Grid.Row="1" Grid.Column="2" HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="100,5,100,5" Width="340" >
+                                <ComboBoxItem IsSelected="{Binding Format1IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">ROK-MIESIĄC-DZIEŃ-GODZINA</ComboBoxItem>
+                                <ComboBoxItem IsSelected="{Binding Format2IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">DZIEŃ-MIESIĄC-ROK-GODZINA</ComboBoxItem>
                             </ComboBox>
-                            <Label Grid.Row="2" Grid.Column="0" Content="Początek tygodnia" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                            <ComboBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="100,5,100,5" Width="340" HorizontalContentAlignment="Center">
-                                <ComboBoxItem>NIEDZIELA</ComboBoxItem>
-                                <ComboBoxItem IsSelected="True">PONIEDZIAŁEK</ComboBoxItem>
-                            </ComboBox>
+
                         </Grid>
                     </StackPanel>
-                        
+
                 </GroupBox>
                 <GroupBox Grid.Row="1" Header="POWIADOMIENIA" Margin="30" Padding="10" Foreground="White">
                     <Grid>
@@ -84,15 +87,11 @@
                     </Grid>
                 </GroupBox>
 
-                <Grid Grid.Row="2" >
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto" />
-                        <ColumnDefinition Width="auto" />
-                    </Grid.ColumnDefinitions>
-                    
-                    <Button Grid.Column="0" Content="ZAPISZ ZMIANY" Margin="50" Height="60" FontWeight="Bold" FontSize="16" BorderBrush="#FFFFFEFE" Background="White"  Style="{StaticResource whiteBttn}" />
-                    <Button Grid.Column="1" Content="PRZYWRÓĆ DOMYŚLNE ZMIANY" Margin="50" Height="60" FontWeight="Bold" FontSize="16" BorderBrush="#FFFFFEFE" Background="White"  Style="{StaticResource whiteBttn}" />
-                </Grid>
+
+
+                <Button Command="{Binding Save}" Grid.Row="2" Content="ZAPISZ ZMIANY" Margin="50" Height="60" FontWeight="Bold" FontSize="16" BorderBrush="#FFFFFEFE" Background="White"  Style="{StaticResource whiteBttn}" />
+
+
             </Grid>
         </StackPanel>
     </DockPanel>

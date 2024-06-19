@@ -141,6 +141,8 @@ namespace Wallet.ViewModels
         }
         private void CreateAccount()
         {
+            MessageHolder msg = MessageHolder.Instance;
+
             if (Internet.IsConnected())
             {
                 if (IsDataNullOrEmpty())
@@ -180,31 +182,20 @@ namespace Wallet.ViewModels
                 else if (!_user.IsAlreadyCreated(_email))
                 {
                     _user.Register(_email, _name, _surname, _nick, _password);
-
-                    Window currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive);
-                    if (currentWindow is not null)
-                    {
-                        HomeWindow window = new HomeWindow();
-
-                        currentWindow.Close();
-                        window.Show();
-
-                        MessageHolder msg = MessageHolder.Instance;
-                        msg.Text = "Utworzono konto.";
-                        InfoWindow infoWindow = new InfoWindow();
-                        infoWindow.Show();
-                    }
+                    
+                    msg.Text = "Utworzono konto. Możesz się zalogować.";
+                    InfoWindow infoWindow = new InfoWindow();
+                    infoWindow.Show();
                 }
                 else
                 {
-                    MessageHolder msg = MessageHolder.Instance;
+                    
                     msg.Text = "Błędne dane.";
                     InfoWindow window = new InfoWindow();
                 }
             }
             else
             {
-                MessageHolder msg = MessageHolder.Instance;
                 msg.Text = "Brak dostępu do internetu.";
                 InfoWindow window = new InfoWindow();
                 window.Show();

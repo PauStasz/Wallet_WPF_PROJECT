@@ -133,12 +133,16 @@ namespace Wallet.Models
 
             Account temp = accounts.FirstOrDefault(a => a.IsMain == true && a.IdUser == id);
 
-            Name = temp.Name;
-            Salary = temp.Salary;
-            IdUser = temp.IdUser;
-            IsMain = temp.IsMain;
-            MainAccount = temp.MainAccount;
-            Id = temp.Id;
+            if (temp != null)
+            {
+                Name = temp.Name;
+                Salary = temp.Salary;
+                IdUser = temp.IdUser;
+                IsMain = temp.IsMain;
+                MainAccount = temp.MainAccount;
+                Id = temp.Id;
+            }
+            
             
         }
     }

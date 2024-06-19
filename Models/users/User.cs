@@ -21,12 +21,14 @@ namespace Wallet.Models.Users
         public string ConfirmPassword { get; set; }
         public string HashPassword { get; set; }
 
+        public bool HasCustomSettings { get; set; }
+
         private IUserRepository _userRepository = new UserRepository();
        
 
         public User()
         {
-            
+            HasCustomSettings = false;
         }
 
         public bool Authenticate(string email, string password)
